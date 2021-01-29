@@ -1,0 +1,5 @@
+{
+    "target1" : ["test1"],
+    "target2" : ["test1","test2"]
+
+}
