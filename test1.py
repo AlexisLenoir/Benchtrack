@@ -7,5 +7,5 @@ import random
 a = 0
 b = 30
 
-n = random.randint(a,b)
+r = random.randint(a,b)
 
