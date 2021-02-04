@@ -1,9 +1,22 @@
 
 CALENDRIER:
-Choix des sujets: avant le mercredi 13 Janvier 2021
-Rapports: vendredi 21 Mai 2021
-Soutenances: 27-28 Mai 2021
 
+- Première version avant le 1er mars 2021
+- Dernière version le 3 mai 2021, fin du codage
+
+- Première version du rapport le 26 avril 2021
+- Dernière version du rapport le 17 mai 20217
+- Soumission du rapport le vendredi 21 Mai 2021
+
+- Fin préparation des slides le 19 mai 2021
+- Entrainement soutenance 1 le 21 mai 2021
+- Entrainement soutenance 2 le 25 mai 2021
+- Soutenances: 27-28 Mai 2021
+
+
+
+
+ Donc mettre ça dans un document et proposer des dates pour la fin du codage, la fin d’une première version du rapport, la fin pour la révision du rapport et idem pour les slides et la répétition de soutenance
 contact :  adrien.demilly@scd.upmc.fr
 
 Le projet comprend une partie ‘bibliographie’ qui sera intégrée au projet, sous forme d'un carnet de bord (première version à rendre pour le 28 Février, cf. mail de Adrien Demilly que vous a fait suivre Eva Laskowski). Au mois de Mars, vous aurez a priori des séances de tutorat avec des intervenants de la bibliothèque pour retravailler le carnet de bord. Pour rappel, cet partie (évaluée par les intervenants bibliothécaires) comptera pour 2 points dans votre note de projet.
