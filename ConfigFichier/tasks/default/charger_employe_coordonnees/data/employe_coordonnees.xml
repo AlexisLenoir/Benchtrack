@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<employes>
+    <employe>
+        <nom>
+            Leguenec
+        </nom>
+        <prenom>
+            Yann
+        </prenom>
+    </employe>
+    <coordonnees>
+        <telephone>
+            3441
+        </telephone>
+        <mail>
+            yann.leguenec@societe.bzh
+        </mail>
+        <ip>
+            192.168.29.35
+        </ip>
+    </coordonnees>
+</employes>
