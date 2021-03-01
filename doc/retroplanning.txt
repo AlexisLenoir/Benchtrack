@@ -1,6 +1,8 @@
 
 CALENDRIER:
 
+- carnet de bord (première version à rendre pour le 28 Février)
+
 - Première version avant le 1er mars 2021
 - Dernière version le 3 mai 2021, fin du codage
 
