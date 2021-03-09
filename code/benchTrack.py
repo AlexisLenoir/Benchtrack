@@ -1,43 +1,46 @@
 import os
-import time
-import datetime
+import sys
+from absl import app
+from absl import flags
 
-#Pour trouver tous les fichers de repertoire de BASE.
-from resultsBench import ResultsBench
+from MyFlags import *
+from structureBench import BenchTrack
 
-def find_all_file(base):
-    for root, ds, fs in os.walk(base):
-        for f in fs:
-            yield f
+FLAGS = flags.FLAGS
+helpTarget = '\nFormat:--target <-l|-i> nameTest\n-l:list of target\n -i:infomation of target\n'
+flags.DEFINE_enum('target', None, ['-l', '-i','-include','-exclude'], helpTarget)
+helpTask = '\nFormat:--task <-l|-i> nameTest\n-l:list of task\n -i:infomation of task\n'
+flags.DEFINE_enum('task', None,['-l', '-i','-include','-exclude'],helpTask)
+flags.DEFINE_string('output',None,'Modife the folder of file output.html\n')
 
-#Pour calculer temps d'execution en python
-#@param target_name:path et nom pour target
-#@return temp d'execution
-def exe_python(target_name):
-    start = datetime.datetime.now()
-    print("Test "+target_name+" start")
-    os.system("python " + target_name)
-    timeUsed = (datetime.datetime.now() - start).microseconds * 1e-6
-    print("Test " + target_name +" finished using time:" + timeUsed.__str__())
-    return timeUsed
+def manage_flag(argv,bench):
+    if FLAGS.target is not None:
+        flagTargets(argv,bench)
+        return 0
 
-#execute test of bench
-def exe_bench(bench_name):
-    base = 'PGM/' + bench_name + '/'
-    res = ResultsBench(base)
-    for i in find_all_file(base):
-        t = exe_python(base + i)
-        res.add_target(i,t)
-    return res
+    if FLAGS.task is not None:
+        flagTasks(argv,bench)
+        return 0
 
-def to_txt(list_res):
-    with  open('PGM/result.txt','w') as f:
-        for i in list_res:
-            f.write(i.benchName+'\n')
-            for target in i.listTargets:
-                f.write(target)
-            f.write('\n')
-            for targetTime in i.listTemps:
-                f.write(targetTime.__str__()+'\n')
-            f.write('|'+'\n')
-        f.close()
+    if FLAGS.output is not None:
+        if len(argv) < 2:
+            print("Without the parameter location")
+            return -1
+        # modifyOutputLocation(argv[1])
+        return 0
+    return 1
+
+def exe(argv):
+    # if FLAGS.debug:
+    #     print('non-flag arguments:', argv)
+    if len(argv) < 2:
+        print("Missing parameter")
+        return -1
+    bench = BenchTrack(argv[len(argv) - 1])
+    if manage_flag(argv,bench):
+        bench.exe_bench()
+
+
+if __name__ == '__main__':
+    app.run(exe)
+
