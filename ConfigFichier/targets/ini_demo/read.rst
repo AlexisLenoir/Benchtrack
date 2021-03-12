@@ -1,1 +1,0 @@
-Charge un fichier de configuration .ini
