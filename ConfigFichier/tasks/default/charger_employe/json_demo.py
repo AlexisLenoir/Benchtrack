@@ -1,4 +1,4 @@
 import json
 
-with open('./employe.json', 'r') as fichier:
+with open('data/employe.json', 'r') as fichier:
     data = json.load(fichier)

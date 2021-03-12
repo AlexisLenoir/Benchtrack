@@ -1,3 +1,3 @@
 from lxml import etree
 
-xml_file = etree.parse("./employe.xml")
+xml_file = etree.parse("data/employe.xml")
