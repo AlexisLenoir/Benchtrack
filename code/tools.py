@@ -1,9 +1,21 @@
 import os
 import time
 import datetime
+from configparser import ConfigParser
+import csv
+
+
+def exeCmd(path,cmd):
+    os.system("cd " + path + "&&" + cmd)
+
+def ConfigFile(targetName):
+    config=ConfigParser()
+    config.read(targetName + "/config.ini")
+    language=config.get('execution', 'language')
+    run=config.get('execution', 'run')
+    return run
 
 #pour trouver tous les fichers de repertoire de BASE.
-
 def find_all_file(base):
     for root, ds, fs in os.walk(base):
         for f in fs:
@@ -25,15 +37,9 @@ def exe_python(target_name):
     print("Test " + target_name +" finished using time:" + timeUsed.__str__())
     return timeUsed
 
-# #execute test of bench
-# def exe_bench(test_name):
-#
-#     base = 'PGM/' + test_name + '/'
-#     res = BenchTrack(base)
-#     for i in find_all_file(base):
-#         t = exe_python(base + i)
-#         res.add_target(i,t)
-#     return res
+#return the commande for run the target
+def run_text(target_name):
+    pass
 
 def to_txt(list_res):
     with  open('PGM/result.txt','w') as f:
