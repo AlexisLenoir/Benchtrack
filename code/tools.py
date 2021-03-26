@@ -6,7 +6,21 @@ import csv
 
 
 def exeCmd(path,cmd):
-    os.system("cd " + path + "&&" + cmd)
+    CurrentPath=os.getcwd()
+    PathAbsolu=CurrentPath+"/"+path
+    
+    os.fchdir(os.open(PathAbsolu,os.O_RDONLY))
+    res=os.system(cmd)
+    if res!=0:
+        if os.path.exists('errorInfo.txt'):
+            with open('errorInfo.txt',mode='r',encoding='utf-8') as ff:
+                print(ff.read())
+        else:
+            with open("test.txt", mode='w', encoding='utf-8') as ff:
+                print(ff.read())
+
+    
+    os.fchdir(os.open(CurrentPath,os.O_RDONLY))
 
 def ConfigFile(targetName):
     config=ConfigParser()
