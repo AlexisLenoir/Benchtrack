@@ -9,6 +9,9 @@ class Task:
         self.__dictTargetTimes = {}
         self.__times_default = 20
 
+    def __str__(self):
+        return self.getName()
+
     def addTarget(self, name_Target, res_Target):
         self.__dictTargets [name_Target] = res_Target
 
@@ -51,6 +54,13 @@ class Theme:
         self.__themeName = name
         self.__listTasks = []
 
+    def __str__(self):
+        string = self.getName()
+        string += self.__listTasks[0].__str__()
+        for i in range(1,len(self.__listTasks)):
+            string += "," + self.__listTasks[i].__str__()
+        string += "]"
+
     def addTask(self,task):
         self.__listTasks.append(task)
     def getName(self):
@@ -87,6 +97,15 @@ class BenchTrack:
         self.__allTask = []
         self.__construct()
         self.__outputFile = "../"+self.__name+"/output.csv"
+    def __str__(self):
+        string = self.getName()
+        string += ":list Themes["
+        string += self.__listThemes[0].__str__()
+        for i in range(1,len(self.__listThemes)):
+            string += "," + self.__listThemes[i].__str__()
+        string += "]"
+        return string
+
     def __construct(self):
         """
         construct all theme,target,task

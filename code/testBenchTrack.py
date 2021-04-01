@@ -7,6 +7,7 @@ class TestMathFunc(unittest.TestCase):
     def test_construct(self):
         bench = BenchTrack("ConfigFichier")
         self.assertEqual("ConfigFichier",bench.getName())
+        self.assertEqual("to ddo",bench.__str__())
 
     def test_InfoTarget(self):
         bench = BenchTrack("ConfigFichier")
