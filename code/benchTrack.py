@@ -35,8 +35,8 @@ def manage_flag(argv,bench):
             flagTargets(argv[i:],bench,"include")
         if "--target-exclude" == argv[i]:
             flagTargets(argv,bench,"exclude")
-        if "--target-liste" == argv[i]:
-            flagTargets(argv[i:],bench,"liste")
+        if "--target-list" == argv[i]:
+            flagTargets(argv[i:],bench,"list")
             return 0
         if "--target-info" == argv[i]:
             flagTargets(argv[i:],bench,"info")
@@ -47,7 +47,7 @@ def manage_flag(argv,bench):
         if "--task-exclude" == argv[i]:
             flagTasks(argv[i:],bench,"exclude")
         if "--task-liste" == argv[i]:
-            flagTasks(argv[i:],bench,"liste")
+            flagTasks(argv[i:],bench,"list")
             return 0
         if "--task-info" == argv[i]:
             flagTasks(argv[i:],bench,"info")

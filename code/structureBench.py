@@ -2,20 +2,18 @@
 import os
 import re
 from tools import *
-
-nb_Execution = 20
 class Task:
     def __init__(self,name):
         self.__Name = name
         self.__dictTargets = {}
-    # def __str__(self):
-    #     str = "BenchMark:" + self.__Name + ",Targets:\n"
-    #     for i in self.__dictTargets.keys():
-    #         str += "Target " + i.__str__() + ":" + self.__dictTargets[i].__str__() + "\n"
-    #     return str + '\n'
+        self.__dictTargetTimes = {}
+        self.__times_default = 20
 
     def addTarget(self, name_Target, res_Target):
         self.__dictTargets [name_Target] = res_Target
+
+    def addTargetTimes(self, name_Target, times):
+        self.__dictTargetTimes [name_Target] = times
 
     def modifyTarget(self, name_Target, res_Target):
         self.__dictTargets [name_Target] = res_Target
@@ -25,16 +23,19 @@ class Task:
         for i in self.__dictTargets:
             # print(i,lis)
             if i in lis:
-                # print("../"+benchName +"/targets/"+i)
-                command = ConfigFile("../"+benchName +"/targets/"+i)
+                path_ConfigFile = "../"+benchName +"/targets/"+i
+                command,language = ConfigFile(path_ConfigFile)
                 path = "../"+benchName +"/tasks/"+themeName+"/"+self.__Name
                 start = time.time()
-                for n in range(nb_Execution):
-                    exeCmd(path,command)
-                self.__dictTargets[i] = (time.time() - start)/nb_Execution
-                print("--execute target " + i)
+                times = self.__times_default
+                if i in self.__dictTargetTimes:
+                    times = self.__dictTargetTimes[i]
+                for n in range(times):
+                    exeCmd(path,command,language)
+                self.__dictTargets[i] = (time.time() - start)/times
+                print("--execute target " + i +' '+times.__str__()+' times')
                 print("Execution time:"+self.__dictTargets[i].__str__())
-        print("")
+
     def getName(self):
         return self.__Name
     def ToCsv(self,writer,theme):
@@ -49,18 +50,14 @@ class Theme:
     def __init__(self,name):
         self.__themeName = name
         self.__listTasks = []
-    # def __str__(self):
-    #     str = "BenchName:"+self.__themeName+'BenchMark:\n'
-    #     for i in range(len(self.__listTasks)):
-    #         str += self.__listTasks[i].__str__()
-    #     return str
+
     def addTask(self,task):
         self.__listTasks.append(task)
     def getName(self):
         return self.__themeName
 
     def exe_theme(self,listTask,listTarget,benchName):
-        print("\nIn theme " + self.__themeName + ":")
+        print("\nIn theme " + self.getName() + ":")
         for i in range(len(self.__listTasks)):
             # print(listTask)
             if self.__listTasks[i].getName() in listTask:
@@ -70,11 +67,10 @@ class Theme:
         print("In the theme " + self.getName() + ",there are tasks:")
         for i in self.__listTasks:
             print(i.getName())
-        print('')
     def showInfoTask(self,nameTask,nameTest):
         for i in self.__listTasks:
             if i.getName() == nameTask:
-                file_read(nameTest,nameTask,'tasks')
+                file_read("../"+nameTest,nameTask,'tasks')
                 return 1
     def ToCsv(self,writer):
         for task in self.__listTasks:
@@ -89,11 +85,12 @@ class BenchTrack:
         self.__listThemes=[]
         self.__allTarget=[]
         self.__allTask = []
-        print(name_test)
         self.__construct()
         self.__outputFile = "../"+self.__name+"/output.csv"
-
     def __construct(self):
+        """
+        construct all theme,target,task
+        """
         path = '../'
         if not exitFile(self.__name,path):
             print("Error:Test name")
@@ -111,7 +108,17 @@ class BenchTrack:
                 if taskName not in self.__allTask:
                     self.__allTask.append(taskName)
                 pathTs = pathT+'/'+taskName +'/'
+                #for every target in the folder task
                 for i in os.listdir(pathTs):
+                    if re.match("times",i):
+                        with open(pathTs+i, newline='') as csvfile:
+                            spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
+                            next(spamreader)
+                            for row in spamreader:
+                                aux = re.split(',|\[|\]|\'',row.__str__())
+                                aux = [x for x in aux if x != '']
+                                task.addTargetTimes(aux[0],int(aux[1]))
+                        continue
                     ret = re.match("README|data", i)
                     if not ret:
                         ret = re.match("[A-Z,a-z,_,-]*", i)
@@ -121,10 +128,14 @@ class BenchTrack:
                         task.addTarget(ret.group(),-1)
                 theme.addTask(task)
             self.__listThemes.append(theme)
+
         #construt list of targets
         path = "../"+self.__name+"/targets"
         for targetName in os.listdir(path):
             self.__allTarget.append(targetName)
+
+    def getName(self):
+        return self.__name
 
     def ToCsv(self):
         with open(self.__outputFile, "w",newline="") as csvfile:
@@ -164,16 +175,6 @@ class BenchTrack:
             self.__allTask = [x for x in self.__allTask if x not in lis]
             print(self.__allTask)
 
-    # def exe_bench_Task(self):
-    #     print("Execution de "+self.__name)
-    #     for i in range(len(self.__listThemes)):
-    #         self.__listThemes[i].exe_theme()
-    #
-    # def exe_bench_Target(self,listTarget,mode):
-    #     print("Execution de "+self.__name)
-    #     for i in range(len(self.__listThemes)):
-    #         self.__listThemes[i].exe_theme()
-
     def show_list_target(self):
         print("List of targets:")
         for i in range(len(self.__allTarget)):
@@ -181,7 +182,7 @@ class BenchTrack:
 
     def showInfoTarget(self,nomTarget):
         print("Information of " + nomTarget + " in the test " + self.__name +":")
-        file_read(self.__name,nomTarget,"targets")
+        file_read("../"+self.__name,nomTarget,"targets")
 
     def showListTasks(self):
         print("List of tasks:")

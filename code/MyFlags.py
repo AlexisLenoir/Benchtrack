@@ -8,7 +8,7 @@ def flagTasks(argv,bench,flag):
             print('Without'+ (3 - len(argv)).__init__()+'parameter')
             return - 1
         bench.showInfoTask(argv[1])
-    if flag == 'liste':
+    if flag == 'list':
         if len(argv) < 2:
             print('Without a parameter')
             return -1
@@ -28,7 +28,7 @@ def flagTargets(argv,bench,flag):
             print('Without'+ (3 - len(argv)).__init__()+'parameter')
             return -1
         bench.showInfoTarget(argv[1])
-    if flag == 'liste':
+    if flag == 'list':
         if len(argv) < 2:
             print('Without a parameter')
             return -1
