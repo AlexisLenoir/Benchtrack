@@ -10,7 +10,10 @@ class Task:
         self.__suffixe= {}
 
     def __str__(self):
-        return self.getName()
+        string = self.getName() + "["
+        for i in self.__dictTargets:
+            string += i + " "
+        return string+"]"
 
     def addTarget(self, name_Target, res_Target):
         self.__dictTargets [name_Target] = res_Target
@@ -74,6 +77,7 @@ class Theme:
         for i in range(1,len(self.__listTasks)):
             string += "," + self.__listTasks[i].__str__()
         string += "]"
+        return string
 
     def addTask(self,task):
         self.__listTasks.append(task)
