@@ -31,16 +31,20 @@ class Task:
 
 
     def exe_before_test(self,benchName,themeName,targets):
-        path_File = "../" + benchName + "/targets/" + themeName + "/" + self.getName() + "/" + "before_" + targets
+        path_File = "../" + benchName + "/tasks/" + themeName + "/" + self.getName() + "/" + "before_" + targets+".py"
         print(path_File)
         times_before = 0
         if os.path.exists(path_File):
             start = time.time()
-            self.exe_target(benchName, themeName, "before_" + targets, beforeTest=True)
+            path_ConfigFile = "../" + benchName + "/targets/" + targets
+            command, language = ConfigFile(path_ConfigFile)
+            path = "../" + benchName + "/tasks/" + themeName + "/" + self.getName()
+            exeCmd(path, command, language)
             times_before = time.time() - start
         return times_before
 
     def exe_target(self,benchName,themeName,targets,beforeTest = False):
+        #exeCmd(path, "python "+"before_"+"target"+".py", "python")
         path_ConfigFile = "../" + benchName + "/targets/" + targets
         command, language = ConfigFile(path_ConfigFile)
         path = "../" + benchName + "/tasks/" + themeName + "/" + self.getName()
