@@ -6,8 +6,8 @@ class Task:
     def __init__(self,name):
         self.__Name = name
         self.__dictTargets = {}
-        self.__dictTargetTimes = {}
-        self.__times_default = 20
+        self.__sample_size = 20
+        self.__suffixe= {}
 
     def __str__(self):
         return self.getName()
@@ -15,29 +15,39 @@ class Task:
     def addTarget(self, name_Target, res_Target):
         self.__dictTargets [name_Target] = res_Target
 
-    def addTargetTimes(self, name_Target, times):
-        self.__dictTargetTimes [name_Target] = times
-
     def modifyTarget(self, name_Target, res_Target):
         self.__dictTargets [name_Target] = res_Target
 
     def exe_task(self,lis,benchName,themeName):
         print("-In Task "+self.__Name+":")
         for i in self.__dictTargets:
-            # print(i,lis)
             if i in lis:
-                path_ConfigFile = "../"+benchName +"/targets/"+i
-                command,language = ConfigFile(path_ConfigFile)
-                path = "../"+benchName +"/tasks/"+themeName+"/"+self.__Name
+                times_before =  self.exe_before_test(benchName,themeName,i)
                 start = time.time()
-                times = self.__times_default
-                if i in self.__dictTargetTimes:
-                    times = self.__dictTargetTimes[i]
-                for n in range(times):
-                    exeCmd(path,command,language)
-                self.__dictTargets[i] = (time.time() - start)/times
-                print("--execute target " + i +' '+times.__str__()+' times')
+                self.exe_target(benchName,themeName,i)
+                self.__dictTargets[i] = (time.time() - start)/self.__sample_size - times_before
+                print("--execute target " + i +' '+self.__sample_size.__str__()+' times')
                 print("Execution time:"+self.__dictTargets[i].__str__())
+
+
+    def exe_before_test(self,benchName,themeName,targets):
+        path_File = "../" + benchName + "/targets/" + themeName + "/" + self.getName() + "/" + "before_" + targets
+        print(path_File)
+        times_before = 0
+        if os.path.exists(path_File):
+            start = time.time()
+            self.exe_target(benchName, themeName, "before_" + targets, beforeTest=True)
+            times_before = time.time() - start
+        return times_before
+
+    def exe_target(self,benchName,themeName,targets,beforeTest = False):
+        path_ConfigFile = "../" + benchName + "/targets/" + targets
+        command, language = ConfigFile(path_ConfigFile)
+        path = "../" + benchName + "/tasks/" + themeName + "/" + self.getName()
+        for n in range(self.__sample_size):
+            exeCmd(path, command, language)
+            if beforeTest:
+                return
 
     def getName(self):
         return self.__Name
