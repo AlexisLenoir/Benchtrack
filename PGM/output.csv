@@ -1,0 +1,7 @@
+theme,task,target,arg,run_time
+inference,BIFreading,pyAgrum,asia.bif,0.15
+inference,BIFreading,pyAgrum,alarm.bif,1.01
+inference,BIFreading,pyAgrum,Diabetes.bif,3.14
+inference,BIFreading,pyAgrum,Mildew.bif,5.03
+
+
