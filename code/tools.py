@@ -89,9 +89,9 @@ def ConfigFileTarget(targetName):
     run = config.get('execution', 'run')
     return run,language
 
-def ConfigFileTask(taskName):
+def ConfigFileTask(file):
     config = ConfigParser()
-    config.read(taskName + "/config.ini")
+    config.read(file)
     sample_size = config.get('running', 'sample_size')
     arg = config.get('running', 'arg')
     return sample_size,arg
