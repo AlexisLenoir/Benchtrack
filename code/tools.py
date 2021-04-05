@@ -3,6 +3,7 @@ import datetime
 from configparser import ConfigParser
 import csv
 import os
+import re
 from rpy2 import robjects
 
 def exeCmdPython(path, cmd):
@@ -92,7 +93,7 @@ def ConfigFileTask(file):
     config = ConfigParser()
     config.read(file)
     sample_size = config.get('running', 'sample_size')
-    arg = config.get('running', 'arg')
+    arg = config.get('running', 'args')
     return sample_size,arg
 
 # pour trouver tous les fichers de repertoire de BASE.
@@ -102,9 +103,9 @@ def find_all_file(base):
             yield f
 
 
-def exitFile(fileName, Path):
+def existFile(fileName, Path):
     for files in os.listdir(Path):
-        if files == fileName:
+        if re.match(fileName,files):
             return True
     return False
 

@@ -57,11 +57,11 @@ def exe(argv):
     if len(argv) < 2:
         print("Missing parameter")
         return -1
-    bench = BenchTrack(argv[len(argv) - 1])
+    bench = BenchTrack(argv[0],argv[len(argv) - 1])
     if manage_flag(argv,bench):
         bench.exe_bench()
         bench.ToCsv()
-
+    print(bench.__str__())
 
 if __name__ == '__main__':
     exe(sys.argv)

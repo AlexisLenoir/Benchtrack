@@ -42,7 +42,7 @@ class Task:
         path_File = path + benchName + "/tasks/" + themeName + "/" + self.getName() + "/" + "before_" + targets
         path_ConfigFile = path + benchName + "/targets/" + targets
         self.exe_file(path_ConfigFile, path_File)
-
+        
     def exe_target(self,benchName,themeName,targets,path):
         path_ConfigFile = path + benchName + "/targets/" + targets
         path_File =path + benchName + "/tasks/" + themeName + "/" + self.getName() + targets
@@ -50,7 +50,7 @@ class Task:
 
     def exe_file(self,path_configFile,args,path_file):
         if os.path.exists(path_configFile):
-            command, language = ConfigFile(path_configFile)
+            command, language = ConfigFileTask(path_configFile)
             for n in range(self.__sample_size):
                 if os.path.exists(path_file):
                     exeCmd(path_file,args, command, language)
@@ -78,7 +78,7 @@ class Theme:
         for i in range(1,len(self.__listTasks)):
             string += "," + self.__listTasks[i].__str__()
         string += "]"
-
+        return string
     def addTask(self,task):
         self.__listTasks.append(task)
     def getName(self):
@@ -106,7 +106,7 @@ class Theme:
 #class BenchTrack,
 class BenchTrack:
     def __init__(self,path,name):
-        self.__path = path.replace('benchtrack.py',' ')
+        self.__path = path.replace('benchTrack.py','')+'../'
         self.__name = name
         #dictionaire of targets,<key = nameTarget> = objetTarget
         self.__dictTargets={}
@@ -130,7 +130,8 @@ class BenchTrack:
         construct all theme,target,task
         """
         path = self.__path
-        if not exitFile(self.__name,path):
+        
+        if not os.path.exists(path+self.getName()):
             print("Error:Test name")
             return -2
         path += self.__name
@@ -141,7 +142,7 @@ class BenchTrack:
         path = self.__path+self.__name+"/targets"
         for targetName in os.listdir(path):
             self.__allTarget.append(targetName)
-
+        path = self.__path+self.getName()+'/tasks'
         for themeName in os.listdir(path):
             theme = Theme(themeName)
             #for every task in the folder theme
@@ -160,9 +161,10 @@ class BenchTrack:
                 task = Task(taskName,args.split(' '),sample_size)
                 # set all target
                 for targetName in self.__allTarget:
-                    path_target = pathTs + targetName
-                    if os.path.exists(path_target):
+                    # path_target = pathTs + targetName+".py"
+                    if existFile(targetName,pathTs):
                         task.addTarget(targetName)
+                        
                 theme.addTask(task)
                 #for every target in the folder task
                 # for i in os.listdir(pathTs):

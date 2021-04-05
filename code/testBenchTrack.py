@@ -7,7 +7,8 @@ class TestMathFunc(unittest.TestCase):
     def test_construct(self):
         bench = BenchTrack("ConfigFichier")
         self.assertEqual("ConfigFichier",bench.getName())
-        self.assertEqual("to ddo",bench.__str__())
+        string = "ConfigFichier:list Themes[defaultcharger_employe[json_demo  errorInfo xml_demo before_ini_demo r_demo before_xml_demo ini_demo ],charger_employe_coordonnees[json_demo errorInfo xml_demo before_ini_demo ini_demo ]]]"
+        self.assertEqual(string,bench.__str__())
 
     def test_InfoTarget(self):
         bench = BenchTrack("ConfigFichier")
