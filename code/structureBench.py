@@ -13,7 +13,7 @@ class Task:
         string = self.getName() + "["
         for i in self.__dictTargets:
             string += i + " "
-        return string+"]"
+        return string
 
     def addTarget(self, name_Target, res_Target):
         self.__dictTargets [name_Target] = res_Target
@@ -21,40 +21,41 @@ class Task:
     def modifyTarget(self, name_Target, res_Target):
         self.__dictTargets [name_Target] = res_Target
 
-    def exe_task(self,lis,benchName,themeName):
+    def exe_task(self,lis,benchName,themeName,path):
         print("-In Task "+self.__Name+":")
         for i in self.__dictTargets:
             if i in lis:
-                times_before =  self.exe_before_test(benchName,themeName,i)
+                #time to execute before_test
+                times_before = time.time()
+                self.exe_before_test(benchName,themeName,i,path)
+                times_before = time.time() - times_before
+
+                #time to execute test
                 start = time.time()
-                self.exe_target(benchName,themeName,i)
-                self.__dictTargets[i] = (time.time() - start)/self.__sample_size - times_before
+                self.exe_target(benchName,themeName,i,path)
+                self.__dictTargets[i] = (time.time() - start - times_before)/self.__sample_size
                 print("--execute target " + i +' '+self.__sample_size.__str__()+' times')
                 print("Execution time:"+self.__dictTargets[i].__str__())
 
 
-    def exe_before_test(self,benchName,themeName,targets):
-        path_File = "../" + benchName + "/tasks/" + themeName + "/" + self.getName() + "/" + "before_" + targets+".py"
-        print(path_File)
-        times_before = 0
-        if os.path.exists(path_File):
-            start = time.time()
-            path_ConfigFile = "../" + benchName + "/targets/" + targets
-            command, language = ConfigFile(path_ConfigFile)
-            path = "../" + benchName + "/tasks/" + themeName + "/" + self.getName()
-            exeCmd(path, command, language)
-            times_before = time.time() - start
-        return times_before
+    def exe_before_test(self,benchName,themeName,targets,path):
+        path_File = path + benchName + "/tasks/" + themeName + "/" + self.getName() + "/" + "before_" + targets
+        path_ConfigFile = path + benchName + "/targets/" + targets
+        self.exe_file(path_ConfigFile, path_File)
 
-    def exe_target(self,benchName,themeName,targets,beforeTest = False):
-        #exeCmd(path, "python "+"before_"+"target"+".py", "python")
-        path_ConfigFile = "../" + benchName + "/targets/" + targets
-        command, language = ConfigFile(path_ConfigFile)
-        path = "../" + benchName + "/tasks/" + themeName + "/" + self.getName()
-        for n in range(self.__sample_size):
-            exeCmd(path, command, language)
-            if beforeTest:
-                return
+    def exe_target(self,benchName,themeName,targets,path):
+        path_ConfigFile = path + benchName + "/targets/" + targets
+        path_File =path + benchName + "/tasks/" + themeName + "/" + self.getName() + targets
+        self.exe_file(path_ConfigFile,path_File)
+
+    def exe_file(self,path_configFile,path_file):
+        if os.path.exists(path_configFile):
+            command, language = ConfigFile(path_configFile)
+            for n in range(self.__sample_size):
+                if os.path.exists(path_file):
+                    exeCmd(path_file, command, language)
+        else:
+            print("Can't find the file config:"+path_file)
 
     def getName(self):
         return self.__Name
@@ -77,36 +78,36 @@ class Theme:
         for i in range(1,len(self.__listTasks)):
             string += "," + self.__listTasks[i].__str__()
         string += "]"
-        return string
 
     def addTask(self,task):
         self.__listTasks.append(task)
     def getName(self):
         return self.__themeName
 
-    def exe_theme(self,listTask,listTarget,benchName):
+    def exe_theme(self,listTask,listTarget,benchName,path):
         print("\nIn theme " + self.getName() + ":")
         for i in range(len(self.__listTasks)):
             # print(listTask)
             if self.__listTasks[i].getName() in listTask:
-                self.__listTasks[i].exe_task(listTarget,benchName,self.__themeName)
+                self.__listTasks[i].exe_task(listTarget,benchName,self.__themeName,path)
 
     def showlistTasks(self):
         print("In the theme " + self.getName() + ",there are tasks:")
         for i in self.__listTasks:
             print(i.getName())
-    def showInfoTask(self,nameTask,nameTest):
+    def showInfoTask(self,nameTask,nameTest,path):
         for i in self.__listTasks:
             if i.getName() == nameTask:
-                file_read("../"+nameTest,nameTask,'tasks')
+                file_read(path+nameTest,nameTask,'tasks')
                 return 1
     def ToCsv(self,writer):
         for task in self.__listTasks:
             task.ToCsv(writer,self.__themeName)
 #class BenchTrack,
 class BenchTrack:
-    def __init__(self,name_test):
-        self.__name = name_test
+    def __init__(self,path,name):
+        self.__path = path.replace('benchtrack.py',' ')
+        self.__name = name
         #dictionaire of targets,<key = nameTarget> = objetTarget
         self.__dictTargets={}
         #list of
@@ -114,7 +115,7 @@ class BenchTrack:
         self.__allTarget=[]
         self.__allTask = []
         self.__construct()
-        self.__outputFile = "../"+self.__name+"/output.csv"
+        self.__outputFile = self.__path+self.__name+"/output.csv"
     def __str__(self):
         string = self.getName()
         string += ":list Themes["
@@ -128,7 +129,7 @@ class BenchTrack:
         """
         construct all theme,target,task
         """
-        path = '../'
+        path = self.__path
         if not exitFile(self.__name,path):
             print("Error:Test name")
             return -2
@@ -167,7 +168,7 @@ class BenchTrack:
             self.__listThemes.append(theme)
 
         #construt list of targets
-        path = "../"+self.__name+"/targets"
+        path = self.__path+self.__name+"/targets"
         for targetName in os.listdir(path):
             self.__allTarget.append(targetName)
 
@@ -193,7 +194,7 @@ class BenchTrack:
     def exe_bench(self):
         print("Execution de "+self.__name)
         for i in range(len(self.__listThemes)):
-            self.__listThemes[i].exe_theme(self.__allTask,self.__allTarget,self.__name)
+            self.__listThemes[i].exe_theme(self.__allTask,self.__allTarget,self.__name,self.__path)
 
     def filter_target(self,lis,model):
         if model:
@@ -219,7 +220,7 @@ class BenchTrack:
 
     def showInfoTarget(self,nomTarget):
         print("Information of " + nomTarget + " in the test " + self.__name +":")
-        file_read("../"+self.__name,nomTarget,"targets")
+        file_read(self.__path+self.__name,nomTarget,"targets")
 
     def showListTasks(self):
         print("List of tasks:")
@@ -228,7 +229,7 @@ class BenchTrack:
 
     def showInfoTask(self,nameTask):
         for i in self.__listThemes:
-            if i.showInfoTask(nameTask,self.__name):
+            if i.showInfoTask(nameTask,self.__name,self.__path):
                 return 1
         print("Task "+nameTask+" doesn't exite")
         return -1
