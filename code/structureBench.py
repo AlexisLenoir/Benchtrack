@@ -3,11 +3,11 @@ import os
 import re
 from tools import *
 class Task:
-    def __init__(self,name):
+    def __init__(self,name,args,sample_size=20):
         self.__Name = name
         self.__dictTargets = {}
-        self.__sample_size = 20
-        self.__suffixe= {}
+        self.__sample_size = sample_size
+        self.args = args
 
     def __str__(self):
         string = self.getName() + "["
@@ -15,7 +15,7 @@ class Task:
             string += i + " "
         return string
 
-    def addTarget(self, name_Target, res_Target):
+    def addTarget(self, name_Target, res_Target = -1):
         self.__dictTargets [name_Target] = res_Target
 
     def modifyTarget(self, name_Target, res_Target):
@@ -48,12 +48,12 @@ class Task:
         path_File =path + benchName + "/tasks/" + themeName + "/" + self.getName() + targets
         self.exe_file(path_ConfigFile,path_File)
 
-    def exe_file(self,path_configFile,path_file):
+    def exe_file(self,path_configFile,args,path_file):
         if os.path.exists(path_configFile):
             command, language = ConfigFile(path_configFile)
             for n in range(self.__sample_size):
                 if os.path.exists(path_file):
-                    exeCmd(path_file, command, language)
+                    exeCmd(path_file,args, command, language)
         else:
             print("Can't find the file config:"+path_file)
 
@@ -137,40 +137,53 @@ class BenchTrack:
         #for every theme in the folder test
         path += '/tasks'
 
+        #construt list of targets
+        path = self.__path+self.__name+"/targets"
+        for targetName in os.listdir(path):
+            self.__allTarget.append(targetName)
+
         for themeName in os.listdir(path):
             theme = Theme(themeName)
             #for every task in the folder theme
             pathT = path + '/' + themeName
             for taskName in os.listdir(pathT):
-                task = Task(taskName)
+                #set in the list alltask
                 if taskName not in self.__allTask:
                     self.__allTask.append(taskName)
                 pathTs = pathT+'/'+taskName +'/'
-                #for every target in the folder task
-                for i in os.listdir(pathTs):
-                    if re.match("times",i):
-                        with open(pathTs+i, newline='') as csvfile:
-                            spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
-                            next(spamreader)
-                            for row in spamreader:
-                                aux = re.split(',|\[|\]|\'',row.__str__())
-                                aux = [x for x in aux if x != '']
-                                task.addTargetTimes(aux[0],int(aux[1]))
-                        continue
-                    ret = re.match("README|data", i)
-                    if not ret:
-                        ret = re.match("[A-Z,a-z,_,-]*", i)
-                        # print(ret.group())
-                        pathF = pathTs + '/' + i
-                        task.addTarget(ret.group(),-1)
-                        task.addTarget(ret.group(),-1)
+                path_config = pathTs + 'config.ini'
+                #resd config.ini and construct task
+                sample_size = 20
+                args = ''
+                if os.path.exists(path_config):
+                    sample_size,args = ConfigFileTask(path_config)
+                task = Task(taskName,args.split(' '),sample_size)
+                # set all target
+                for targetName in self.__allTarget:
+                    path_target = pathTs + targetName
+                    if os.path.exists(path_target):
+                        task.addTarget(targetName)
                 theme.addTask(task)
-            self.__listThemes.append(theme)
+                #for every target in the folder task
+                # for i in os.listdir(pathTs):
+                #     if re.match("times",i):
+                #         with open(pathTs+i, newline='') as csvfile:
+                #             spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
+                #             next(spamreader)
+                #             for row in spamreader:
+                #                 aux = re.split(',|\[|\]|\'',row.__str__())
+                #                 aux = [x for x in aux if x != '']
+                #                 task.addTargetTimes(aux[0],int(aux[1]))
+                #         continue
+                #     ret = re.match("README|data", i)
+                #     if not ret:
+                #         ret = re.match("[A-Z,a-z,_,-]*", i)
+                #         # print(ret.group())
+                #         pathF = pathTs + '/' + i
+                #         task.addTarget(ret.group(),-1)
+                #         task.addTarget(ret.group(),-1)
 
-        #construt list of targets
-        path = self.__path+self.__name+"/targets"
-        for targetName in os.listdir(path):
-            self.__allTarget.append(targetName)
+            self.__listThemes.append(theme)
 
     def getName(self):
         return self.__name
