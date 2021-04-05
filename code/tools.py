@@ -6,6 +6,20 @@ import os
 from rpy2 import robjects
 
 def exeCmdPython(path, cmd):
+    '''
+    
+    Parameters
+    ----------
+    path : string
+        the path where we run our task.
+    cmd : string
+        command to run.
+
+    Returns
+    -------
+    None.
+
+    '''
     CurrentPath = os.getcwd()
     PathAbsolu = CurrentPath + "/" + path
     os.fchdir(os.open(PathAbsolu, os.O_RDONLY))
@@ -14,32 +28,73 @@ def exeCmdPython(path, cmd):
     if res != 0:
         if os.path.exists('errorInfo.txt'):
             with open('errorInfo.txt', mode='w', encoding='utf-8') as ff:
-                print(ff.read())
+                #print(ff.read())
+                ff.write(res)
         else:
             with open("errorInfo.txt", mode='w+', encoding='utf-8') as ff:
-                print(ff.read())
+                #print(ff.read())
+                ff.write(res)
 
     os.fchdir(os.open(CurrentPath, os.O_RDONLY))
 
 
 def exeCmdR(path,cmd):
-        robjects.r.source(path+"/"+cmd)
+    '''
 
+    Parameters
+    ----------
+    path : string
+        the path where we run our task.
+    cmd : string
+        command to run.
 
-def exeCmd(path, cmd,language):
+    Returns
+    -------
+    None.
+
+    '''
+    CurrentPath = os.getcwd()
+    PathAbsolu = CurrentPath + "/" + path
+    os.fchdir(os.open(PathAbsolu, os.O_RDONLY))
+    #res = os.system("cd"+path+"&&"+cmd)
+    res=robjects.r.source(path+"/"+cmd)
+    if res != 0:
+        if os.path.exists('errorInfo.txt'):
+            with open('errorInfo.txt', mode='w', encoding='utf-8') as ff:
+                #print(ff.read())
+                ff.write(res)
+        else:
+            with open("errorInfo.txt", mode='w+', encoding='utf-8') as ff:
+                #print(ff.read())
+                ff.write(res)
+
+    os.fchdir(os.open(CurrentPath, os.O_RDONLY))
+
+def exeCmd(path,parameter,cmd,language):
+    cmd.replace('{script}',language)
+    cmd.replace('{arg}',parameter)
+    path_envir=path.copy()
     if language == "python":
-        exeCmdPython(path, cmd)
+        path+=".py"
+        exeCmdPython(path_envir, cmd)
     if language == "r":
-        exeCmdR(path,cmd)
+        path+=".r"
+        exeCmdR(path_envir,cmd)
 
 
-def ConfigFile(targetName):
+def ConfigFileTarget(targetName):
     config = ConfigParser()
     config.read(targetName + "/config.ini")
     language = config.get('execution', 'language')
     run = config.get('execution', 'run')
     return run,language
 
+def ConfigFileTask(taskName):
+    config = ConfigParser()
+    config.read(taskName + "/config.ini")
+    sample_size = config.get('running', 'sample_size')
+    arg = config.get('running', 'arg')
+    return sample_size,arg
 
 # pour trouver tous les fichers de repertoire de BASE.
 def find_all_file(base):
