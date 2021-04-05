@@ -40,7 +40,7 @@ def exeCmdPython(path, cmd):
 
 def exeCmdR(path,cmd):
     '''
-
+    dddd
     Parameters
     ----------
     path : string
