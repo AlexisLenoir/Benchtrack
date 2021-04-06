@@ -1,5 +1,6 @@
 from tools import *
 from theme import Theme
+from task import Task
 #class BenchTrack
 class BenchTrack:
     def __init__(self,path_inf):
@@ -13,7 +14,6 @@ class BenchTrack:
         self.__allTask = []
         if not self.__construct():
             print("Error:Construct")
-        print(self.__str__())
         self.__outputFile = self.__path+"/output.csv"
     def __str__(self):
         string = self.getName()
@@ -76,7 +76,7 @@ class BenchTrack:
         with open(self.__outputFile, "w",newline="") as csvfile:
             writer = csv.writer(csvfile)
             # name of columns
-            writer.writerow(["theme", "task", "target", "run_time"])
+            writer.writerow(["theme", "task", "target","args","sample_size"])
             # values of columns
             for theme in self.__listThemes:
                 theme.ToCsv(writer)
@@ -91,7 +91,7 @@ class BenchTrack:
     def exe_bench(self):
         print("Execution de "+self.__name)
         for i in range(len(self.__listThemes)):
-            self.__listThemes[i].exe_theme(self.__allTask,self.__allTarget,self.__name,self.__path)
+            self.__listThemes[i].exe_theme(self.__allTask,self.__allTarget,self.__path)
 
     def filter_target(self,lis,model):
         if model:

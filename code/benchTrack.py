@@ -61,7 +61,6 @@ def exe(argv):
     if manage_flag(argv,bench):
         bench.exe_bench()
         bench.ToCsv()
-    print(bench.__str__())
 
 if __name__ == '__main__':
     exe(sys.argv)

@@ -1,5 +1,4 @@
 from tools import *
-from task import Task
 #theme
 
 class Theme:
@@ -19,12 +18,12 @@ class Theme:
     def getName(self):
         return self.__themeName
 
-    def exe_theme(self,listTask,listTarget,benchName,path):
+    def exe_theme(self,listTask,listTarget,path):
         print("\nIn theme " + self.getName() + ":")
         for i in range(len(self.__listTasks)):
             # print(listTask)
             if self.__listTasks[i].getName() in listTask:
-                self.__listTasks[i].exe_task(listTarget,benchName,self.__themeName,path)
+                self.__listTasks[i].exe_task(listTarget,self.__themeName,path)
 
     def showlistTasks(self):
         print("In the theme " + self.getName() + ",there are tasks:")

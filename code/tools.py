@@ -75,7 +75,7 @@ def exeCmd(path,parameter,cmd,language):
     path_envir=path.copy()
     if language == "python":
         path+=".py"
-        exeCmdPython(path_envir, cmd)
+        exeCmdPython(path_envir,"python "+cmd)
     if language == "r":
         path+=".r"
         exeCmdR(path_envir,cmd)
@@ -83,7 +83,7 @@ def exeCmd(path,parameter,cmd,language):
 
 def ConfigFileTarget(targetName):
     config = ConfigParser()
-    config.read(targetName + "/config.ini")
+    config.read(targetName)
     language = config.get('execution', 'language')
     run = config.get('execution', 'run')
     return run,language
@@ -91,6 +91,7 @@ def ConfigFileTarget(targetName):
 def ConfigFileTask(file):
     config = ConfigParser()
     config.read(file)
+    print(file)
     sample_size = config.get('running', 'sample_size')
     arg = config.get('running', 'args')
     return sample_size,arg
