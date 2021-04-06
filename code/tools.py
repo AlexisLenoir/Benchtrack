@@ -4,7 +4,6 @@ from configparser import ConfigParser
 import csv
 import os
 import re
-from rpy2 import robjects
 
 def exeCmdPython(path, cmd):
     '''

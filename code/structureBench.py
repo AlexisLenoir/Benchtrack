@@ -13,7 +13,7 @@ class Task:
         string = self.getName() + "["
         for i in self.__dictTargets:
             string += i + " "
-        return string
+        return string + "]"
 
     def addTarget(self, name_Target, res_Target = -1):
         self.__dictTargets [name_Target] = res_Target
@@ -74,7 +74,7 @@ class Theme:
 
     def __str__(self):
         string = self.getName()
-        string += self.__listTasks[0].__str__()
+        string += "["+self.__listTasks[0].__str__()
         for i in range(1,len(self.__listTasks)):
             string += "," + self.__listTasks[i].__str__()
         string += "]"
@@ -105,21 +105,24 @@ class Theme:
             task.ToCsv(writer,self.__themeName)
 #class BenchTrack,
 class BenchTrack:
-    def __init__(self,path,name):
-        self.__path = path.replace('benchTrack.py','')+'../'
-        self.__name = name
+    def __init__(self,path_inf):
+        self.__path = path_inf
+        self.__name = path_inf.split('/')[-1]
         #dictionaire of targets,<key = nameTarget> = objetTarget
         self.__dictTargets={}
         #list of
         self.__listThemes=[]
         self.__allTarget=[]
         self.__allTask = []
-        self.__construct()
-        self.__outputFile = self.__path+self.__name+"/output.csv"
+        if not self.__construct():
+            print("Error:Construct")
+        print(self.__str__())
+        self.__outputFile = self.__path+"/output.csv"
     def __str__(self):
         string = self.getName()
         string += ":list Themes["
-        string += self.__listThemes[0].__str__()
+        if len(self.__listThemes) != 0:
+            string += self.__listThemes[0].__str__()
         for i in range(1,len(self.__listThemes)):
             string += "," + self.__listThemes[i].__str__()
         string += "]"
@@ -131,18 +134,18 @@ class BenchTrack:
         """
         path = self.__path
         
-        if not os.path.exists(path+self.getName()):
+        if not os.path.exists(path):
             print("Error:Test name")
-            return -2
+            return 0
         path += self.__name
         #for every theme in the folder test
         path += '/tasks'
 
         #construt list of targets
-        path = self.__path+self.__name+"/targets"
+        path = self.__path+"/targets"
         for targetName in os.listdir(path):
             self.__allTarget.append(targetName)
-        path = self.__path+self.getName()+'/tasks'
+        path = self.__path+'/tasks'
         for themeName in os.listdir(path):
             theme = Theme(themeName)
             #for every task in the folder theme
@@ -186,7 +189,7 @@ class BenchTrack:
                 #         task.addTarget(ret.group(),-1)
 
             self.__listThemes.append(theme)
-
+            return True
     def getName(self):
         return self.__name
 

@@ -1,4 +1,6 @@
 theme,task,target,run_time
+default,charger_employe,before_ini_demo,-1
+default,charger_employe,config,-1
 default,charger_employe,json_demo,0.07509185075759887
 default,charger_employe,,-1
 default,charger_employe,errorInfo,-1
