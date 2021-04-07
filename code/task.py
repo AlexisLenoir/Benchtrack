@@ -66,3 +66,13 @@ class Task:
             for i in range(len(self.__args)):
                 run_time = self.__dictTargets[target][i]
                 writer.writerow([theme, self.__Name, target,self.__args[i], run_time])
+
+    def get_structure_tasks(self,path):
+        list_target=[]
+        for target in list(self.__dictTargets.keys()):
+            path_configFile = path + "/targets/" + target + "/config.ini"
+            if os.path.exists(path_configFile):
+                command, language = ConfigFileTarget(path_configFile)
+                target += get_suffixe(language)
+                list_target.append(target)
+        return list_target

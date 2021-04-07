@@ -37,3 +37,10 @@ class Theme:
     def ToCsv(self,writer):
         for task in self.__listTasks:
             task.ToCsv(writer,self.__themeName)
+
+    def get_structure_tasks(self,path):
+        list_structure_task = {}
+        for task in self.__listTasks:
+            list_structure_task[task.getName()] =task.get_structure_tasks(path)
+        return  list_structure_task
+

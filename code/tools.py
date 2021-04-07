@@ -74,12 +74,17 @@ def exeCmd(path,parameter,cmd,language):
     cmd.replace('{arg}',parameter)
     path_envir=path.copy()
     if language == "python":
-        path+=".py"
+        path+= get_suffixe(language)
         exeCmdPython(path_envir,"python "+cmd)
     if language == "r":
-        path+=".r"
+        path+= get_suffixe(language)
         exeCmdR(path_envir,cmd)
 
+def get_suffixe(language):
+    if language == "python":
+        return ".py"
+    if language == "r":
+        return ".r"
 
 def ConfigFileTarget(targetName):
     config = ConfigParser()

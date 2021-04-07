@@ -76,7 +76,7 @@ class BenchTrack:
         with open(self.__outputFile, "w",newline="") as csvfile:
             writer = csv.writer(csvfile)
             # name of columns
-            writer.writerow(["theme", "task", "target","args","sample_size"])
+            writer.writerow(["theme", "task", "target","args","run_time"])
             # values of columns
             for theme in self.__listThemes:
                 theme.ToCsv(writer)
@@ -130,3 +130,9 @@ class BenchTrack:
                 return 1
         print("Task "+nameTask+" doesn't exite")
         return -1
+
+    def get_structure_tasks(self):
+        list_structure_theme = {}
+        for theme in self.__listThemes:
+            list_structure_theme[theme.getName()] = theme.get_structure_tasks(self.__path)
+        return list_structure_theme
