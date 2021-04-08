@@ -96,7 +96,6 @@ def ConfigFileTarget(targetName):
 def ConfigFileTask(file):
     config = ConfigParser()
     config.read(file)
-    print(file)
     sample_size = config.get('running', 'sample_size')
     arg = config.get('running', 'args')
     return sample_size,arg
