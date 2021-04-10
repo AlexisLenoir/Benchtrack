@@ -1,0 +1,7 @@
+Theme,task,target,arg, run_time
+default,charger_employe,ini_demo,employe.ini,3.5924
+default,charger_employe,json_demo,employe.json,2.7243
+default,charger_employe,xml_demo,employe.xml,3.8790
+default,charger_employe_coordonnees,ini_demo,employe_coordonnees.ini,3.6304
+default,charger_employe_coordonnees,json_demo,employe_coordonnees.json,2.8043
+default,charger_employe_coordonnees,xml_demo,employe_coordonnese.xml,3.8590
