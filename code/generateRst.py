@@ -11,18 +11,27 @@ def create_title_rst(readme,name_title):
     readme est une chaîne de carac d'un fichier readme
     """
     title = ""
+    title_exists = True
     for i in range(len(readme)):
         if readme[i] == '\n':
             if readme[i+1] == '#' or readme[i+1] == '=':
-                return title
+                return title_exists, title
             else:
                 break
+    title_exists = False
     title = name_title + " [Error]\n"
     nb_carac = len(title)
     for i in range(nb_carac):
         title += "="
     title += "\n"
-    return title
+    return title_exists, title
+
+def meta_data():
+    md = "\n"
+    md += ":authors: Benchtrack\n"
+    md += ":date: 2010-10-03 10:20\n"
+    md += "\n"
+    return md
 
 def create_rst_base():
     pass
@@ -35,19 +44,19 @@ def create_infra_rst(name_infra, path_content, path_readme, structure_run_time, 
     path_file = path_content+ "/" +name_infra+ ".rst"
 
     with open(path_file,'w') as f:
-        f.write(create_title_rst(readme,name_infra))
-        """
-        f.write(name_infra+"\n")
-        for i in range(len(name_infra)):
-            f.write("#")
-        f.write("\n")
-        """
-        f.write("\n")
-        f.write(":authors: Benchtrack\n")
-        f.write(":date: 2010-10-03 10:20\n")
-        f.write("\n")
-        f.write(readme)
-        f.write("\n")
+        title_exists, title = create_title_rst(readme,name_infra)
+        if title_exists :
+            number_line = 0 
+            for i in range(len(readme)):
+                f.write(readme[i])
+                if readme [i] == "\n":
+                    number_line +=1
+                if number_line == 2 :
+                    f.write(meta_data())
+        else:
+            f.write(title)
+            f.write(meta_data())
+
         f.write("\n")
         f.write(".. list-table:: Results\n")
         f.write("   :widths: auto\n")

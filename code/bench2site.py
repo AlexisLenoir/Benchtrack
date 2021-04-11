@@ -153,8 +153,9 @@ def content2html (path_parent_content, path_site):
 #--------------------------TEST-----------------------
 
 
-#path_infra_term = sys.argv[1]
-path_infra2 = "/Users/alexislenoir/python/bench2html/ConfigFichier"
-path_infra = "/Users/alexislenoir/python/Benchtrack/ConfigFichier"
-
-bench2content(path_infra)
+if __name__ == '__main__':
+    path_infra_PGM = "/Users/alexislenoir/python/Benchtrack/infrastructures/PGM"
+    path_infra_ConfigFichier = "/Users/alexislenoir/python/Benchtrack/infrastructures/ConfigFichier"
+    #path_infra_term = sys.argv[1]
+    print ("Localisation du fichier ", __file__)
+    bench2content(path_infra_ConfigFichier)
