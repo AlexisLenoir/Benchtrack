@@ -33,7 +33,7 @@ def load_csv_results(path_infra_csv, structure_run_time):
 
 
 
-def bench2content(path_infra):
+def bench2content(path_infra, path_benchTrack):
     """
     Cette fonction prend en argument l'adresse de l'infrastructure et à l'aide du fichier csv results,
     genère un répertoire content pour l'affichage du site statique.
@@ -82,7 +82,8 @@ def bench2content(path_infra):
     structure_run_time = load_csv_results(path_infra + "/" + name_infra + ".csv", structure_run_time)
 
     # On crée le repertoire content et content/pages
-    path_content = os.path.dirname(path_infra) + "/content"
+    #path_content = os.path.dirname(path_infra) + "/content"
+    path_content = path_benchTrack + "/site/content"
     os.mkdir(path_content)
     path_pages = path_content+"/pages"
     os.mkdir(path_pages)
@@ -157,5 +158,7 @@ if __name__ == '__main__':
     path_infra_PGM = "/Users/alexislenoir/python/Benchtrack/infrastructures/PGM"
     path_infra_ConfigFichier = "/Users/alexislenoir/python/Benchtrack/infrastructures/ConfigFichier"
     #path_infra_term = sys.argv[1]
-    print ("Localisation du fichier ", __file__)
-    bench2content(path_infra_ConfigFichier)
+    path_benchTrack = os.path.dirname(os.path.dirname(os.path.abspath( __file__ )))
+
+    
+    bench2content(path_infra_PGM, path_benchTrack)

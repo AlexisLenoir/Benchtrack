@@ -7,6 +7,7 @@ Ce module contient toutes les fonctions permettant de générer les fichiers rst
 
 def create_title_rst(readme,name_title):
     """
+    Deprecated
     Pour gérer les cas où il y a déjà un titre
     readme est une chaîne de carac d'un fichier readme
     """
@@ -28,15 +29,50 @@ def create_title_rst(readme,name_title):
 
 def meta_data():
     md = "\n"
+    md = "\n"
     md += ":authors: Benchtrack\n"
     md += ":date: 2010-10-03 10:20\n"
     md += "\n"
     return md
 
-def create_rst_base():
-    pass
-  
+def create_rst_base(readme, name_title):
+    base_rst = ""
+    one_line = True
+
+    for i in range(len(readme)):
+        if readme[i] == '\n':
+            one_line = False
+            if readme[i+1] == '#' or readme[i+1] == '=':
+                base_rst = readme
+                j = i + 1
+                while readme[j] =='#' or readme[j] == '=':
+                    j += 1
+                base_rst = base_rst[:j] + meta_data() + base_rst[j:]
+                break
+            else:
+                title = name_title + " [Error]\n"
+                base_rst += title
+                nb_carac = len(title)
+                for i in range(nb_carac-1):
+                    base_rst += "="
+                base_rst += "\n"
+                base_rst += meta_data()
+                break
+
+    if one_line:
+        title = name_title + " [Error]\n"
+        base_rst += title
+        nb_carac = len(title)
+        for i in range(nb_carac-1):
+            base_rst += "="
+        base_rst += "\n"
+        base_rst += meta_data()
+
+    return base_rst
+
+
 def create_infra_rst(name_infra, path_content, path_readme, structure_run_time, list_targets):
+
     readme = ''
     with open(path_readme,'r') as f:
         readme = f.read()
@@ -44,20 +80,9 @@ def create_infra_rst(name_infra, path_content, path_readme, structure_run_time, 
     path_file = path_content+ "/" +name_infra+ ".rst"
 
     with open(path_file,'w') as f:
-        title_exists, title = create_title_rst(readme,name_infra)
-        if title_exists :
-            number_line = 0 
-            for i in range(len(readme)):
-                f.write(readme[i])
-                if readme [i] == "\n":
-                    number_line +=1
-                if number_line == 2 :
-                    f.write(meta_data())
-        else:
-            f.write(title)
-            f.write(meta_data())
 
-        f.write("\n")
+        f.write(create_rst_base(readme, name_infra))
+
         f.write(".. list-table:: Results\n")
         f.write("   :widths: auto\n")
         f.write("   :header-rows: 1\n")
@@ -92,17 +117,8 @@ def create_target_rst(name_target, path_readme, path_targets, list_tasks, struct
     path_file = path_targets+ "/" +name_target+ ".rst"
 
     with open(path_file,'w') as f:
-        f.write(name_target+"\n")
-        for i in range(len(name_target)):
-            f.write("#")
-        f.write("\n")
-        f.write("\n")
-        f.write(":authors: Benchtrack\n")
-        f.write(":date: 2010-10-03 10:20\n")
-        f.write("\n")
-        f.write(readme)
-        f.write("\n")
-        f.write("\n")
+        f.write(create_rst_base(readme, name_target))
+
         f.write(".. list-table:: Results\n")
         f.write("   :widths: auto\n")
         #f.write("   :header-rows: 1\n")
@@ -133,17 +149,8 @@ def create_task_rst(name_task, path_readme, path_tasks, list_targets, structure_
     path_file = path_tasks+ "/" +name_task+ ".rst"
 
     with open(path_file,'w') as f:
-        f.write(name_task+"\n")
-        for i in range(len(name_task)):
-            f.write("#")
-        f.write("\n")
-        f.write("\n")
-        f.write(":authors: Benchtrack\n")
-        f.write(":date: 2010-10-03 10:20\n")
-        f.write("\n")
-        f.write(readme)
-        f.write("\n")
-        f.write("\n")
+        f.write(create_rst_base(readme, name_task))
+
         f.write(".. list-table:: Results\n")
         f.write("   :widths: auto\n")
         #f.write("   :header-rows: 1\n")
@@ -176,10 +183,9 @@ def create_targetXtask_rst(name_target, name_task,path_code, path_targetsXtasks,
         for i in range(len(name_task+name_target)+1):
             f.write("#")
         f.write("\n")
-        f.write("\n")
-        f.write(":authors: Benchtrack\n")
-        f.write(":date: 2010-10-03 10:20\n")
-        f.write("\n")
+
+        f.write(meta_data())
+
         #f.write ("La target "+name_target+" de la task "+name_task+": \n")
         f.write ("La target ")
         f.write("`"+name_target+" <{filename}/targets/"+name_target+".rst>`_")

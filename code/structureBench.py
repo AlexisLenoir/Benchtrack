@@ -41,13 +41,19 @@ class BenchTrack:
         #construt list of targets
         path = self.__path+"/targets"
         for targetName in os.listdir(path):
+            if targetName[0] == '.' :
+                continue
             self.__allTarget.append(targetName)
         path = self.__path+'/tasks'
         for themeName in os.listdir(path):
+            if themeName[0] == '.' :
+                continue
             theme = Theme(themeName)
             #for every task in the folder theme
             pathT = path + '/' + themeName
             for taskName in os.listdir(pathT):
+                if taskName[0] == '.' :
+                    continue
                 #set in the list alltask
                 if taskName not in self.__allTask:
                     self.__allTask.append(taskName)
