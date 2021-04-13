@@ -3,7 +3,7 @@ from theme import Theme
 from task import Task
 #class BenchTrack
 class BenchTrack:
-    def __init__(self,path_inf):
+    def __init__(self, path_inf, path_benchTrack):
         self.__path = path_inf
         self.__name = path_inf.split('/')[-1]
         #dictionaire of targets,<key = nameTarget> = objetTarget
@@ -12,6 +12,7 @@ class BenchTrack:
         self.__listThemes=[]
         self.__allTarget=[]
         self.__allTask = []
+        self.__path_benchTrack = path_benchTrack
         if not self.__construct():
             print("Error:Construct")
         self.__outputFile = self.__path+"/output.csv"

@@ -42,7 +42,8 @@ def exe(argv):
     if len(argv) < 2:
         print("Missing parameter")
         return -1
-    bench = BenchTrack(argv[-1])
+    path_benchTrack = os.path.dirname(os.path.dirname(os.path.abspath( __file__ )))
+    bench = BenchTrack(argv[-1], path_benchTrack)
     if manage_flag(argv,bench):
         bench.exe_bench()
         bench.ToCsv()

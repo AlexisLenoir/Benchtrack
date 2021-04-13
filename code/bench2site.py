@@ -33,7 +33,7 @@ def load_csv_results(path_infra_csv, structure_run_time):
 
 
 
-def bench2content(path_infra, path_benchTrack):
+def bench2content(path_infra, path_benchTrack, file_csv):
     """
     Cette fonction prend en argument l'adresse de l'infrastructure et à l'aide du fichier csv results,
     genère un répertoire content pour l'affichage du site statique.
@@ -79,16 +79,21 @@ def bench2content(path_infra, path_benchTrack):
             structure_run_time[task][target] = {}
 
     # Instanciation de structure_run_time à partir de results.csv 
-    structure_run_time = load_csv_results(path_infra + "/" + name_infra + ".csv", structure_run_time)
+    structure_run_time = load_csv_results(path_infra + "/" + file_csv, structure_run_time)
 
-    # On crée le repertoire content et content/pages
+    #-----------Create path_content-----------
+
     #path_content = os.path.dirname(path_infra) + "/content"
-    path_content = path_benchTrack + "/site/content"
+    path_site = path_benchTrack + "/site"
+    path_site_infra = path_benchTrack + "/site_" + name_infra
+    os.system("cp -r " + path_site + " " + path_site_infra) #zip ?
+
+    path_content = path_site_infra + "/content"
     os.mkdir(path_content)
     path_pages = path_content+"/pages"
     os.mkdir(path_pages)
 
-    #------------ Page résumé ------------
+    #------------ Page résumé ----------------
     create_infra_rst(name_infra,path_pages,path_infra+"/README.rst",structure_run_time,list_targets)
 
     # On génère les pages listes (sous-répertoire page)
@@ -128,24 +133,18 @@ def bench2content(path_infra, path_benchTrack):
                 name_target = os.path.splitext(os.path.basename(target))[0]
                 create_targetXtask_rst(name_target, task, path_code, path_targetsXtasks,path_pages, structure_run_time)
 
-
-
+    return path_site_infra
 
     
-def content2html (path_parent_content, path_site):
-    pass
-    """
-    os.system (cd path_parent_content)
-    os.system (zip -r content.zip content)
-    os.system (cp content.zip vers path_site)
-    os.system (cd path_site)
-    décompresser
-    modif conf.py avec le nom de infra (d'autres modifs ?)
-    os.system(pelican content)
-    """
+def content2html(path_site_infra):
 
+    #print(" Test path interpreter: ",sys.executable)
+    #print(" Test, lancer pelican")
 
+    os.chdir(path_site_infra)
+    os.system(sys.executable + " -m pelican content")
 
+    # Modification de conf.py
 
 
 
@@ -158,7 +157,11 @@ if __name__ == '__main__':
     path_infra_PGM = "/Users/alexislenoir/python/Benchtrack/infrastructures/PGM"
     path_infra_ConfigFichier = "/Users/alexislenoir/python/Benchtrack/infrastructures/ConfigFichier"
     #path_infra_term = sys.argv[1]
+    file_csv = "output.csv"
+
     path_benchTrack = os.path.dirname(os.path.dirname(os.path.abspath( __file__ )))
 
+    path_site_infra = bench2content(path_infra_PGM, path_benchTrack, file_csv)
+    content2html(path_site_infra)
     
-    bench2content(path_infra_PGM, path_benchTrack)
+

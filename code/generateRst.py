@@ -83,6 +83,8 @@ def create_infra_rst(name_infra, path_content, path_readme, structure_run_time, 
 
         f.write(create_rst_base(readme, name_infra))
 
+        f.write("\n")
+        f.write("\n")
         f.write(".. list-table:: Results\n")
         f.write("   :widths: auto\n")
         f.write("   :header-rows: 1\n")
@@ -119,6 +121,8 @@ def create_target_rst(name_target, path_readme, path_targets, list_tasks, struct
     with open(path_file,'w') as f:
         f.write(create_rst_base(readme, name_target))
 
+        f.write("\n")
+        f.write("\n")
         f.write(".. list-table:: Results\n")
         f.write("   :widths: auto\n")
         #f.write("   :header-rows: 1\n")
@@ -151,6 +155,8 @@ def create_task_rst(name_task, path_readme, path_tasks, list_targets, structure_
     with open(path_file,'w') as f:
         f.write(create_rst_base(readme, name_task))
 
+        f.write("\n")
+        f.write("\n")
         f.write(".. list-table:: Results\n")
         f.write("   :widths: auto\n")
         #f.write("   :header-rows: 1\n")
