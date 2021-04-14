@@ -3,6 +3,20 @@
 import os
 
 def flagTasks(argv,bench,flag):
+    '''
+    gestion of flags of the tasks
+
+    Parameters
+    ----------
+    argv : string
+        name of the benchmark.
+    bench : string
+        name of bench for testing.
+    flag : string
+        type of flags.
+
+
+    '''
     if flag == 'info':
         if len(argv)< 3:
             print('Without'+ (3 - len(argv)).__init__()+'parameter')
@@ -23,6 +37,21 @@ def flagTasks(argv,bench,flag):
 
 
 def flagTargets(argv,bench,flag):
+    '''
+    gestion of flags of the targets
+
+    Parameters
+    ----------
+    argv : string
+        name of the benchmark.
+    bench : string
+        name of bench for testing.
+    flag : string
+        type of flags.
+
+
+    '''
+    
     if flag == 'info':
         if len(argv) < 3:
             print('Without'+ (3 - len(argv)).__init__()+'parameter')
