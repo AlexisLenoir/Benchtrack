@@ -294,8 +294,7 @@ class BenchTrack:
 
     def get_structure_tasks(self):
         '''
-        get the structure of the tasks
-
+        return the structure of the tasks
         '''
         list_structure_theme = {}
         for theme in self.__listThemes:
