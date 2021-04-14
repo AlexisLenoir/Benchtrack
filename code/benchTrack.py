@@ -8,7 +8,7 @@ def manage_flag(argv,bench):
     '''
     This function manage all flags,
     with a flag for show a list or the information,this function call a function to show that
-    with a flag include or exclude,this function modifie the object bench
+    with a flag include or exclude,this function change the object bench
     without flag,return 1
     Parameter:
         Argv:args
@@ -39,6 +39,15 @@ def manage_flag(argv,bench):
     return 1
 
 def exe(argv):
+    '''
+    execution of the tool BenchTrack
+
+    Parameters
+    ----------
+    argv : string
+        input in the terminal.
+
+    '''
     if len(argv) < 2:
         print("Missing parameter")
         return -1
