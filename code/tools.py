@@ -7,14 +7,13 @@ import re
 
 def exeCmdPython(path, cmd):
     '''
-    
+    This fonction is made to run python files
     Parameters
     ----------
     path : string
-        the path where we run our task.
+        the path that contains the task need to be execute.
     cmd : string
-        command to run.
-
+        command of executing based on terminal.
     Returns
     -------
     None.
@@ -38,6 +37,25 @@ def exeCmdPython(path, cmd):
     os.fchdir(os.open(CurrentPath, os.O_RDONLY))
 
 def exeCmd(path,parameter,cmd,language):
+    '''
+    exeCmd is a fonction that switch the task to 
+    other specific fonction to execute them
+    Parameters
+    ----------
+    path : string
+        the path that contains the task need to be execute.
+    parameter : string
+        the parameter of the task.
+    cmd : String
+        command of executing based on terminal.
+    language : string
+        the programming languague of task .
+
+    Returns
+    -------
+    None.
+
+    '''
     cmd.replace('{script}',language)
     cmd.replace('{arg}',parameter)
     path_envir=path.copy()
@@ -50,9 +68,10 @@ def exeCmd(path,parameter,cmd,language):
 
 def get_suffixe(language):
     '''
-    Pram:
+    This method return the suffixe of programming language
+    Parameters:
         language:string
-    return: suffixe of the fichier in language input
+    Returns: suffixe of the fichier in language input
     '''
     if language == "python":
         return ".py"
@@ -61,11 +80,14 @@ def get_suffixe(language):
 
 def ConfigFileTarget(path_target):
     '''
-    parm:
+    This method trait configure file and return their command and 
+    programming language of the target.
+    
+    Parameters:
         path of the config.ini for the target
-    Return:
-        run:the command for execute target
-        language:the language of the target
+    Returns:
+        run:the command of executing the target
+        language:the programming language of the target
     '''
     config = ConfigParser()
     config.read(path_target)
@@ -75,9 +97,11 @@ def ConfigFileTarget(path_target):
 
 def ConfigFileTask(file):
     '''
-    parm:
+    This method trait configure file of task and return their sample_size and 
+    parameters of the task.
+    Parameters:
         path of the the config.ini for the task
-    Return:
+    Returns:
         sample_size:sample size for execute all targets in this task
         arg:all args of the target
     '''
@@ -90,7 +114,18 @@ def ConfigFileTask(file):
 # pour trouver tous les fichers de repertoire de BASE.
 def find_all_file(base):
     '''
-    find all file in base
+    Find all files in base
+
+    Parameters
+    ----------
+    base : string
+        the system path.
+
+    Yields
+    ------
+    f : string
+        all files found in base.
+
     '''
     for root, ds, fs in os.walk(base):
         for f in fs:
@@ -99,12 +134,13 @@ def find_all_file(base):
 
 def existFile(fileName, Path):
     '''
-    param:
-        fileName:
-        path:
-    Return
+    To test if a Path contain a file
+    Parameters:
+        fileName:name of the file
+        path:the path that contains the file
+    Returns
         True:Found a file name filename in path
-        False:else
+        False:if the file doesn't be found in path
     '''
     for files in os.listdir(Path):
         if re.match(fileName,files):
@@ -115,9 +151,11 @@ def existFile(fileName, Path):
 
 def exe_python(target_name):
     '''
-    # Pour calculer temps d'execution en python
-    # @param target_name:path et nom pour target
-    # @return temp d'execution
+    for calculating time of executing of python file
+    Parameters :
+        target_name:path et nom pour target
+    Returns :
+        temp d'execution
     '''
     start = datetime.datetime.now()
     print("Test " + target_name + " start")
@@ -128,6 +166,19 @@ def exe_python(target_name):
 
 
 def to_txt(list_res):
+    '''
+    Turns the results to txt file
+
+    Parameters
+    ----------
+    list_res : float list 
+        time of executing.
+
+    Returns
+    -------
+    None.
+
+    '''
     with  open('PGM/result.txt', 'w') as f:
         for i in list_res:
             f.write(i.benchName + '\n')
@@ -141,16 +192,31 @@ def to_txt(list_res):
 
 
 # print a file
-def file_read(nomTest, nomTarget, typeF):
+def file_read(nameTest, nameTarget, typeF):
     '''
-    Read file readme.rst
+    To read readme file and print the contents
+
+    Parameters
+    ----------
+    nomTest : string
+        name of task.
+    nomTarget : string
+        name of target.
+    typeF : string
+        task/target.
+
+    Returns
+    -------
+    int
+        succeded print the content of readme.
+
     '''
-    for files in os.listdir(nomTest):
+    for files in os.listdir(nameTest):
         if files == typeF:
-            file_dir = nomTest + "/" + files
+            file_dir = nameTest + "/" + files
             for files_sous in os.listdir(file_dir):
-                if files_sous == nomTarget:
-                    filesRead = nomTest + "/" + typeF + "/" + nomTarget + "/" + "README.rst"
+                if files_sous == nameTarget:
+                    filesRead = nameTest + "/" + typeF + "/" + nameTarget + "/" + "README.rst"
                     with open(filesRead, 'r') as f:
                         content = f.read()
                         print(content)
@@ -159,8 +225,8 @@ def file_read(nomTest, nomTarget, typeF):
                 if existFile(files_sous, file_dir):
                     dir = file_dir + "/" + files_sous
                     for file_task in os.listdir(dir):
-                        if file_task == nomTarget:
-                            filesRead = nomTest + "/" + typeF + "/" + files_sous + "/" + file_task + "/" + "README.rst"
+                        if file_task == nameTarget:
+                            filesRead = nameTest + "/" + typeF + "/" + files_sous + "/" + file_task + "/" + "README.rst"
                             with open(filesRead, 'r') as f:
                                 content = f.read()
                                 print(content)
