@@ -133,10 +133,10 @@ def bench2content(path_infra, path_benchTrack, file_csv):
                 name_target = os.path.splitext(os.path.basename(target))[0]
                 create_targetXtask_rst(name_target, task, path_code, path_targetsXtasks,path_pages, structure_run_time)
 
-    return path_site_infra
+    return path_site_infra, name_infra
 
     
-def content2html(path_site_infra):
+def content2html(path_site_infra, path_benchTrack, name_infra):
 
     #print(" Test path interpreter: ",sys.executable)
     #print(" Test, lancer pelican")
@@ -145,6 +145,22 @@ def content2html(path_site_infra):
     os.system(sys.executable + " -m pelican content")
 
     # Modification de conf.py
+    path_conf_py = path_site_infra + "/pelicanconf.py"
+    new_file = ""
+    line_name_site = "SITENAME = '"+ name_infra+"'\n"
+    with open(path_conf_py) as f:
+        for line in f:
+            if line == "SITENAME = 'default'\n":
+                new_file += line_name_site
+                continue
+            else:
+                new_file += line
+
+    with open(path_conf_py,'w') as f:
+        f.write(new_file)
+
+
+
 
 
 
@@ -161,7 +177,7 @@ if __name__ == '__main__':
 
     path_benchTrack = os.path.dirname(os.path.dirname(os.path.abspath( __file__ )))
 
-    path_site_infra = bench2content(path_infra_ConfigFichier, path_benchTrack, file_csv)
-    content2html(path_site_infra)
+    path_site_infra, name_infra = bench2content(path_infra_ConfigFichier, path_benchTrack, file_csv)
+    content2html(path_site_infra, path_benchTrack, name_infra)
     
 
