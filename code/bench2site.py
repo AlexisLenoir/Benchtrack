@@ -42,7 +42,7 @@ def bench2content(path_infra, path_benchTrack, file_csv):
     name_infra = os.path.basename(path_infra)
 
     # Chargement de l'objet de Benchtrack et de certains attributs
-    my_bench = structureBench.BenchTrack(path_infra)
+    my_bench = structureBench.BenchTrack(path_infra, path_benchTrack)
 
     list_targets = my_bench._BenchTrack__allTarget
     list_tasks = my_bench._BenchTrack__allTask
@@ -161,7 +161,7 @@ if __name__ == '__main__':
 
     path_benchTrack = os.path.dirname(os.path.dirname(os.path.abspath( __file__ )))
 
-    path_site_infra = bench2content(path_infra_PGM, path_benchTrack, file_csv)
+    path_site_infra = bench2content(path_infra_ConfigFichier, path_benchTrack, file_csv)
     content2html(path_site_infra)
     
 

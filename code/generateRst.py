@@ -57,6 +57,7 @@ def create_rst_base(readme, name_title):
                     base_rst += "="
                 base_rst += "\n"
                 base_rst += meta_data()
+                base_rst += readme
                 break
 
     if one_line:
@@ -67,6 +68,7 @@ def create_rst_base(readme, name_title):
             base_rst += "="
         base_rst += "\n"
         base_rst += meta_data()
+        base_rst += readme
 
     return base_rst
 
