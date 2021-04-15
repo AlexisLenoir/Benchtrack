@@ -117,9 +117,9 @@ class Task:
         None.
 
         '''
-        path_File = path  + "/tasks/" + themeName + "/" + self.getName() + "/" + "before_" + targets
+        path_File = path  + "/tasks/" + themeName + "/" + self.getName() 
         path_ConfigFile = path  + "/targets/" + targets + "/config.ini"
-        self.exe_file(path_ConfigFile, path_File,args)
+        self.exe_file(path_ConfigFile, path_File,args,"before_"+targets)
 
     def exe_target(self, themeName, targets,path,args):
         '''
@@ -131,10 +131,10 @@ class Task:
 
         '''
         path_ConfigFile = path  + "/targets/" + targets + "/config.ini"
-        path_File = path  + "/tasks/" + themeName + "/" + self.getName() + "/" +targets
-        self.exe_file(path_ConfigFile, path_File,args)
+        path_File = path  + "/tasks/" + themeName + "/" + self.getName() 
+        self.exe_file(path_ConfigFile, path_File,args,targets)
 
-    def exe_file(self, path_configFile, path_file, args):
+    def exe_file(self, path_configFile, path_file, args,target):
         '''
         execution of target
 
@@ -143,11 +143,15 @@ class Task:
         None.
 
         '''
+        
+        #path_file+=".py"
         if os.path.exists(path_configFile):
             command, language = ConfigFileTarget(path_configFile)
-            for n in range(self.__sample_size):
-                if os.path.exists(path_file):
-                    exeCmd(path_file, args, command, language)
+            for n in range(1):
+                
+                #if os.path.exists(path_file):
+                    
+                    exeCmd(path_file, args, command, language,target)
         else:
             print("Can't find the file config:" + path_configFile)
 

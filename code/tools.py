@@ -23,20 +23,21 @@ def exeCmdPython(path, cmd):
     PathAbsolu = CurrentPath + "/" + path
     os.fchdir(os.open(PathAbsolu, os.O_RDONLY))
     #res = os.system("cd"+path+"&&"+cmd)
+    print(cmd)
     res=os.system(cmd)
     if res != 0:
         if os.path.exists('errorInfo.txt'):
             with open('errorInfo.txt', mode='w', encoding='utf-8') as ff:
                 #print(ff.read())
-                ff.write(res)
+                ff.write(str(res))
         else:
             with open("errorInfo.txt", mode='w+', encoding='utf-8') as ff:
                 #print(ff.read())
-                ff.write(res)
+                ff.write(str(res))
 
     os.fchdir(os.open(CurrentPath, os.O_RDONLY))
 
-def exeCmd(path,parameter,cmd,language):
+def exeCmd(path,parameter,cmd,language,target):
     '''
     exeCmd is a fonction that switch the task to 
     other specific fonction to execute them
@@ -56,15 +57,15 @@ def exeCmd(path,parameter,cmd,language):
     None.
 
     '''
-    cmd.replace('{script}',language)
-    cmd.replace('{arg}',parameter)
-    path_envir=path.copy()
-    if language == "python":
-        path+= get_suffixe(language)
-        exeCmdPython(path_envir,"python "+cmd)
-    if language == "r":
-        path+= get_suffixe(language)
-        exeCmdPython(path_envir,"Rscript"+cmd)
+    target+=get_suffixe(language)
+    new_cmd=cmd.replace("{script}",target)
+    new_cmd2=new_cmd.replace("{arg}",parameter)
+    #if language == "python":
+        #new_cmd2+= get_suffixe(language)
+    exeCmdPython(path,new_cmd2)
+    # if language == "r":
+    #     path+= get_suffixe(language)
+    #     exeCmdPython(path,"Rscript"+cmd)
 
 def get_suffixe(language):
     '''

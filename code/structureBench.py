@@ -5,8 +5,7 @@ from task import Task
 class BenchTrack:
     
     def __init__(self, path_inf, path_benchTrack):
-        print(path_inf)
-        print(path_benchTrack)
+
         '''
         constructor of class BenchTrack
 
