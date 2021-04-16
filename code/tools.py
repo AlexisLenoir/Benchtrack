@@ -13,10 +13,8 @@ def execute(path, cmd):
         the path that contains the task need to be execute.
     cmd : string
         command of executing based on terminal.
-    Returns
-    -------
-    None.
 
+    :return: no return
     '''
     CurrentPath = os.getcwd()
     PathAbsolu = CurrentPath + "/" + path+"/"
@@ -53,9 +51,8 @@ def exeCmd(path,parameter,cmd,language,target):
         the programming languague of task .
     target: string
         the name of target
-    Returns
-    -------
-    None.
+
+    :return: no return
 
     '''
     target+=get_suffixe(language)
@@ -72,7 +69,7 @@ def get_suffixe(language):
     This method return the suffixe of programming language
     Parameters:
         language:string
-    Returns: suffixe of the fichier in language input
+    :return: suffixe of the fichier in language input
     '''
     if language == "python":
         return ".py"
@@ -86,9 +83,8 @@ def ConfigFileTarget(path_target):
     
     Parameters:
         path of the config.ini for the target
-    Returns:
-        run:the command of executing the target
-        language:the programming language of the target
+    :return:run:the command of executing the target
+            language:the programming language of the target
     '''
     config = ConfigParser()
     config.read(path_target)
@@ -102,9 +98,8 @@ def ConfigFileTask(file):
     parameters of the task.
     Parameters:
         path of the the config.ini for the task
-    Returns:
-        sample_size:sample size for execute all targets in this task
-        arg:all args of the target
+    :return:sample_size:sample size for execute all targets in this task
+           :arg:all args of the target
     '''
     try:
         config = ConfigParser()
@@ -125,10 +120,8 @@ def find_all_file(base):
     base : string
         the system path.
 
-    Yields
-    ------
-    f : string
-        all files found in base.
+    :yield:f : string
+         :all files found in base.
 
     '''
     for root, ds, fs in os.walk(base):
@@ -142,9 +135,8 @@ def existFile(fileName, Path):
     Parameters:
         fileName:name of the file
         path:the path that contains the file
-    Returns
-        True:Found a file name filename in path
-        False:if the file doesn't be found in path
+    :returns:True:Found a file name filename in path
+            :False:if the file doesn't be found in path
     '''
     for files in os.listdir(Path):
         if re.match(fileName,files):
@@ -158,8 +150,7 @@ def exe_python(target_name):
     for calculating time of executing of python file
     Parameters :
         target_name:path et nom pour target
-    Returns :
-        temp d'execution
+    :returns :temp d'execution
     '''
     start = datetime.datetime.now()
     print("Test " + target_name + " start")
@@ -178,9 +169,7 @@ def to_txt(list_res):
     list_res : float list 
         time of executing.
 
-    Returns
-    -------
-    None.
+    :return: no return
 
     '''
     with  open('PGM/result.txt', 'w') as f:
@@ -209,10 +198,7 @@ def file_read(nameTest, nameTarget, typeF):
     typeF : string
         task/target.
 
-    Returns
-    -------
-    int
-        succeded print the content of readme.
+    :return:int:succeded print the content of readme.
 
     '''
     for files in os.listdir(nameTest):
@@ -251,7 +237,7 @@ def flagTasks(argv, bench, flag):
     flag : string
         type of flags.
 
-
+    :return: no return
     '''
     if flag == 'info':
         if len(argv) < 3:
@@ -284,7 +270,7 @@ def flagTargets(argv, bench, flag):
         name of bench for testing.
     flag : string
         type of flags.
-
+    :return: no return
 
     '''
 

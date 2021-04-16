@@ -11,9 +11,7 @@ class Theme:
         name : string
             name of the theme.
 
-        Returns
-        -------
-        None.
+        :return: no return
 
         '''
         self.__themeName = name
@@ -22,10 +20,7 @@ class Theme:
     def __str__(self):
         '''
 
-        Returns
-        -------
-        string : string
-            a string that contains all the tasks of the theme.
+        :return: string : string a string that contains all the tasks of the theme.
 
         '''
         string = self.getName()
@@ -52,9 +47,7 @@ class Theme:
         '''
         getter of parameter Name of the theme
 
-        Returns
-        -------
-        TYPE string
+        :return: string:name of the theme
 
         '''
         return self.__themeName
@@ -72,9 +65,7 @@ class Theme:
         path : string
             the path contains the theme.
 
-        Returns
-        -------
-        None.
+        :return: no return
 
         '''
         print("\nIn theme " + self.getName() + ":")
@@ -87,9 +78,7 @@ class Theme:
         '''
         Output the list of tasks of the theme
 
-        Returns
-        -------
-        None.
+        :return: no return
 
         '''
         print("In the theme " + self.getName() + ",there are tasks:")
@@ -106,6 +95,7 @@ class Theme:
         path : string
             the path contains the theme.
 
+        :return: no return
         '''
         for i in self.__listTasks:
             if i.getName() == nameTask:
@@ -131,9 +121,7 @@ class Theme:
         -------
         path :string path
 
-        Returns
-        -------
-        a dictionnaire
+        :return: a dictionnaire
         '''
         list_structure_task = {}
         for task in self.__listTasks:

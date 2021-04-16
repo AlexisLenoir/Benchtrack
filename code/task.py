@@ -14,9 +14,7 @@ class Task:
         sample_size : int, optional
             the times of execution. The default is 20.
 
-        Returns
-        -------
-        None.
+        :return: no return
 
         '''
         self.__Name = name
@@ -27,10 +25,7 @@ class Task:
         '''
         Return a string of all the targets from the task
 
-        Returns
-        -------
-        stirng
-            all the targets from the task.
+        :return: stirng:all the targets from the task.
 
         '''
         string = self.getName() + "["
@@ -47,9 +42,7 @@ class Task:
         name_Target : string
             name of target.
 
-        Returns
-        -------
-        None.
+        :return: no return
 
         '''
         self.__dictTargets[name_Target] = [-1] * len(self.__args)
@@ -65,9 +58,7 @@ class Task:
         res_Target : flaot
             execution time.
 
-        Returns
-        -------
-        None.
+        :return: no return
 
         '''
         self.__dictTargets[name_Target] = res_Target
@@ -85,9 +76,7 @@ class Task:
         path : stirng
             the path contains the theme
 
-        Returns
-        -------
-        None.
+        :return: no return
 
         '''
         print("-In Task " + self.__Name + ":")
@@ -119,9 +108,7 @@ class Task:
         '''
         execute some before-task file like imports
 
-        Returns
-        -------
-        None.
+        :return: no return
 
         '''
         path_File = path  + "/tasks/" + themeName + "/" + self.getName() 
@@ -132,9 +119,7 @@ class Task:
         '''
         drive infos from configure file of target and transforme these infos
 
-        Returns
-        -------
-        None.
+        :return: no return
 
         '''
         path_ConfigFile = path  + "/targets/" + targets + "/config.ini"
@@ -145,9 +130,7 @@ class Task:
         '''
         execution of a target
 
-        Returns
-        -------
-        None.
+        :return: no return
 
         '''
         command, language = ConfigFileTarget(path_configFile)
@@ -171,9 +154,7 @@ class Task:
         generetor the csv file which contains some
         infos about results of execution
 
-        Returns
-        -------
-        None.
+        :return: no return
 
         '''
         targetNames = dict.keys(self.__dictTargets)
@@ -186,10 +167,7 @@ class Task:
         '''
         get targets of tasks
 
-        Returns
-        -------
-        list_target : TYPE
-            DESCRIPTION.
+        :return: list_target : TYPE DESCRIPTION.
 
         '''
         list_target=[]
@@ -202,6 +180,10 @@ class Task:
         return list_target
 
     def upgrade_for_target(self,path,target):
+        '''
+
+        :return: no return
+        '''
         path_ConfigFile = path  + "/targets/" + target + "/config.ini"
         config = ConfigParser()
         config.read(path_ConfigFile)

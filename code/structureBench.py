@@ -157,9 +157,7 @@ class BenchTrack:
         theme : TYPE
             DESCRIPTION.
 
-        Returns
-        -------
-        None.
+        :return: no return
 
         '''
         self.__listThemes.append(theme)
@@ -191,9 +189,7 @@ class BenchTrack:
             if true, all the targets selected will be added in the list of execution.
             else, delet those targets excluded
 
-        Returns
-        -------
-        The number of targets to be tested
+        :return: The number of targets to be tested
 
         '''
         if model:
@@ -215,9 +211,7 @@ class BenchTrack:
             if true, all the tasks selected will be added in the list of execution.
             else, delet those tasks excluded
 
-        Returns
-        -------
-        The number of targets to be tested
+        :return: no returnThe number of targets to be tested
 
 
         '''
@@ -231,9 +225,7 @@ class BenchTrack:
         '''
         Output the list of targets that will be executed
 
-        Returns
-        -------
-        None.
+        :return: no return
 
         '''
         print("List of targets:")
@@ -249,9 +241,7 @@ class BenchTrack:
         nomTarget : string
             target's name.
 
-        Returns
-        -------
-        None.
+        :return: no return
 
         '''
         print("Information of " + nomTarget + " in the test " + self.__name +":")
@@ -261,9 +251,7 @@ class BenchTrack:
         '''
         output all the tasks that will be executed
 
-        Returns
-        -------
-        None.
+        :return: no return
 
         '''
         print("List of tasks:")
@@ -278,8 +266,7 @@ class BenchTrack:
         ----------
         nameTask : string
             task's name.
-
-
+        :return: no return
         '''
         for i in self.__listThemes:
             if i.showInfoTask(nameTask,self.__name,self.__path):
@@ -289,7 +276,7 @@ class BenchTrack:
 
     def get_structure_tasks(self):
         '''
-        return the structure of the tasks
+        :return: the structure of the tasks
         '''
         list_structure_theme = {}
         for theme in self.__listThemes:

@@ -5,13 +5,14 @@ from structureBench import BenchTrack
 
 def manage_flag(argv,bench):
     '''
+
     This function manage all flags,
     with a flag for show a list or the information,this function call a function to show that
     with a flag include or exclude,this function change the object bench
     without flag,return 1
-    Parameter:
-        Argv:args
-        Bench:l'object benchTrack
+
+    :param Argv:args Bench:l'object benchTrack
+    :return: no return
     '''
     for i in range(len(argv)):
         if "--target-include" == argv[i]:
@@ -41,11 +42,8 @@ def exe(argv):
     '''
     execution of the tool BenchTrack
 
-    Parameters
-    ----------
-    argv : string
-        input in the terminal.
-
+    :param str argv: input in the terminal.
+    :return: no return
     '''
     if len(argv) < 2:
         print("Missing parameter")
