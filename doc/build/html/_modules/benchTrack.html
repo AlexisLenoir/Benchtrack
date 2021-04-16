@@ -155,13 +155,14 @@
 
 <div class="viewcode-block" id="manage_flag"><a class="viewcode-back" href="../benchTrack.html#benchTrack.manage_flag">[docs]</a><span class="k">def</span> <span class="nf">manage_flag</span><span class="p">(</span><span class="n">argv</span><span class="p">,</span><span class="n">bench</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
+
 <span class="sd">    This function manage all flags,</span>
 <span class="sd">    with a flag for show a list or the information,this function call a function to show that</span>
 <span class="sd">    with a flag include or exclude,this function change the object bench</span>
 <span class="sd">    without flag,return 1</span>
-<span class="sd">    Parameter:</span>
-<span class="sd">        Argv:args</span>
-<span class="sd">        Bench:l&#39;object benchTrack</span>
+
+<span class="sd">    :param Argv:args Bench:l&#39;object benchTrack</span>
+<span class="sd">    :return: no return</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">argv</span><span class="p">)):</span>
         <span class="k">if</span> <span class="s2">&quot;--target-include&quot;</span> <span class="o">==</span> <span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
@@ -191,11 +192,8 @@
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    execution of the tool BenchTrack</span>
 
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    argv : string</span>
-<span class="sd">        input in the terminal.</span>
-
+<span class="sd">    :param str argv: input in the terminal.</span>
+<span class="sd">    :return: no return</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Missing parameter&quot;</span><span class="p">)</span>

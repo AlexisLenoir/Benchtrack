@@ -1,36 +1,36 @@
 from tools import *
 import os
 class Task:
-    '''
+    """
     This class contains the structure of the Task
-    '''
+
+    :cvar str __Name :name of the task.
+    :cvar str __args :parameters of the task.
+    :cvar int __sample_size :optional,the times of execution. The default is 20.
+    :cvar dict __dictTargets:a dictionnaire contains keys of target's name and values of object Target
+    """
     def __init__(self, name, args, sample_size=20):
-        '''
+        """
         Constructor of class Task
 
-        Parameters
-        ----------
-        name : string
-            name of the task.
-        args : string
-            parameters of the task.
-        sample_size : int, optional
-            the times of execution. The default is 20.
+        :param str name :name of the task.
+        :param str args :parameters of the task.
+        :param int sample_size :optional,the times of execution. The default is 20.
 
         :return: no return
 
-        '''
+        """
         self.__Name = name
         self.__dictTargets = {}
         self.__sample_size = int(sample_size)
         self.__args = args
     def __str__(self):
-        '''
+        """
         Return a string of all the targets from the task
 
         :return: stirng:all the targets from the task.
 
-        '''
+        """
         string = self.getName() + "["
         for i in self.__dictTargets:
             string += i + " "
@@ -40,10 +40,7 @@ class Task:
         '''
         Add targets to targets dictionary of the task
 
-        Parameters
-        ----------
-        name_Target : string
-            name of target.
+        param str name_Target :name of target.
 
         :return: no return
 
@@ -51,37 +48,28 @@ class Task:
         self.__dictTargets[name_Target] = [-1] * len(self.__args)
 
     def modifyTarget(self, name_Target, res_Target):
-        '''
+        """
         Add execution time of targets of the task
 
-        Parameters
-        ----------
-        name_Target : string
-            the target.
-        res_Target : flaot
-            execution time.
+        :param str name_Target :the target.
+        :param float res_Target : execution time.
 
         :return: no return
 
-        '''
+        """
         self.__dictTargets[name_Target] = res_Target
 
     def exe_task(self, lis, themeName, path):
-        '''
-        Execution of the tasks 
+        """
+        Execution of the tasks
 
-        Parameters
-        ----------
-        lis : list of string
-            list of targets.
-        themeName : string
-            name of theme of the task.
-        path : stirng
-            the path contains the theme
+        :param list lis :list of targets.
+        :param str themeName : name of theme of the task.
+        :param str path :the path contains the theme
 
         :return: no return
 
-        '''
+        """
         print("-In Task " + self.__Name + ":")
         for target in self.__dictTargets:
             if target in lis:
@@ -108,12 +96,17 @@ class Task:
                 self.__dictTargets[target] = list_times
 
     def exe_before_test(self, themeName, targets, path,args):
-        '''
+        """
         execute some before-task file like imports
+
+        :param str themeName:name of theme
+        :param str targets:name of target
+        :param str path :path of the infrastructure
+        :param str args:args of execution
 
         :return: no return
 
-        '''
+        """
         path_File = path  + "/tasks/" + themeName + "/" + self.getName() 
         path_ConfigFile = path  + "/targets/" + targets + "/config.ini"
         self.exe_file(path_ConfigFile, path_File,args,"before_"+targets)
@@ -121,6 +114,11 @@ class Task:
     def exe_target(self, themeName, targets,path,args):
         '''
         drive infos from configure file of target and transforme these infos
+
+        :param str themeName:name of theme
+        :param str targets:name of target
+        :param str path :path of the infrastructure
+        :param str args:args of execution
 
         :return: no return
 
@@ -133,6 +131,11 @@ class Task:
         '''
         execution of a target
 
+        :param str path_configFile:path of file config of target
+        :param str path_file:file to execute
+        :param str args:args of execution
+        :param str target :name of target
+
         :return: no return
 
         '''
@@ -142,12 +145,9 @@ class Task:
 
     def getName(self):
         '''
-        return name of the task
+        get name of the task
 
-        Returns
-        -------
-        string
-            name of the task.
+        :return:name of the task.
 
         '''
         return self.__Name

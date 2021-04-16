@@ -4,15 +4,15 @@ from tools import *
 class Theme:
     '''
     This class contains the structure of the theme of Task
+
+    :cvar str __themeName:name of the theme
+    :cvar list __listTasks: list of object task in the theme
     '''
     def __init__(self,name):
         '''
         construtor of the class theme
 
-        Parameters
-        ----------
-        name : string
-            name of the theme.
+        :param str name :name of the theme.
 
         :return: no return
 
@@ -22,6 +22,7 @@ class Theme:
 
     def __str__(self):
         '''
+        get the string that contains all the tasks of the theme.
 
         :return: string : string a string that contains all the tasks of the theme.
 
@@ -32,17 +33,14 @@ class Theme:
             string += "," + self.__listTasks[i].__str__()
         string += "]"
         return string
+
     def addTask(self,task):
         '''
-        all task to the listTasks of the theme
+        add task to the listTasks of the theme
 
-        Parameters
-        ----------
-        task : string
+        :param Object_Task task:the task to add
 
-        Returns
-        -------
-        None.
+        :return:no return
 
         '''
         self.__listTasks.append(task)
@@ -59,14 +57,9 @@ class Theme:
         '''
         execution of the theme
 
-        Parameters
-        ----------
-        listTask : list of string
-            all the tasks of the theme.
-        listTarget : list of string
-            all the targets of the task in the theme.
-        path : string
-            the path contains the theme.
+        :param list listTask :all the tasks of the theme.
+        :param list listTarget :all the targets of the task in the theme.
+        :param str path :the path contains the theme.
 
         :return: no return
 
@@ -91,12 +84,9 @@ class Theme:
         '''
         Output the Info(readme) file of the task in the theme
 
-        Parameters
-        ----------
-        nameTask : string
-        nameTest : string
-        path : string
-            the path contains the theme.
+        :param str nameTask :name of task
+        :param str nameTest : name of the Bench
+        :param str path : the path contains the theme.
 
         :return: no return
         '''
@@ -120,9 +110,7 @@ class Theme:
         '''
         Get the structure of every task
 
-        Parameters
-        -------
-        path :string path
+        :param str path :the path of the infrastructure
 
         :return: a dictionnaire
         '''

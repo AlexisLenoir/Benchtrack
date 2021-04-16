@@ -152,18 +152,19 @@
 <span class="c1">#theme</span>
 
 <div class="viewcode-block" id="Theme"><a class="viewcode-back" href="../theme.html#theme.Theme">[docs]</a><span class="k">class</span> <span class="nc">Theme</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    This class contains the structure of the theme of Task</span>
+
+<span class="sd">    :cvar str __themeName:name of the theme</span>
+<span class="sd">    :cvar list __listTasks: list of object task in the theme</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        construtor of the class theme</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        name : string</span>
-<span class="sd">            name of the theme.</span>
+<span class="sd">        :param str name :name of the theme.</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        None.</span>
+<span class="sd">        :return: no return</span>
 
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__themeName</span> <span class="o">=</span> <span class="n">name</span>
@@ -171,11 +172,9 @@
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        get the string that contains all the tasks of the theme.</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        string : string</span>
-<span class="sd">            a string that contains all the tasks of the theme.</span>
+<span class="sd">        :return: string : string a string that contains all the tasks of the theme.</span>
 
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span>
@@ -184,17 +183,14 @@
             <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;,&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">__listTasks</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
         <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;]&quot;</span>
         <span class="k">return</span> <span class="n">string</span>
+
 <div class="viewcode-block" id="Theme.addTask"><a class="viewcode-back" href="../theme.html#theme.Theme.addTask">[docs]</a>    <span class="k">def</span> <span class="nf">addTask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">task</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        all task to the listTasks of the theme</span>
+<span class="sd">        add task to the listTasks of the theme</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        task : string</span>
+<span class="sd">        :param Object_Task task:the task to add</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        None.</span>
+<span class="sd">        :return:no return</span>
 
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__listTasks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">task</span><span class="p">)</span></div>
@@ -202,9 +198,7 @@
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        getter of parameter Name of the theme</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        TYPE string</span>
+<span class="sd">        :return: string:name of the theme</span>
 
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__themeName</span></div>
@@ -213,18 +207,11 @@
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        execution of the theme</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        listTask : list of string</span>
-<span class="sd">            all the tasks of the theme.</span>
-<span class="sd">        listTarget : list of string</span>
-<span class="sd">            all the targets of the task in the theme.</span>
-<span class="sd">        path : string</span>
-<span class="sd">            the path contains the theme.</span>
+<span class="sd">        :param list listTask :all the tasks of the theme.</span>
+<span class="sd">        :param list listTarget :all the targets of the task in the theme.</span>
+<span class="sd">        :param str path :the path contains the theme.</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        None.</span>
+<span class="sd">        :return: no return</span>
 
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">In theme &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;:&quot;</span><span class="p">)</span>
@@ -237,9 +224,7 @@
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Output the list of tasks of the theme</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        None.</span>
+<span class="sd">        :return: no return</span>
 
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;In the theme &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;,there are tasks:&quot;</span><span class="p">)</span>
@@ -249,13 +234,11 @@
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Output the Info(readme) file of the task in the theme</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        nameTask : string</span>
-<span class="sd">        nameTest : string</span>
-<span class="sd">        path : string</span>
-<span class="sd">            the path contains the theme.</span>
+<span class="sd">        :param str nameTask :name of task</span>
+<span class="sd">        :param str nameTest : name of the Bench</span>
+<span class="sd">        :param str path : the path contains the theme.</span>
 
+<span class="sd">        :return: no return</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__listTasks</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">==</span> <span class="n">nameTask</span><span class="p">:</span>
@@ -277,13 +260,9 @@
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Get the structure of every task</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        -------</span>
-<span class="sd">        path :string path</span>
+<span class="sd">        :param str path :the path of the infrastructure</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        a dictionnaire</span>
+<span class="sd">        :return: a dictionnaire</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">list_structure_task</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__listTasks</span><span class="p">:</span>

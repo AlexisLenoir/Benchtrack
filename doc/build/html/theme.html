@@ -158,6 +158,9 @@
 <dt id="theme.Theme">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">theme.</span></code><code class="sig-name descname"><span class="pre">Theme</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/theme.html#Theme"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#theme.Theme" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class contains the structure of the theme of Task</p>
+<p>:cvar str __themeName:name of the theme
+:cvar list __listTasks: list of object task in the theme</p>
 <dl class="py method">
 <dt id="theme.Theme.ToCsv">
 <code class="sig-name descname"><span class="pre">ToCsv</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">writer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/theme.html#Theme.ToCsv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#theme.Theme.ToCsv" title="Permalink to this definition">¶</a></dt>
@@ -168,58 +171,71 @@
 <dl class="py method">
 <dt id="theme.Theme.addTask">
 <code class="sig-name descname"><span class="pre">addTask</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/theme.html#Theme.addTask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#theme.Theme.addTask" title="Permalink to this definition">¶</a></dt>
-<dd><p>all task to the listTasks of the theme</p>
-<p>task : string</p>
-<p>None.</p>
+<dd><p>add task to the listTasks of the theme</p>
+<p>:param Object_Task task:the task to add</p>
+<p>:return:no return</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="theme.Theme.exe_theme">
 <code class="sig-name descname"><span class="pre">exe_theme</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">listTask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">listTarget</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/theme.html#Theme.exe_theme"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#theme.Theme.exe_theme" title="Permalink to this definition">¶</a></dt>
 <dd><p>execution of the theme</p>
-<dl class="simple">
-<dt>listTask<span class="classifier">list of string</span></dt><dd><p>all the tasks of the theme.</p>
-</dd>
-<dt>listTarget<span class="classifier">list of string</span></dt><dd><p>all the targets of the task in the theme.</p>
-</dd>
-<dt>path<span class="classifier">string</span></dt><dd><p>the path contains the theme.</p>
+<p>:param list listTask :all the tasks of the theme.
+:param list listTarget :all the targets of the task in the theme.
+:param str path :the path contains the theme.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>no return</p>
 </dd>
 </dl>
-<p>None.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="theme.Theme.getName">
 <code class="sig-name descname"><span class="pre">getName</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/theme.html#Theme.getName"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#theme.Theme.getName" title="Permalink to this definition">¶</a></dt>
 <dd><p>getter of parameter Name of the theme</p>
-<p>TYPE string</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>string:name of the theme</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="theme.Theme.get_structure_tasks">
 <code class="sig-name descname"><span class="pre">get_structure_tasks</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/theme.html#Theme.get_structure_tasks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#theme.Theme.get_structure_tasks" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the structure of every task</p>
-<p>path :string path</p>
-<p>a dictionnaire</p>
+<p>:param str path :the path of the infrastructure</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a dictionnaire</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="theme.Theme.showInfoTask">
 <code class="sig-name descname"><span class="pre">showInfoTask</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nameTask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nameTest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/theme.html#Theme.showInfoTask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#theme.Theme.showInfoTask" title="Permalink to this definition">¶</a></dt>
 <dd><p>Output the Info(readme) file of the task in the theme</p>
-<p>nameTask : string
-nameTest : string
-path : string</p>
-<blockquote>
-<div><p>the path contains the theme.</p>
-</div></blockquote>
+<p>:param str nameTask :name of task
+:param str nameTest : name of the Bench
+:param str path : the path contains the theme.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>no return</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="theme.Theme.showlistTasks">
 <code class="sig-name descname"><span class="pre">showlistTasks</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/theme.html#Theme.showlistTasks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#theme.Theme.showlistTasks" title="Permalink to this definition">¶</a></dt>
 <dd><p>Output the list of tasks of the theme</p>
-<p>None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>no return</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>

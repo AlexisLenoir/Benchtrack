@@ -158,31 +158,46 @@
 <dt id="structureBench.BenchTrack">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">structureBench.</span></code><code class="sig-name descname"><span class="pre">BenchTrack</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_inf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_benchTrack</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/structureBench.html#BenchTrack"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#structureBench.BenchTrack" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class contains the structure of the benchTrack</p>
+<p>:cvar str __path:the relative path that contains the infrastructure.which is also the first parameter of input
+:cvar str __name:name of bench
+:cvar dict __dictTargets:a dictionnaire contains keys of target’s name and values of object Target
+:cvar list __listThemes:a list contains of object theme
+:cvar list __allTarget:a list of all targets must be tested
+:cvar list __allTask:a list of all tasks must be tested
+:cvar str __path_benchTrack:path of benchTrack.py
+:cvar str __outputFile:path of output.csv</p>
 <dl class="py method">
 <dt id="structureBench.BenchTrack.ToCsv">
 <code class="sig-name descname"><span class="pre">ToCsv</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/structureBench.html#BenchTrack.ToCsv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#structureBench.BenchTrack.ToCsv" title="Permalink to this definition">¶</a></dt>
 <dd><p>write infos of the infrastructure to csv file</p>
-<p>None.</p>
+<p>:return:no return</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="structureBench.BenchTrack.addTargets">
 <code class="sig-name descname"><span class="pre">addTargets</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lang_target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/structureBench.html#BenchTrack.addTargets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#structureBench.BenchTrack.addTargets" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add targets at the dictionay dictTargets</p>
-<dl class="simple">
-<dt>name_target<span class="classifier">string</span></dt><dd><p>targets of the infrastructure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Param</dt>
+<dd class="field-odd"><p>str name_target:targets of the infrastructure.</p>
 </dd>
-<dt>lang_target<span class="classifier">string</span></dt><dd><p>programming languague of the target.</p>
+<dt class="field-even">Param</dt>
+<dd class="field-even"><p>str lang_target:programming languague of the target.</p>
 </dd>
 </dl>
-<p>None.</p>
+<p>:return:no return</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="structureBench.BenchTrack.exe_bench">
 <code class="sig-name descname"><span class="pre">exe_bench</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/structureBench.html#BenchTrack.exe_bench"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#structureBench.BenchTrack.exe_bench" title="Permalink to this definition">¶</a></dt>
 <dd><p>Execution of the programme</p>
-<p>None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>no return</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -190,14 +205,16 @@
 <code class="sig-name descname"><span class="pre">filter_target</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/structureBench.html#BenchTrack.filter_target"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#structureBench.BenchTrack.filter_target" title="Permalink to this definition">¶</a></dt>
 <dd><p>delet the target has been excluded from the command
 of user</p>
-<dl class="simple">
-<dt>lis<span class="classifier">list of string</span></dt><dd><p>list of targets will be excluded/included.</p>
-</dd>
-<dt>model<span class="classifier">Bool</span></dt><dd><p>if true, all the targets selected will be added in the list of execution.
-else, delet those targets excluded</p>
+<p>:param:list lis:list of targets will be excluded/included.
+:param bool model :if true, all the targets selected will be added in the list of execution.</p>
+<blockquote>
+<div><p>else, delet those targets excluded</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The number of targets to be tested</p>
 </dd>
 </dl>
-<p>The number of targets to be tested</p>
 </dd></dl>
 
 <dl class="py method">
@@ -205,49 +222,56 @@ else, delet those targets excluded</p>
 <code class="sig-name descname"><span class="pre">filter_task</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/structureBench.html#BenchTrack.filter_task"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#structureBench.BenchTrack.filter_task" title="Permalink to this definition">¶</a></dt>
 <dd><p>delet the task has been excluded from the command
 of user</p>
-<dl class="simple">
-<dt>lis<span class="classifier">list of string</span></dt><dd><p>list of tasks will be excluded/included.</p>
-</dd>
-<dt>model<span class="classifier">Bool</span></dt><dd><p>if true, all the tasks selected will be added in the list of execution.
-else, delet those tasks excluded</p>
+<p>:param list lis:list of tasks will be excluded/included.
+:param bool model:if true, all the tasks selected will be added in the list of execution.</p>
+<blockquote>
+<div><p>else, delet those tasks excluded</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>no returnThe number of targets to be tested</p>
 </dd>
 </dl>
-<p>The number of targets to be tested</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="structureBench.BenchTrack.getName">
 <code class="sig-name descname"><span class="pre">getName</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/structureBench.html#BenchTrack.getName"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#structureBench.BenchTrack.getName" title="Permalink to this definition">¶</a></dt>
 <dd><p>Getter of parameter __name</p>
-<dl class="simple">
-<dt>TYPE</dt><dd><p>DESCRIPTION.</p>
-</dd>
-</dl>
+<p>:return:name of Bench</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="structureBench.BenchTrack.get_structure_tasks">
 <code class="sig-name descname"><span class="pre">get_structure_tasks</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/structureBench.html#BenchTrack.get_structure_tasks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#structureBench.BenchTrack.get_structure_tasks" title="Permalink to this definition">¶</a></dt>
-<dd><p>return the structure of the tasks</p>
+<dd><p>get all infos of targets,tasks</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the structure of the tasks</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="structureBench.BenchTrack.showInfoTarget">
 <code class="sig-name descname"><span class="pre">showInfoTarget</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nomTarget</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/structureBench.html#BenchTrack.showInfoTarget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#structureBench.BenchTrack.showInfoTarget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Output infos (readme) of the target</p>
-<dl class="simple">
-<dt>nomTarget<span class="classifier">string</span></dt><dd><p>target’s name.</p>
+<p>:param str nomTarget :target’s name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>no return</p>
 </dd>
 </dl>
-<p>None.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="structureBench.BenchTrack.showInfoTask">
 <code class="sig-name descname"><span class="pre">showInfoTask</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nameTask</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/structureBench.html#BenchTrack.showInfoTask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#structureBench.BenchTrack.showInfoTask" title="Permalink to this definition">¶</a></dt>
 <dd><p>output info(readme) of the task</p>
-<dl class="simple">
-<dt>nameTask<span class="classifier">string</span></dt><dd><p>task’s name.</p>
+<p>:param str nameTask :task’s name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>no return</p>
 </dd>
 </dl>
 </dd></dl>
@@ -256,14 +280,22 @@ else, delet those tasks excluded</p>
 <dt id="structureBench.BenchTrack.showListTasks">
 <code class="sig-name descname"><span class="pre">showListTasks</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/structureBench.html#BenchTrack.showListTasks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#structureBench.BenchTrack.showListTasks" title="Permalink to this definition">¶</a></dt>
 <dd><p>output all the tasks that will be executed</p>
-<p>None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>no return</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="structureBench.BenchTrack.show_list_target">
 <code class="sig-name descname"><span class="pre">show_list_target</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/structureBench.html#BenchTrack.show_list_target"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#structureBench.BenchTrack.show_list_target" title="Permalink to this definition">¶</a></dt>
 <dd><p>Output the list of targets that will be executed</p>
-<p>None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>no return</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>

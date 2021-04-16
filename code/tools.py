@@ -7,12 +7,9 @@ import csv
 def execute(path, cmd):
     '''
     This fonction is made to run  files
-    Parameters
-    ----------
-    path : string
-        the path that contains the task need to be execute.
-    cmd : string
-        command of executing based on terminal.
+
+    :param str path :the path that contains the task need to be execute.
+    :param str cmd :command of executing based on terminal.
 
     :return: no return
     '''
@@ -36,25 +33,19 @@ def execute(path, cmd):
     os.chdir(CurrentPath)
 
 def exeCmd(path,parameter,cmd,language,target):
-    '''
-    exeCmd is a fonction that switch the task to 
+    """
+    exeCmd is a fonction that switch the task to
     other specific fonction to execute them
-    Parameters
-    ----------
-    path : string
-        the path that contains the task need to be execute.
-    parameter : string
-        the parameter of the task.
-    cmd : String
-        command of executing based on terminal.
-    language : string
-        the programming languague of task .
-    target: string
-        the name of target
+
+    :param str path : the path that contains the task need to be execute.
+    :param str parameter : the parameter of the task.
+    :param str cmd : command of executing based on terminal.
+    :param str language : the programming languague of task .
+    :param str target: the name of target
 
     :return: no return
 
-    '''
+    """
     target+=get_suffixe(language)
     new_cmd=cmd.replace("{script}",target)
     new_cmd2=new_cmd.replace("{arg}",parameter)
@@ -65,27 +56,29 @@ def exeCmd(path,parameter,cmd,language,target):
 
 
 def get_suffixe(language):
-    '''
+    """
     This method return the suffixe of programming language
-    Parameters:
-        language:string
+
+    :param str language:language to get a suffixe
+
     :return: suffixe of the fichier in language input
-    '''
+    """
     if language == "python":
         return ".py"
     if language == "r":
         return ".r"
 
 def ConfigFileTarget(path_target):
-    '''
-    This method trait configure file and return their command and 
+    """
+    This method trait configure file and return their command and
     programming language of the target.
-    
-    Parameters:
-        path of the config.ini for the target
+
+
+    :param str path_target:path of the config.ini for the target
+
     :return:run:the command of executing the target
             language:the programming language of the target
-    '''
+    """
     config = ConfigParser()
     config.read(path_target)
     language = config.get('execution', 'language')
@@ -93,14 +86,15 @@ def ConfigFileTarget(path_target):
     return run,language
 
 def ConfigFileTask(file):
-    '''
-    This method trait configure file of task and return their sample_size and 
+    """
+    This method trait configure file of task and return their sample_size and
     parameters of the task.
-    Parameters:
-        path of the the config.ini for the task
+
+    :param str file:path of the the config.ini for the task
+
     :return:sample_size:sample size for execute all targets in this task
            :arg:all args of the target
-    '''
+    """
     try:
         config = ConfigParser()
         config.read(file)
@@ -112,33 +106,30 @@ def ConfigFileTask(file):
 
 # pour trouver tous les fichers de repertoire de BASE.
 def find_all_file(base):
-    '''
+    """
     Find all files in base
 
-    Parameters
-    ----------
-    base : string
-        the system path.
+    :param str base : the system path.
 
-    :yield:f : string
-         :all files found in base.
+    :yield str f : all files found in base.
 
-    '''
+    """
     for root, ds, fs in os.walk(base):
         for f in fs:
             yield f
 
 
-def existFile(fileName, Path):
-    '''
+def existFile(fileName, path):
+    """
     To test if a Path contain a file
-    Parameters:
-        fileName:name of the file
-        path:the path that contains the file
-    :returns:True:Found a file name filename in path
-            :False:if the file doesn't be found in path
-    '''
-    for files in os.listdir(Path):
+
+    :param str fileName:name of the file
+    :param str path:the path that contains the file
+
+    :returns:bool:True for Found a file name filename in path
+                    esle False
+    """
+    for files in os.listdir(path):
         if re.match(fileName,files):
             return True
     return False
@@ -228,14 +219,9 @@ def flagTasks(argv, bench, flag):
     '''
     gestion of flags of the tasks
 
-    Parameters
-    ----------
-    argv : string
-        name of the benchmark.
-    bench : string
-        name of bench for testing.
-    flag : string
-        type of flags.
+    :param str argv :name of the benchmark.
+    :param str bench :name of bench for testing.
+    :param str flag : type of flags.
 
     :return: no return
     '''
@@ -262,16 +248,12 @@ def flagTargets(argv, bench, flag):
     '''
     gestion of flags of the targets
 
-    Parameters
-    ----------
-    argv : string
-        name of the benchmark.
-    bench : string
-        name of bench for testing.
-    flag : string
-        type of flags.
-    :return: no return
 
+    :param str argv : name of the benchmark.
+    :param str bench : name of bench for testing.
+    :param str flag : type of flags.
+
+    :return: no return
     '''
 
     if flag == 'info':

@@ -158,77 +158,108 @@
 <dt id="task.Task">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">task.</span></code><code class="sig-name descname"><span class="pre">Task</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/task.html#Task"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#task.Task" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class contains the structure of the Task</p>
+<p>:cvar str __Name :name of the task.
+:cvar str __args :parameters of the task.
+:cvar int __sample_size :optional,the times of execution. The default is 20.
+:cvar dict __dictTargets:a dictionnaire contains keys of target’s name and values of object Target</p>
 <dl class="py method">
 <dt id="task.Task.ToCsv">
 <code class="sig-name descname"><span class="pre">ToCsv</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">writer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theme</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/task.html#Task.ToCsv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#task.Task.ToCsv" title="Permalink to this definition">¶</a></dt>
 <dd><p>generetor the csv file which contains some
 infos about results of execution</p>
-<p>None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>no return</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="task.Task.addTarget">
 <code class="sig-name descname"><span class="pre">addTarget</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_Target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/task.html#Task.addTarget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#task.Task.addTarget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add targets to targets dictionary of the task</p>
-<dl class="simple">
-<dt>name_Target<span class="classifier">string</span></dt><dd><p>name of target.</p>
+<p>param str name_Target :name of target.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>no return</p>
 </dd>
 </dl>
-<p>None.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="task.Task.exe_before_test">
 <code class="sig-name descname"><span class="pre">exe_before_test</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">themeName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/task.html#Task.exe_before_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#task.Task.exe_before_test" title="Permalink to this definition">¶</a></dt>
 <dd><p>execute some before-task file like imports</p>
-<p>None.</p>
+<p>:param str themeName:name of theme
+:param str targets:name of target
+:param str path :path of the infrastructure
+:param str args:args of execution</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>no return</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="task.Task.exe_file">
 <code class="sig-name descname"><span class="pre">exe_file</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_configFile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/task.html#Task.exe_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#task.Task.exe_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>execution of a target</p>
-<p>None.</p>
+<p>:param str path_configFile:path of file config of target
+:param str path_file:file to execute
+:param str args:args of execution
+:param str target :name of target</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>no return</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="task.Task.exe_target">
 <code class="sig-name descname"><span class="pre">exe_target</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">themeName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/task.html#Task.exe_target"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#task.Task.exe_target" title="Permalink to this definition">¶</a></dt>
 <dd><p>drive infos from configure file of target and transforme these infos</p>
-<p>None.</p>
+<p>:param str themeName:name of theme
+:param str targets:name of target
+:param str path :path of the infrastructure
+:param str args:args of execution</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>no return</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="task.Task.exe_task">
 <code class="sig-name descname"><span class="pre">exe_task</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">themeName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/task.html#Task.exe_task"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#task.Task.exe_task" title="Permalink to this definition">¶</a></dt>
 <dd><p>Execution of the tasks</p>
-<dl class="simple">
-<dt>lis<span class="classifier">list of string</span></dt><dd><p>list of targets.</p>
-</dd>
-<dt>themeName<span class="classifier">string</span></dt><dd><p>name of theme of the task.</p>
-</dd>
-<dt>path<span class="classifier">stirng</span></dt><dd><p>the path contains the theme</p>
+<p>:param list lis :list of targets.
+:param str themeName : name of theme of the task.
+:param str path :the path contains the theme</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>no return</p>
 </dd>
 </dl>
-<p>None.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="task.Task.getName">
 <code class="sig-name descname"><span class="pre">getName</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/task.html#Task.getName"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#task.Task.getName" title="Permalink to this definition">¶</a></dt>
-<dd><p>return name of the task</p>
-<dl class="simple">
-<dt>string</dt><dd><p>name of the task.</p>
-</dd>
-</dl>
+<dd><p>get name of the task</p>
+<p>:return:name of the task.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="task.Task.get_structure_tasks">
 <code class="sig-name descname"><span class="pre">get_structure_tasks</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/task.html#Task.get_structure_tasks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#task.Task.get_structure_tasks" title="Permalink to this definition">¶</a></dt>
 <dd><p>get targets of tasks</p>
-<dl class="simple">
-<dt>list_target<span class="classifier">TYPE</span></dt><dd><p>DESCRIPTION.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>list_target : TYPE DESCRIPTION.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -237,19 +268,24 @@ infos about results of execution</p>
 <dt id="task.Task.modifyTarget">
 <code class="sig-name descname"><span class="pre">modifyTarget</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_Target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">res_Target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/task.html#Task.modifyTarget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#task.Task.modifyTarget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add execution time of targets of the task</p>
-<dl class="simple">
-<dt>name_Target<span class="classifier">string</span></dt><dd><p>the target.</p>
-</dd>
-<dt>res_Target<span class="classifier">flaot</span></dt><dd><p>execution time.</p>
+<p>:param str name_Target :the target.
+:param float res_Target : execution time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>no return</p>
 </dd>
 </dl>
-<p>None.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="task.Task.upgrade_for_target">
 <code class="sig-name descname"><span class="pre">upgrade_for_target</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/task.html#Task.upgrade_for_target"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#task.Task.upgrade_for_target" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>no return</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 

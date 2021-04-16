@@ -4,23 +4,25 @@ from task import Task
 class BenchTrack:
     '''
     This class contains the structure of the benchTrack
+
+    :cvar str __path:the relative path that contains the infrastructure.which is also the first parameter of input
+    :cvar str __name:name of bench
+    :cvar dict __dictTargets:a dictionnaire contains keys of target's name and values of object Target
+    :cvar list __listThemes:a list contains of object theme
+    :cvar list __allTarget:a list of all targets must be tested
+    :cvar list __allTask:a list of all tasks must be tested
+    :cvar str __path_benchTrack:path of benchTrack.py
+    :cvar str __outputFile:path of output.csv
     '''
     def __init__(self, path_inf, path_benchTrack):
 
         '''
         constructor of class BenchTrack
 
-        Parameters
-        ----------
-        path_inf : string
-            the relative path that contains the infrastructure.
-            which is also the first parameter of input
-        path_benchTrack : string
-            the absolu path that contains the benchTrack.
+        :param str path_inf:the relative path that contains the infrastructure.which is also the first parameter of input
+        :param str path_benchTrack : the absolu path that contains the benchTrack.
 
-        Returns
-        -------
-        None.
+        :return:no return
 
         '''
         self.__path = path_inf
@@ -39,10 +41,7 @@ class BenchTrack:
         '''
         Output list of all the themes of the infrastructure
 
-        Returns
-        -------
-        string : TYPE
-            DESCRIPTION.
+        return str: infos of the bench
 
         '''
         string = self.getName()
@@ -58,59 +57,54 @@ class BenchTrack:
         """
         construct all theme,target,task
         """
-        path = self.__path
-        if not os.path.exists(path):
-            print("Error:Test name")
-            return 0
-        path += self.__name
-        #for every theme in the folder test
-        path += '/tasks'
+        try:
+            path = self.__path
+            path += self.__name
+            #for every theme in the folder test
+            path += '/tasks'
 
-        #construt list of targets
-        path = self.__path+"/targets"
-        for targetName in os.listdir(path):
-            if targetName[0] == '.' :
-                continue
-            self.__allTarget.append(targetName)
-        path = self.__path+'/tasks'
-        for themeName in os.listdir(path):
-            if themeName[0] == '.' :
-                continue
-            theme = Theme(themeName)
-            #for every task in the folder theme
-            pathT = path + '/' + themeName
-            for taskName in os.listdir(pathT):
-                if taskName[0] == '.' :
+            #construt list of targets
+            path = self.__path+"/targets"
+            for targetName in os.listdir(path):
+                if targetName[0] == '.' :
                     continue
-                #set in the list alltask
-                if taskName not in self.__allTask:
-                    self.__allTask.append(taskName)
-                pathTs = pathT+'/'+taskName +'/'
-                path_config = pathTs + 'config.ini'
-                #resd config.ini and construct task
-                sample_size = 20
-                args = ''
-                if os.path.exists(path_config):
-                    sample_size,args = ConfigFileTask(path_config)
-                task = Task(taskName,args.split(' '),sample_size)
-                # set all target
-                for targetName in self.__allTarget:
-                    # path_target = pathTs + targetName+".py"
-                    if existFile(targetName,pathTs):
-                        task.addTarget(targetName)
-                        
-                theme.addTask(task)
+                self.__allTarget.append(targetName)
+            path = self.__path+'/tasks'
+            for themeName in os.listdir(path):
+                if themeName[0] == '.' :
+                    continue
+                theme = Theme(themeName)
+                #for every task in the folder theme
+                pathT = path + '/' + themeName
+                for taskName in os.listdir(pathT):
+                    if taskName[0] == '.' :
+                        continue
+                    #set in the list alltask
+                    if taskName not in self.__allTask:
+                        self.__allTask.append(taskName)
+                    pathTs = pathT+'/'+taskName +'/'
+                    path_config = pathTs + 'config.ini'
+                    #resd config.ini and construct task
+                    sample_size = 20
+                    args = ''
+                    if os.path.exists(path_config):
+                        sample_size,args = ConfigFileTask(path_config)
+                    task = Task(taskName,args.split(' '),sample_size)
+                    # set all target
+                    for targetName in self.__allTarget:
+                        # path_target = pathTs + targetName+".py"
+                        if existFile(targetName,pathTs):
+                            task.addTarget(targetName)
 
-            self.__listThemes.append(theme)
-            return True
+                    theme.addTask(task)
+                self.__listThemes.append(theme)
+        except IOError:
+            print("Error of path in construct")
     def getName(self):
         '''
         Getter of parameter __name
 
-        Returns
-        -------
-        TYPE
-            DESCRIPTION.
+        :return:name of Bench
 
         '''
         return self.__name
@@ -119,9 +113,7 @@ class BenchTrack:
         '''
         write infos of the infrastructure to csv file
 
-        Returns
-        -------
-        None.
+        :return:no return
 
         '''
         with open(self.__outputFile, "w",newline="") as csvfile:
@@ -136,17 +128,10 @@ class BenchTrack:
         '''
         Add targets at the dictionay dictTargets
 
-        Parameters
-        ----------
-        name_target : string
-            targets of the infrastructure.
-        lang_target : string
-            programming languague of the target.
+        :param: str name_target:targets of the infrastructure.
+        :param: str lang_target:programming languague of the target.
 
-        Returns
-        -------
-        None.
-
+        :return:no return
         '''
         self.__dictTargets[name_target] = lang_target
 
@@ -154,10 +139,7 @@ class BenchTrack:
         '''
         Add themes of the infrastructure to the listThemes
 
-        Parameters
-        ----------
-        theme : TYPE
-            DESCRIPTION.
+        :param Object_Theme theme:
 
         :return: no return
 
@@ -169,9 +151,7 @@ class BenchTrack:
         '''
         Execution of the programme
 
-        Returns
-        -------
-        None.
+        :return: no return
 
         '''
         print("Execution de "+self.__name)
@@ -183,13 +163,9 @@ class BenchTrack:
         delet the target has been excluded from the command
         of user
 
-        Parameters
-        ----------
-        lis : list of string
-            list of targets will be excluded/included.
-        model : Bool
-            if true, all the targets selected will be added in the list of execution.
-            else, delet those targets excluded
+        :param:list lis:list of targets will be excluded/included.
+        :param bool model :if true, all the targets selected will be added in the list of execution.
+                            else, delet those targets excluded
 
         :return: The number of targets to be tested
 
@@ -205,17 +181,11 @@ class BenchTrack:
         delet the task has been excluded from the command
         of user
 
-        Parameters
-        ----------
-        lis : list of string
-            list of tasks will be excluded/included.
-        model : Bool
-            if true, all the tasks selected will be added in the list of execution.
-            else, delet those tasks excluded
+        :param list lis:list of tasks will be excluded/included.
+        :param bool model:if true, all the tasks selected will be added in the list of execution.
+                            else, delet those tasks excluded
 
         :return: no returnThe number of targets to be tested
-
-
         '''
         if model:
             self.__allTask = lis
@@ -238,10 +208,7 @@ class BenchTrack:
         '''
         Output infos (readme) of the target 
 
-        Parameters
-        ----------
-        nomTarget : string
-            target's name.
+        :param str nomTarget :target's name.
 
         :return: no return
 
@@ -264,10 +231,8 @@ class BenchTrack:
         '''
         output info(readme) of the task
 
-        Parameters
-        ----------
-        nameTask : string
-            task's name.
+        :param str nameTask :task's name.
+
         :return: no return
         '''
         for i in self.__listThemes:
@@ -278,6 +243,8 @@ class BenchTrack:
 
     def get_structure_tasks(self):
         '''
+        get all infos of targets,tasks
+
         :return: the structure of the tasks
         '''
         list_structure_theme = {}

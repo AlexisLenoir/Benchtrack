@@ -151,38 +151,36 @@
 <span></span><span class="kn">from</span> <span class="nn">tools</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <div class="viewcode-block" id="Task"><a class="viewcode-back" href="../task.html#task.Task">[docs]</a><span class="k">class</span> <span class="nc">Task</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class contains the structure of the Task</span>
+
+<span class="sd">    :cvar str __Name :name of the task.</span>
+<span class="sd">    :cvar str __args :parameters of the task.</span>
+<span class="sd">    :cvar int __sample_size :optional,the times of execution. The default is 20.</span>
+<span class="sd">    :cvar dict __dictTargets:a dictionnaire contains keys of target&#39;s name and values of object Target</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">sample_size</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructor of class Task</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        name : string</span>
-<span class="sd">            name of the task.</span>
-<span class="sd">        args : string</span>
-<span class="sd">            parameters of the task.</span>
-<span class="sd">        sample_size : int, optional</span>
-<span class="sd">            the times of execution. The default is 20.</span>
+<span class="sd">        :param str name :name of the task.</span>
+<span class="sd">        :param str args :parameters of the task.</span>
+<span class="sd">        :param int sample_size :optional,the times of execution. The default is 20.</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        None.</span>
+<span class="sd">        :return: no return</span>
 
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__Name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__dictTargets</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__sample_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sample_size</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__args</span> <span class="o">=</span> <span class="n">args</span>
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a string of all the targets from the task</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        stirng</span>
-<span class="sd">            all the targets from the task.</span>
+<span class="sd">        :return: stirng:all the targets from the task.</span>
 
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;[&quot;</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dictTargets</span><span class="p">:</span>
             <span class="n">string</span> <span class="o">+=</span> <span class="n">i</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span>
@@ -192,54 +190,36 @@
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Add targets to targets dictionary of the task</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        name_Target : string</span>
-<span class="sd">            name of target.</span>
+<span class="sd">        param str name_Target :name of target.</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        None.</span>
+<span class="sd">        :return: no return</span>
 
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__dictTargets</span><span class="p">[</span><span class="n">name_Target</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__args</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Task.modifyTarget"><a class="viewcode-back" href="../task.html#task.Task.modifyTarget">[docs]</a>    <span class="k">def</span> <span class="nf">modifyTarget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name_Target</span><span class="p">,</span> <span class="n">res_Target</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add execution time of targets of the task</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        name_Target : string</span>
-<span class="sd">            the target.</span>
-<span class="sd">        res_Target : flaot</span>
-<span class="sd">            execution time.</span>
+<span class="sd">        :param str name_Target :the target.</span>
+<span class="sd">        :param float res_Target : execution time.</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        None.</span>
+<span class="sd">        :return: no return</span>
 
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__dictTargets</span><span class="p">[</span><span class="n">name_Target</span><span class="p">]</span> <span class="o">=</span> <span class="n">res_Target</span></div>
 
 <div class="viewcode-block" id="Task.exe_task"><a class="viewcode-back" href="../task.html#task.Task.exe_task">[docs]</a>    <span class="k">def</span> <span class="nf">exe_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lis</span><span class="p">,</span> <span class="n">themeName</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Execution of the tasks </span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Execution of the tasks</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        lis : list of string</span>
-<span class="sd">            list of targets.</span>
-<span class="sd">        themeName : string</span>
-<span class="sd">            name of theme of the task.</span>
-<span class="sd">        path : stirng</span>
-<span class="sd">            the path contains the theme</span>
+<span class="sd">        :param list lis :list of targets.</span>
+<span class="sd">        :param str themeName : name of theme of the task.</span>
+<span class="sd">        :param str path :the path contains the theme</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        None.</span>
+<span class="sd">        :return: no return</span>
 
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-In Task &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">__Name</span> <span class="o">+</span> <span class="s2">&quot;:&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dictTargets</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">lis</span><span class="p">:</span>
@@ -266,14 +246,17 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">__dictTargets</span><span class="p">[</span><span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="n">list_times</span></div>
 
 <div class="viewcode-block" id="Task.exe_before_test"><a class="viewcode-back" href="../task.html#task.Task.exe_before_test">[docs]</a>    <span class="k">def</span> <span class="nf">exe_before_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">themeName</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span><span class="n">args</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        execute some before-task file like imports</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        None.</span>
+<span class="sd">        :param str themeName:name of theme</span>
+<span class="sd">        :param str targets:name of target</span>
+<span class="sd">        :param str path :path of the infrastructure</span>
+<span class="sd">        :param str args:args of execution</span>
 
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        :return: no return</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">path_File</span> <span class="o">=</span> <span class="n">path</span>  <span class="o">+</span> <span class="s2">&quot;/tasks/&quot;</span> <span class="o">+</span> <span class="n">themeName</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span> 
         <span class="n">path_ConfigFile</span> <span class="o">=</span> <span class="n">path</span>  <span class="o">+</span> <span class="s2">&quot;/targets/&quot;</span> <span class="o">+</span> <span class="n">targets</span> <span class="o">+</span> <span class="s2">&quot;/config.ini&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">exe_file</span><span class="p">(</span><span class="n">path_ConfigFile</span><span class="p">,</span> <span class="n">path_File</span><span class="p">,</span><span class="n">args</span><span class="p">,</span><span class="s2">&quot;before_&quot;</span><span class="o">+</span><span class="n">targets</span><span class="p">)</span></div>
@@ -282,9 +265,12 @@
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        drive infos from configure file of target and transforme these infos</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        None.</span>
+<span class="sd">        :param str themeName:name of theme</span>
+<span class="sd">        :param str targets:name of target</span>
+<span class="sd">        :param str path :path of the infrastructure</span>
+<span class="sd">        :param str args:args of execution</span>
+
+<span class="sd">        :return: no return</span>
 
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">path_ConfigFile</span> <span class="o">=</span> <span class="n">path</span>  <span class="o">+</span> <span class="s2">&quot;/targets/&quot;</span> <span class="o">+</span> <span class="n">targets</span> <span class="o">+</span> <span class="s2">&quot;/config.ini&quot;</span>
@@ -295,9 +281,12 @@
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        execution of a target</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        None.</span>
+<span class="sd">        :param str path_configFile:path of file config of target</span>
+<span class="sd">        :param str path_file:file to execute</span>
+<span class="sd">        :param str args:args of execution</span>
+<span class="sd">        :param str target :name of target</span>
+
+<span class="sd">        :return: no return</span>
 
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">command</span><span class="p">,</span> <span class="n">language</span> <span class="o">=</span> <span class="n">ConfigFileTarget</span><span class="p">(</span><span class="n">path_configFile</span><span class="p">)</span>
@@ -306,12 +295,9 @@
 
 <div class="viewcode-block" id="Task.getName"><a class="viewcode-back" href="../task.html#task.Task.getName">[docs]</a>    <span class="k">def</span> <span class="nf">getName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        return name of the task</span>
+<span class="sd">        get name of the task</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        string</span>
-<span class="sd">            name of the task.</span>
+<span class="sd">        :return:name of the task.</span>
 
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__Name</span></div>
@@ -321,9 +307,7 @@
 <span class="sd">        generetor the csv file which contains some</span>
 <span class="sd">        infos about results of execution</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        None.</span>
+<span class="sd">        :return: no return</span>
 
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">targetNames</span> <span class="o">=</span> <span class="nb">dict</span><span class="o">.</span><span class="n">keys</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__dictTargets</span><span class="p">)</span>
@@ -336,10 +320,7 @@
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        get targets of tasks</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        list_target : TYPE</span>
-<span class="sd">            DESCRIPTION.</span>
+<span class="sd">        :return: list_target : TYPE DESCRIPTION.</span>
 
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">list_target</span><span class="o">=</span><span class="p">[]</span>
@@ -352,6 +333,10 @@
         <span class="k">return</span> <span class="n">list_target</span></div>
 
 <div class="viewcode-block" id="Task.upgrade_for_target"><a class="viewcode-back" href="../task.html#task.Task.upgrade_for_target">[docs]</a>    <span class="k">def</span> <span class="nf">upgrade_for_target</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">path</span><span class="p">,</span><span class="n">target</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+
+<span class="sd">        :return: no return</span>
+<span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">path_ConfigFile</span> <span class="o">=</span> <span class="n">path</span>  <span class="o">+</span> <span class="s2">&quot;/targets/&quot;</span> <span class="o">+</span> <span class="n">target</span> <span class="o">+</span> <span class="s2">&quot;/config.ini&quot;</span>
         <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
         <span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">path_ConfigFile</span><span class="p">)</span>
