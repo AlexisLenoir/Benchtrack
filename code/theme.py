@@ -2,6 +2,9 @@ from tools import *
 #theme
 
 class Theme:
+    '''
+    This class contains the structure of the theme of Task
+    '''
     def __init__(self,name):
         '''
         construtor of the class theme

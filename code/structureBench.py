@@ -2,7 +2,9 @@ from tools import *
 from theme import Theme
 from task import Task
 class BenchTrack:
-    
+    '''
+    This class contains the structure of the benchTrack
+    '''
     def __init__(self, path_inf, path_benchTrack):
 
         '''

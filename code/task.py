@@ -1,6 +1,9 @@
 from tools import *
 import os
 class Task:
+    '''
+    This class contains the structure of the Task
+    '''
     def __init__(self, name, args, sample_size=20):
         '''
         Constructor of class Task
