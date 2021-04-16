@@ -93,12 +93,10 @@ class Task:
         print("-In Task " + self.__Name + ":")
         for target in self.__dictTargets:
             if target in lis:
-
                 try :
                     self.exe_target(themeName, target, path, self.__args[0])
                 except ModuleNotFoundError:
                     self.upgrade_for_target(path,target)
-
                 list_times = []
                 for j in range(len(self.__args)):
                     # time to execute before_test
@@ -140,12 +138,12 @@ class Task:
 
         '''
         path_ConfigFile = path  + "/targets/" + targets + "/config.ini"
-        path_File = path  + "/tasks/" + themeName + "/" + self.getName() 
+        path_File = path  + "/tasks/" + themeName + "/" + self.getName()
         self.exe_file(path_ConfigFile, path_File,args,targets)
 
     def exe_file(self, path_configFile, path_file, args,target):
         '''
-        execution of target
+        execution of a target
 
         Returns
         -------
@@ -178,7 +176,6 @@ class Task:
         None.
 
         '''
-        targetNames = []
         targetNames = dict.keys(self.__dictTargets)
         for target in targetNames:
             for i in range(len(self.__args)):

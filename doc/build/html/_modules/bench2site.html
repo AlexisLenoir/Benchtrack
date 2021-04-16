@@ -1,0 +1,379 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>bench2site &mdash; BenchTrack 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> BenchTrack
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BenchTrack</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>bench2site</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for bench2site</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">-----------------------------------------------bench2site---------------------------------------------------</span>
+<span class="sd">Ce module permet de générer le site</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">getcwd</span><span class="p">,</span> <span class="n">chdir</span><span class="p">,</span> <span class="n">mkdir</span>
+<span class="kn">import</span> <span class="nn">pathlib</span> <span class="k">as</span> <span class="nn">pl</span>
+<span class="kn">import</span> <span class="nn">structureBench</span>
+<span class="kn">from</span> <span class="nn">generateRst</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+
+<div class="viewcode-block" id="load_csv_results"><a class="viewcode-back" href="../bench2site.html#bench2site.load_csv_results">[docs]</a><span class="k">def</span> <span class="nf">load_csv_results</span><span class="p">(</span><span class="n">path_infra_csv</span><span class="p">,</span> <span class="n">structure_run_time</span><span class="p">):</span>
+    
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_infra_csv</span><span class="p">)</span> <span class="k">as</span> <span class="n">csv_file</span><span class="p">:</span>
+        <span class="n">csv_reader</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">csv_file</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">))</span>
+        <span class="n">line_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">csv_reader</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">line_count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">line_count</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">continue</span>
+            
+            <span class="n">structure_run_time</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">]][</span><span class="n">row</span><span class="p">[</span><span class="mi">3</span><span class="p">]]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+
+    <span class="c1">#print (&quot;structure_run_time&quot;, structure_run_time)</span>
+
+    <span class="k">return</span> <span class="n">structure_run_time</span></div>
+
+
+
+<div class="viewcode-block" id="bench2content"><a class="viewcode-back" href="../bench2site.html#bench2site.bench2content">[docs]</a><span class="k">def</span> <span class="nf">bench2content</span><span class="p">(</span><span class="n">path_infra</span><span class="p">,</span> <span class="n">path_benchTrack</span><span class="p">,</span> <span class="n">file_csv</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Cette fonction prend en argument l&#39;adresse de l&#39;infrastructure et à l&#39;aide du fichier csv results,</span>
+<span class="sd">    genère un répertoire content pour l&#39;affichage du site statique.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">name_infra</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path_infra</span><span class="p">)</span>
+
+    <span class="c1"># Chargement de l&#39;objet de Benchtrack et de certains attributs</span>
+    <span class="n">my_bench</span> <span class="o">=</span> <span class="n">structureBench</span><span class="o">.</span><span class="n">BenchTrack</span><span class="p">(</span><span class="n">path_infra</span><span class="p">,</span> <span class="n">path_benchTrack</span><span class="p">)</span>
+
+    <span class="n">list_targets</span> <span class="o">=</span> <span class="n">my_bench</span><span class="o">.</span><span class="n">_BenchTrack__allTarget</span>
+    <span class="n">list_tasks</span> <span class="o">=</span> <span class="n">my_bench</span><span class="o">.</span><span class="n">_BenchTrack__allTask</span>
+
+    <span class="c1"># structure_task permet de savoir comment sont répartis les tasks et les targets</span>
+    <span class="n">structure_tasks</span> <span class="o">=</span> <span class="n">my_bench</span><span class="o">.</span><span class="n">get_structure_tasks</span><span class="p">()</span>
+    <span class="n">list_themes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">structure_tasks</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    # Test sur les attributs de BenchTrack : </span>
+
+<span class="sd">    print(&quot;Liste des themes :&quot;,my_bench._BenchTrack__listThemes)</span>
+<span class="sd">    print(&quot;Liste des targets :&quot;,list_targets)</span>
+<span class="sd">    print(&quot;Liste des tasks :&quot;,list_tasks )</span>
+<span class="sd">    print(&quot; liste themes 2 :&quot;,list_themes)</span>
+
+
+<span class="sd">    for th in list_themes:</span>
+<span class="sd">    print( &quot;Pour le theme&quot;, th)</span>
+<span class="sd">    list_tasks = list(structure_tasks[th].keys())</span>
+<span class="sd">    print (&quot; list_tasks&quot;, list_tasks)</span>
+<span class="sd">    for tk in list_tasks:</span>
+<span class="sd">        print(&quot; Pour la task&quot;, tk)</span>
+<span class="sd">        list_target = structure_tasks[th][tk]</span>
+<span class="sd">        print(&quot;liste des targets:&quot;, list_target)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Initialisation de structure_run_time</span>
+    <span class="n">structure_run_time</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">list_tasks</span><span class="p">:</span>
+        <span class="n">structure_run_time</span><span class="p">[</span><span class="n">task</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">list_targets</span><span class="p">:</span>
+            <span class="n">structure_run_time</span><span class="p">[</span><span class="n">task</span><span class="p">][</span><span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="c1"># Instanciation de structure_run_time à partir de results.csv </span>
+    <span class="n">structure_run_time</span> <span class="o">=</span> <span class="n">load_csv_results</span><span class="p">(</span><span class="n">path_infra</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">file_csv</span><span class="p">,</span> <span class="n">structure_run_time</span><span class="p">)</span>
+
+    <span class="c1">#-----------Create path_content-----------</span>
+
+    <span class="c1">#path_content = os.path.dirname(path_infra) + &quot;/content&quot;</span>
+    <span class="n">path_site</span> <span class="o">=</span> <span class="n">path_benchTrack</span> <span class="o">+</span> <span class="s2">&quot;/site&quot;</span>
+    <span class="n">path_site_infra</span> <span class="o">=</span> <span class="n">path_benchTrack</span> <span class="o">+</span> <span class="s2">&quot;/site_&quot;</span> <span class="o">+</span> <span class="n">name_infra</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;cp -r &quot;</span> <span class="o">+</span> <span class="n">path_site</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">path_site_infra</span><span class="p">)</span> <span class="c1">#zip ?</span>
+
+    <span class="n">path_content</span> <span class="o">=</span> <span class="n">path_site_infra</span> <span class="o">+</span> <span class="s2">&quot;/content&quot;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">path_content</span><span class="p">)</span>
+    <span class="n">path_pages</span> <span class="o">=</span> <span class="n">path_content</span><span class="o">+</span><span class="s2">&quot;/pages&quot;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">path_pages</span><span class="p">)</span>
+
+    <span class="c1">#------------ Page résumé ----------------</span>
+    <span class="n">create_infra_rst</span><span class="p">(</span><span class="n">name_infra</span><span class="p">,</span><span class="n">path_pages</span><span class="p">,</span><span class="n">path_infra</span><span class="o">+</span><span class="s2">&quot;/README.rst&quot;</span><span class="p">,</span><span class="n">structure_run_time</span><span class="p">,</span><span class="n">list_targets</span><span class="p">)</span>
+
+    <span class="c1"># On génère les pages listes (sous-répertoire page)</span>
+    <span class="c1">#create_pages_rst(path_pages,results)</span>
+
+
+    <span class="c1">#------------ Page par target ------------</span>
+
+    <span class="c1"># Créer un sous-répertoire targets</span>
+    <span class="n">path_targets</span> <span class="o">=</span> <span class="n">path_content</span><span class="o">+</span><span class="s2">&quot;/targets&quot;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">path_targets</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">tg</span> <span class="ow">in</span> <span class="n">list_targets</span><span class="p">:</span>
+        <span class="n">path_tg_rd</span><span class="o">=</span> <span class="n">path_infra</span><span class="o">+</span><span class="s2">&quot;/targets/&quot;</span><span class="o">+</span><span class="n">tg</span><span class="o">+</span><span class="s2">&quot;/README.rst&quot;</span> 
+        <span class="n">create_target_rst</span><span class="p">(</span><span class="n">tg</span><span class="p">,</span> <span class="n">path_tg_rd</span><span class="p">,</span> <span class="n">path_targets</span><span class="p">,</span> <span class="n">list_tasks</span><span class="p">,</span><span class="n">structure_run_time</span><span class="p">)</span>
+
+
+    <span class="c1">#------------ Page par task/ Page par target x task ------------</span>
+
+    <span class="n">path_tasks</span> <span class="o">=</span> <span class="n">path_content</span><span class="o">+</span><span class="s2">&quot;/tasks&quot;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">path_tasks</span><span class="p">)</span>
+    <span class="n">path_targetsXtasks</span> <span class="o">=</span> <span class="n">path_content</span><span class="o">+</span><span class="s2">&quot;/targetsXtasks&quot;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">path_targetsXtasks</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">theme</span> <span class="ow">in</span> <span class="n">list_themes</span><span class="p">:</span>
+        <span class="n">list_tasks_in_theme</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">structure_tasks</span><span class="p">[</span><span class="n">theme</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+        <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">list_tasks_in_theme</span><span class="p">:</span>
+            <span class="n">path_readme_task</span> <span class="o">=</span> <span class="n">path_infra</span><span class="o">+</span><span class="s2">&quot;/tasks/&quot;</span><span class="o">+</span><span class="n">theme</span><span class="o">+</span><span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="n">task</span><span class="o">+</span><span class="s2">&quot;/README.rst&quot;</span>
+            <span class="c1"># Génération de page par task </span>
+            <span class="n">create_task_rst</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">path_readme_task</span><span class="p">,</span> <span class="n">path_tasks</span><span class="p">,</span> <span class="n">list_targets</span><span class="p">,</span><span class="n">structure_run_time</span><span class="p">)</span>
+            <span class="n">list_target_in_task</span> <span class="o">=</span> <span class="n">structure_tasks</span><span class="p">[</span><span class="n">theme</span><span class="p">][</span><span class="n">task</span><span class="p">]</span>
+
+            <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">list_target_in_task</span><span class="p">:</span>
+                <span class="c1"># Génération de page par target x task </span>
+                <span class="n">path_code</span> <span class="o">=</span> <span class="n">path_infra</span><span class="o">+</span><span class="s2">&quot;/tasks/&quot;</span><span class="o">+</span><span class="n">theme</span><span class="o">+</span><span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="n">task</span><span class="o">+</span><span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="n">target</span>
+                <span class="n">name_target</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">target</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">create_targetXtask_rst</span><span class="p">(</span><span class="n">name_target</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">path_code</span><span class="p">,</span> <span class="n">path_targetsXtasks</span><span class="p">,</span><span class="n">path_pages</span><span class="p">,</span> <span class="n">structure_run_time</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">path_site_infra</span><span class="p">,</span> <span class="n">name_infra</span></div>
+
+    
+<div class="viewcode-block" id="content2html"><a class="viewcode-back" href="../bench2site.html#bench2site.content2html">[docs]</a><span class="k">def</span> <span class="nf">content2html</span><span class="p">(</span><span class="n">path_site_infra</span><span class="p">,</span> <span class="n">path_benchTrack</span><span class="p">,</span> <span class="n">name_infra</span><span class="p">):</span>
+
+    <span class="c1">#print(&quot; Test path interpreter: &quot;,sys.executable)</span>
+    <span class="c1">#print(&quot; Test, lancer pelican&quot;)</span>
+
+    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">path_site_infra</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span> <span class="o">+</span> <span class="s2">&quot; -m pelican content&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Modification de conf.py</span>
+    <span class="n">path_conf_py</span> <span class="o">=</span> <span class="n">path_site_infra</span> <span class="o">+</span> <span class="s2">&quot;/pelicanconf.py&quot;</span>
+    <span class="n">new_file</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">line_name_site</span> <span class="o">=</span> <span class="s2">&quot;SITENAME = &#39;&quot;</span><span class="o">+</span> <span class="n">name_infra</span><span class="o">+</span><span class="s2">&quot;&#39;</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_conf_py</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="s2">&quot;SITENAME = &#39;default&#39;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">:</span>
+                <span class="n">new_file</span> <span class="o">+=</span> <span class="n">line_name_site</span>
+                <span class="k">continue</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">new_file</span> <span class="o">+=</span> <span class="n">line</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_conf_py</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">new_file</span><span class="p">)</span></div>
+
+
+
+
+
+
+
+
+<span class="c1">#--------------------------TEST-----------------------</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">path_infra_PGM</span> <span class="o">=</span> <span class="s2">&quot;/Users/alexislenoir/python/Benchtrack/infrastructures/PGM&quot;</span>
+    <span class="n">path_infra_ConfigFichier</span> <span class="o">=</span> <span class="s2">&quot;/Users/alexislenoir/python/Benchtrack/infrastructures/ConfigFichier&quot;</span>
+    <span class="c1">#path_infra_term = sys.argv[1]</span>
+    <span class="n">file_csv</span> <span class="o">=</span> <span class="s2">&quot;output.csv&quot;</span>
+
+    <span class="n">path_benchTrack</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span> <span class="vm">__file__</span> <span class="p">)))</span>
+
+    <span class="n">path_site_infra</span><span class="p">,</span> <span class="n">name_infra</span> <span class="o">=</span> <span class="n">bench2content</span><span class="p">(</span><span class="n">path_infra_ConfigFichier</span><span class="p">,</span> <span class="n">path_benchTrack</span><span class="p">,</span> <span class="n">file_csv</span><span class="p">)</span>
+    <span class="n">content2html</span><span class="p">(</span><span class="n">path_site_infra</span><span class="p">,</span> <span class="n">path_benchTrack</span><span class="p">,</span> <span class="n">name_infra</span><span class="p">)</span>
+    
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, AlexisLenoir,HeXin,YangZhuangzhuang.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

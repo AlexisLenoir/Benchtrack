@@ -1,10 +1,9 @@
-import time
 import datetime
 from configparser import ConfigParser
-import csv
 import os
 import re
-
+import time
+import csv
 def execute(path, cmd):
     '''
     This fonction is made to run  files
@@ -20,9 +19,11 @@ def execute(path, cmd):
 
     '''
     CurrentPath = os.getcwd()
-    PathAbsolu = CurrentPath + "/" + path
-    os.fchdir(os.open(PathAbsolu, os.O_RDONLY))
+    PathAbsolu = CurrentPath + "/" + path+"/"
+
+    os.chdir(PathAbsolu)
     #res = os.system("cd"+path+"&&"+cmd)
+
     res=os.system(cmd)
     if res != 0:
         if os.path.exists('errorInfo.txt'):
@@ -34,7 +35,7 @@ def execute(path, cmd):
                 #print(ff.read())
                 ff.write(str(res))
 
-    os.fchdir(os.open(CurrentPath, os.O_RDONLY))
+    os.chdir(CurrentPath)
 
 def exeCmd(path,parameter,cmd,language,target):
     '''
@@ -60,7 +61,11 @@ def exeCmd(path,parameter,cmd,language,target):
     target+=get_suffixe(language)
     new_cmd=cmd.replace("{script}",target)
     new_cmd2=new_cmd.replace("{arg}",parameter)
-    execute(path,new_cmd2)
+    try:
+        execute(path,new_cmd2)
+    except ImportError:
+        print("ModuleNotFoundError")
+
 
 def get_suffixe(language):
     '''
@@ -231,3 +236,72 @@ def file_read(nameTest, nameTarget, typeF):
                                 print(content)
                                 print("Fin\n")
                                 return 1
+
+
+def flagTasks(argv, bench, flag):
+    '''
+    gestion of flags of the tasks
+
+    Parameters
+    ----------
+    argv : string
+        name of the benchmark.
+    bench : string
+        name of bench for testing.
+    flag : string
+        type of flags.
+
+
+    '''
+    if flag == 'info':
+        if len(argv) < 3:
+            print('Without' + (3 - len(argv)).__init__() + 'parameter')
+            return - 1
+        bench.showInfoTask(argv[1])
+    if flag == 'list':
+        if len(argv) < 2:
+            print('Without a parameter')
+            return -1
+        bench.showListTasks()
+    if flag == 'include':
+        list_Include = argv[1:len(argv) - 1]
+        bench.filter_task(list_Include, True)
+
+    if flag == 'exclude':
+        list_Include = argv[1:len(argv) - 1]
+        bench.filter_task(list_Include, False)
+
+
+def flagTargets(argv, bench, flag):
+    '''
+    gestion of flags of the targets
+
+    Parameters
+    ----------
+    argv : string
+        name of the benchmark.
+    bench : string
+        name of bench for testing.
+    flag : string
+        type of flags.
+
+
+    '''
+
+    if flag == 'info':
+        if len(argv) < 3:
+            print('Without' + (3 - len(argv)).__init__() + 'parameter')
+            return -1
+        bench.showInfoTarget(argv[1])
+    if flag == 'list':
+        if len(argv) < 2:
+            print('Without a parameter')
+            return -1
+        bench.show_list_target()
+    if flag == 'include':
+        list_Include = argv[1:len(argv) - 1]
+        bench.filter_target(list_Include, True)
+
+    if flag == 'exclude':
+        list_Include = argv[1:len(argv) - 1]
+        bench.filter_target(list_Include, False)

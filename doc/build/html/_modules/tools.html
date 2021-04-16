@@ -1,0 +1,503 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>tools &mdash; BenchTrack 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> BenchTrack
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BenchTrack</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>tools</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for tools</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">from</span> <span class="nn">configparser</span> <span class="kn">import</span> <span class="n">ConfigParser</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+<div class="viewcode-block" id="execute"><a class="viewcode-back" href="../tools.html#tools.execute">[docs]</a><span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">cmd</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    This fonction is made to run  files</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path : string</span>
+<span class="sd">        the path that contains the task need to be execute.</span>
+<span class="sd">    cmd : string</span>
+<span class="sd">        command of executing based on terminal.</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None.</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">CurrentPath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+    <span class="n">PathAbsolu</span> <span class="o">=</span> <span class="n">CurrentPath</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">path</span><span class="o">+</span><span class="s2">&quot;/&quot;</span>
+
+    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">PathAbsolu</span><span class="p">)</span>
+    <span class="c1">#res = os.system(&quot;cd&quot;+path+&quot;&amp;&amp;&quot;+cmd)</span>
+
+    <span class="n">res</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">res</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;errorInfo.txt&#39;</span><span class="p">):</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;errorInfo.txt&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">ff</span><span class="p">:</span>
+                <span class="c1">#print(ff.read())</span>
+                <span class="n">ff</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">res</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;errorInfo.txt&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w+&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">ff</span><span class="p">:</span>
+                <span class="c1">#print(ff.read())</span>
+                <span class="n">ff</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">res</span><span class="p">))</span>
+
+    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">CurrentPath</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="exeCmd"><a class="viewcode-back" href="../tools.html#tools.exeCmd">[docs]</a><span class="k">def</span> <span class="nf">exeCmd</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="n">parameter</span><span class="p">,</span><span class="n">cmd</span><span class="p">,</span><span class="n">language</span><span class="p">,</span><span class="n">target</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    exeCmd is a fonction that switch the task to </span>
+<span class="sd">    other specific fonction to execute them</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path : string</span>
+<span class="sd">        the path that contains the task need to be execute.</span>
+<span class="sd">    parameter : string</span>
+<span class="sd">        the parameter of the task.</span>
+<span class="sd">    cmd : String</span>
+<span class="sd">        command of executing based on terminal.</span>
+<span class="sd">    language : string</span>
+<span class="sd">        the programming languague of task .</span>
+<span class="sd">    target: string</span>
+<span class="sd">        the name of target</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None.</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">target</span><span class="o">+=</span><span class="n">get_suffixe</span><span class="p">(</span><span class="n">language</span><span class="p">)</span>
+    <span class="n">new_cmd</span><span class="o">=</span><span class="n">cmd</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{script}</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">target</span><span class="p">)</span>
+    <span class="n">new_cmd2</span><span class="o">=</span><span class="n">new_cmd</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{arg}</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">parameter</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">execute</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="n">new_cmd2</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ModuleNotFoundError&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_suffixe"><a class="viewcode-back" href="../tools.html#tools.get_suffixe">[docs]</a><span class="k">def</span> <span class="nf">get_suffixe</span><span class="p">(</span><span class="n">language</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    This method return the suffixe of programming language</span>
+<span class="sd">    Parameters:</span>
+<span class="sd">        language:string</span>
+<span class="sd">    Returns: suffixe of the fichier in language input</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">language</span> <span class="o">==</span> <span class="s2">&quot;python&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;.py&quot;</span>
+    <span class="k">if</span> <span class="n">language</span> <span class="o">==</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;.r&quot;</span></div>
+
+<div class="viewcode-block" id="ConfigFileTarget"><a class="viewcode-back" href="../tools.html#tools.ConfigFileTarget">[docs]</a><span class="k">def</span> <span class="nf">ConfigFileTarget</span><span class="p">(</span><span class="n">path_target</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    This method trait configure file and return their command and </span>
+<span class="sd">    programming language of the target.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters:</span>
+<span class="sd">        path of the config.ini for the target</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        run:the command of executing the target</span>
+<span class="sd">        language:the programming language of the target</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">path_target</span><span class="p">)</span>
+    <span class="n">language</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;execution&#39;</span><span class="p">,</span> <span class="s1">&#39;language&#39;</span><span class="p">)</span>
+    <span class="n">run</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;execution&#39;</span><span class="p">,</span> <span class="s1">&#39;run&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">run</span><span class="p">,</span><span class="n">language</span></div>
+
+<div class="viewcode-block" id="ConfigFileTask"><a class="viewcode-back" href="../tools.html#tools.ConfigFileTask">[docs]</a><span class="k">def</span> <span class="nf">ConfigFileTask</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    This method trait configure file of task and return their sample_size and </span>
+<span class="sd">    parameters of the task.</span>
+<span class="sd">    Parameters:</span>
+<span class="sd">        path of the the config.ini for the task</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        sample_size:sample size for execute all targets in this task</span>
+<span class="sd">        arg:all args of the target</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="n">sample_size</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;running&#39;</span><span class="p">,</span> <span class="s1">&#39;sample_size&#39;</span><span class="p">)</span>
+        <span class="n">arg</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;running&#39;</span><span class="p">,</span> <span class="s1">&#39;args&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sample_size</span><span class="p">,</span><span class="n">arg</span>
+    <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Can&#39;t find the file config:&quot;</span> <span class="o">+</span> <span class="n">file</span><span class="p">)</span></div>
+
+<span class="c1"># pour trouver tous les fichers de repertoire de BASE.</span>
+<div class="viewcode-block" id="find_all_file"><a class="viewcode-back" href="../tools.html#tools.find_all_file">[docs]</a><span class="k">def</span> <span class="nf">find_all_file</span><span class="p">(</span><span class="n">base</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Find all files in base</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    base : string</span>
+<span class="sd">        the system path.</span>
+
+<span class="sd">    Yields</span>
+<span class="sd">    ------</span>
+<span class="sd">    f : string</span>
+<span class="sd">        all files found in base.</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="n">fs</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">base</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fs</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">f</span></div>
+
+
+<div class="viewcode-block" id="existFile"><a class="viewcode-back" href="../tools.html#tools.existFile">[docs]</a><span class="k">def</span> <span class="nf">existFile</span><span class="p">(</span><span class="n">fileName</span><span class="p">,</span> <span class="n">Path</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    To test if a Path contain a file</span>
+<span class="sd">    Parameters:</span>
+<span class="sd">        fileName:name of the file</span>
+<span class="sd">        path:the path that contains the file</span>
+<span class="sd">    Returns</span>
+<span class="sd">        True:Found a file name filename in path</span>
+<span class="sd">        False:if the file doesn&#39;t be found in path</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">for</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">Path</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">fileName</span><span class="p">,</span><span class="n">files</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+
+
+<div class="viewcode-block" id="exe_python"><a class="viewcode-back" href="../tools.html#tools.exe_python">[docs]</a><span class="k">def</span> <span class="nf">exe_python</span><span class="p">(</span><span class="n">target_name</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    for calculating time of executing of python file</span>
+<span class="sd">    Parameters :</span>
+<span class="sd">        target_name:path et nom pour target</span>
+<span class="sd">    Returns :</span>
+<span class="sd">        temp d&#39;execution</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test &quot;</span> <span class="o">+</span> <span class="n">target_name</span> <span class="o">+</span> <span class="s2">&quot; start&quot;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;python &quot;</span> <span class="o">+</span> <span class="n">target_name</span><span class="p">)</span>
+    <span class="n">timeUsed</span> <span class="o">=</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span><span class="o">.</span><span class="n">microseconds</span> <span class="o">*</span> <span class="mf">1e-6</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test &quot;</span> <span class="o">+</span> <span class="n">target_name</span> <span class="o">+</span> <span class="s2">&quot; finished using time:&quot;</span> <span class="o">+</span> <span class="n">timeUsed</span><span class="o">.</span><span class="fm">__str__</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">timeUsed</span></div>
+
+
+<div class="viewcode-block" id="to_txt"><a class="viewcode-back" href="../tools.html#tools.to_txt">[docs]</a><span class="k">def</span> <span class="nf">to_txt</span><span class="p">(</span><span class="n">list_res</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Turns the results to txt file</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    list_res : float list </span>
+<span class="sd">        time of executing.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None.</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">with</span>  <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;PGM/result.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">list_res</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">benchName</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">i</span><span class="o">.</span><span class="n">listTargets</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">targetTime</span> <span class="ow">in</span> <span class="n">i</span><span class="o">.</span><span class="n">listTemps</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">targetTime</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;|&#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+<span class="c1"># print a file</span>
+<div class="viewcode-block" id="file_read"><a class="viewcode-back" href="../tools.html#tools.file_read">[docs]</a><span class="k">def</span> <span class="nf">file_read</span><span class="p">(</span><span class="n">nameTest</span><span class="p">,</span> <span class="n">nameTarget</span><span class="p">,</span> <span class="n">typeF</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    To read readme file and print the contents</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    nameTest : string</span>
+<span class="sd">        name of task.</span>
+<span class="sd">    nameTarget : string</span>
+<span class="sd">        name of target.</span>
+<span class="sd">    typeF : string</span>
+<span class="sd">        task/target.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    int</span>
+<span class="sd">        succeded print the content of readme.</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">for</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">nameTest</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">files</span> <span class="o">==</span> <span class="n">typeF</span><span class="p">:</span>
+            <span class="n">file_dir</span> <span class="o">=</span> <span class="n">nameTest</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">files</span>
+            <span class="k">for</span> <span class="n">files_sous</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">file_dir</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">files_sous</span> <span class="o">==</span> <span class="n">nameTarget</span><span class="p">:</span>
+                    <span class="n">filesRead</span> <span class="o">=</span> <span class="n">nameTest</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">typeF</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">nameTarget</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="s2">&quot;README.rst&quot;</span>
+                    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filesRead</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                        <span class="n">content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fin</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="k">return</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">existFile</span><span class="p">(</span><span class="n">files_sous</span><span class="p">,</span> <span class="n">file_dir</span><span class="p">):</span>
+                    <span class="nb">dir</span> <span class="o">=</span> <span class="n">file_dir</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">files_sous</span>
+                    <span class="k">for</span> <span class="n">file_task</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="nb">dir</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="n">file_task</span> <span class="o">==</span> <span class="n">nameTarget</span><span class="p">:</span>
+                            <span class="n">filesRead</span> <span class="o">=</span> <span class="n">nameTest</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">typeF</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">files_sous</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">file_task</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="s2">&quot;README.rst&quot;</span>
+                            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filesRead</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                                <span class="n">content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                                <span class="nb">print</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+                                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fin</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                                <span class="k">return</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="flagTasks"><a class="viewcode-back" href="../tools.html#tools.flagTasks">[docs]</a><span class="k">def</span> <span class="nf">flagTasks</span><span class="p">(</span><span class="n">argv</span><span class="p">,</span> <span class="n">bench</span><span class="p">,</span> <span class="n">flag</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    gestion of flags of the tasks</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    argv : string</span>
+<span class="sd">        name of the benchmark.</span>
+<span class="sd">    bench : string</span>
+<span class="sd">        name of bench for testing.</span>
+<span class="sd">    flag : string</span>
+<span class="sd">        type of flags.</span>
+
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">flag</span> <span class="o">==</span> <span class="s1">&#39;info&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Without&#39;</span> <span class="o">+</span> <span class="p">(</span><span class="mi">3</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">argv</span><span class="p">))</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;parameter&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">bench</span><span class="o">.</span><span class="n">showInfoTask</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">flag</span> <span class="o">==</span> <span class="s1">&#39;list&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Without a parameter&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">bench</span><span class="o">.</span><span class="n">showListTasks</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">flag</span> <span class="o">==</span> <span class="s1">&#39;include&#39;</span><span class="p">:</span>
+        <span class="n">list_Include</span> <span class="o">=</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">bench</span><span class="o">.</span><span class="n">filter_task</span><span class="p">(</span><span class="n">list_Include</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">flag</span> <span class="o">==</span> <span class="s1">&#39;exclude&#39;</span><span class="p">:</span>
+        <span class="n">list_Include</span> <span class="o">=</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">bench</span><span class="o">.</span><span class="n">filter_task</span><span class="p">(</span><span class="n">list_Include</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="flagTargets"><a class="viewcode-back" href="../tools.html#tools.flagTargets">[docs]</a><span class="k">def</span> <span class="nf">flagTargets</span><span class="p">(</span><span class="n">argv</span><span class="p">,</span> <span class="n">bench</span><span class="p">,</span> <span class="n">flag</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    gestion of flags of the targets</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    argv : string</span>
+<span class="sd">        name of the benchmark.</span>
+<span class="sd">    bench : string</span>
+<span class="sd">        name of bench for testing.</span>
+<span class="sd">    flag : string</span>
+<span class="sd">        type of flags.</span>
+
+
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">if</span> <span class="n">flag</span> <span class="o">==</span> <span class="s1">&#39;info&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Without&#39;</span> <span class="o">+</span> <span class="p">(</span><span class="mi">3</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">argv</span><span class="p">))</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;parameter&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">bench</span><span class="o">.</span><span class="n">showInfoTarget</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">flag</span> <span class="o">==</span> <span class="s1">&#39;list&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Without a parameter&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">bench</span><span class="o">.</span><span class="n">show_list_target</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">flag</span> <span class="o">==</span> <span class="s1">&#39;include&#39;</span><span class="p">:</span>
+        <span class="n">list_Include</span> <span class="o">=</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">bench</span><span class="o">.</span><span class="n">filter_target</span><span class="p">(</span><span class="n">list_Include</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">flag</span> <span class="o">==</span> <span class="s1">&#39;exclude&#39;</span><span class="p">:</span>
+        <span class="n">list_Include</span> <span class="o">=</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">bench</span><span class="o">.</span><span class="n">filter_target</span><span class="p">(</span><span class="n">list_Include</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, AlexisLenoir,HeXin,YangZhuangzhuang.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

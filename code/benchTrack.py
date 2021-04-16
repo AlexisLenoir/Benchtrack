@@ -1,9 +1,8 @@
 import os
 import sys
-from MyFlags import *
+from tools import *
 from structureBench import BenchTrack
 
-#function for manage flags
 def manage_flag(argv,bench):
     '''
     This function manage all flags,
@@ -56,7 +55,5 @@ def exe(argv):
     if manage_flag(argv,bench):
         bench.exe_bench()
         bench.ToCsv()
-    # print(bench.__str__())
-    # print(bench.get_structure_tasks())
 if __name__ == '__main__':
     exe(sys.argv)

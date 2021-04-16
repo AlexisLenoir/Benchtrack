@@ -1,0 +1,405 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>task &mdash; BenchTrack 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> BenchTrack
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BenchTrack</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>task</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for task</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">tools</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<div class="viewcode-block" id="Task"><a class="viewcode-back" href="../task.html#task.Task">[docs]</a><span class="k">class</span> <span class="nc">Task</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">sample_size</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Constructor of class Task</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name : string</span>
+<span class="sd">            name of the task.</span>
+<span class="sd">        args : string</span>
+<span class="sd">            parameters of the task.</span>
+<span class="sd">        sample_size : int, optional</span>
+<span class="sd">            the times of execution. The default is 20.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None.</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__Name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dictTargets</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__sample_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sample_size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__args</span> <span class="o">=</span> <span class="n">args</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Return a string of all the targets from the task</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        stirng</span>
+<span class="sd">            all the targets from the task.</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;[&quot;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dictTargets</span><span class="p">:</span>
+            <span class="n">string</span> <span class="o">+=</span> <span class="n">i</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span>
+        <span class="k">return</span> <span class="n">string</span> <span class="o">+</span> <span class="s2">&quot;]&quot;</span>
+
+<div class="viewcode-block" id="Task.addTarget"><a class="viewcode-back" href="../task.html#task.Task.addTarget">[docs]</a>    <span class="k">def</span> <span class="nf">addTarget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name_Target</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Add targets to targets dictionary of the task</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name_Target : string</span>
+<span class="sd">            name of target.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None.</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dictTargets</span><span class="p">[</span><span class="n">name_Target</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__args</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Task.modifyTarget"><a class="viewcode-back" href="../task.html#task.Task.modifyTarget">[docs]</a>    <span class="k">def</span> <span class="nf">modifyTarget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name_Target</span><span class="p">,</span> <span class="n">res_Target</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Add execution time of targets of the task</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name_Target : string</span>
+<span class="sd">            the target.</span>
+<span class="sd">        res_Target : flaot</span>
+<span class="sd">            execution time.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None.</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dictTargets</span><span class="p">[</span><span class="n">name_Target</span><span class="p">]</span> <span class="o">=</span> <span class="n">res_Target</span></div>
+
+<div class="viewcode-block" id="Task.exe_task"><a class="viewcode-back" href="../task.html#task.Task.exe_task">[docs]</a>    <span class="k">def</span> <span class="nf">exe_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lis</span><span class="p">,</span> <span class="n">themeName</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Execution of the tasks </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        lis : list of string</span>
+<span class="sd">            list of targets.</span>
+<span class="sd">        themeName : string</span>
+<span class="sd">            name of theme of the task.</span>
+<span class="sd">        path : stirng</span>
+<span class="sd">            the path contains the theme</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None.</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-In Task &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">__Name</span> <span class="o">+</span> <span class="s2">&quot;:&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dictTargets</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">lis</span><span class="p">:</span>
+                <span class="k">try</span> <span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">exe_target</span><span class="p">(</span><span class="n">themeName</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">upgrade_for_target</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="n">target</span><span class="p">)</span>
+                <span class="n">list_times</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__args</span><span class="p">)):</span>
+                    <span class="c1"># time to execute before_test</span>
+                    <span class="n">times_before</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__sample_size</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">exe_before_test</span><span class="p">(</span><span class="n">themeName</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">__args</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+                    <span class="n">times_before</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">times_before</span>
+
+                    <span class="c1"># time to execute test</span>
+                    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__sample_size</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">exe_target</span><span class="p">(</span><span class="n">themeName</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">__args</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+                    <span class="n">list_times</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span> <span class="o">-</span> <span class="n">times_before</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sample_size</span><span class="p">)</span>
+
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--execute target &quot;</span> <span class="o">+</span> <span class="n">target</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sample_size</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39; times avec parameter:&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">__args</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Execution time:&quot;</span> <span class="o">+</span> <span class="n">list_times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="fm">__str__</span><span class="p">())</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__dictTargets</span><span class="p">[</span><span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="n">list_times</span></div>
+
+<div class="viewcode-block" id="Task.exe_before_test"><a class="viewcode-back" href="../task.html#task.Task.exe_before_test">[docs]</a>    <span class="k">def</span> <span class="nf">exe_before_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">themeName</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        execute some before-task file like imports</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None.</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">path_File</span> <span class="o">=</span> <span class="n">path</span>  <span class="o">+</span> <span class="s2">&quot;/tasks/&quot;</span> <span class="o">+</span> <span class="n">themeName</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span> 
+        <span class="n">path_ConfigFile</span> <span class="o">=</span> <span class="n">path</span>  <span class="o">+</span> <span class="s2">&quot;/targets/&quot;</span> <span class="o">+</span> <span class="n">targets</span> <span class="o">+</span> <span class="s2">&quot;/config.ini&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exe_file</span><span class="p">(</span><span class="n">path_ConfigFile</span><span class="p">,</span> <span class="n">path_File</span><span class="p">,</span><span class="n">args</span><span class="p">,</span><span class="s2">&quot;before_&quot;</span><span class="o">+</span><span class="n">targets</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Task.exe_target"><a class="viewcode-back" href="../task.html#task.Task.exe_target">[docs]</a>    <span class="k">def</span> <span class="nf">exe_target</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">themeName</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span><span class="n">path</span><span class="p">,</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        drive infos from configure file of target and transforme these infos</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None.</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">path_ConfigFile</span> <span class="o">=</span> <span class="n">path</span>  <span class="o">+</span> <span class="s2">&quot;/targets/&quot;</span> <span class="o">+</span> <span class="n">targets</span> <span class="o">+</span> <span class="s2">&quot;/config.ini&quot;</span>
+        <span class="n">path_File</span> <span class="o">=</span> <span class="n">path</span>  <span class="o">+</span> <span class="s2">&quot;/tasks/&quot;</span> <span class="o">+</span> <span class="n">themeName</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exe_file</span><span class="p">(</span><span class="n">path_ConfigFile</span><span class="p">,</span> <span class="n">path_File</span><span class="p">,</span><span class="n">args</span><span class="p">,</span><span class="n">targets</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Task.exe_file"><a class="viewcode-back" href="../task.html#task.Task.exe_file">[docs]</a>    <span class="k">def</span> <span class="nf">exe_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path_configFile</span><span class="p">,</span> <span class="n">path_file</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span><span class="n">target</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        execution of a target</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None.</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">command</span><span class="p">,</span> <span class="n">language</span> <span class="o">=</span> <span class="n">ConfigFileTarget</span><span class="p">(</span><span class="n">path_configFile</span><span class="p">)</span>
+        <span class="n">exeCmd</span><span class="p">(</span><span class="n">path_file</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">language</span><span class="p">,</span><span class="n">target</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Task.getName"><a class="viewcode-back" href="../task.html#task.Task.getName">[docs]</a>    <span class="k">def</span> <span class="nf">getName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        return name of the task</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        string</span>
+<span class="sd">            name of the task.</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__Name</span></div>
+
+<div class="viewcode-block" id="Task.ToCsv"><a class="viewcode-back" href="../task.html#task.Task.ToCsv">[docs]</a>    <span class="k">def</span> <span class="nf">ToCsv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">writer</span><span class="p">,</span> <span class="n">theme</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        generetor the csv file which contains some</span>
+<span class="sd">        infos about results of execution</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None.</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">targetNames</span> <span class="o">=</span> <span class="nb">dict</span><span class="o">.</span><span class="n">keys</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__dictTargets</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">targetNames</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__args</span><span class="p">)):</span>
+                <span class="n">run_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dictTargets</span><span class="p">[</span><span class="n">target</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="n">theme</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__Name</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">__args</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">run_time</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="Task.get_structure_tasks"><a class="viewcode-back" href="../task.html#task.Task.get_structure_tasks">[docs]</a>    <span class="k">def</span> <span class="nf">get_structure_tasks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">path</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        get targets of tasks</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list_target : TYPE</span>
+<span class="sd">            DESCRIPTION.</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">list_target</span><span class="o">=</span><span class="p">[]</span>
+        <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__dictTargets</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="n">path_configFile</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;/targets/&quot;</span> <span class="o">+</span> <span class="n">target</span> <span class="o">+</span> <span class="s2">&quot;/config.ini&quot;</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_configFile</span><span class="p">):</span>
+                <span class="n">command</span><span class="p">,</span> <span class="n">language</span> <span class="o">=</span> <span class="n">ConfigFileTarget</span><span class="p">(</span><span class="n">path_configFile</span><span class="p">)</span>
+                <span class="n">target</span> <span class="o">+=</span> <span class="n">get_suffixe</span><span class="p">(</span><span class="n">language</span><span class="p">)</span>
+                <span class="n">list_target</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">list_target</span></div>
+
+<div class="viewcode-block" id="Task.upgrade_for_target"><a class="viewcode-back" href="../task.html#task.Task.upgrade_for_target">[docs]</a>    <span class="k">def</span> <span class="nf">upgrade_for_target</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">path</span><span class="p">,</span><span class="n">target</span><span class="p">):</span>
+        <span class="n">path_ConfigFile</span> <span class="o">=</span> <span class="n">path</span>  <span class="o">+</span> <span class="s2">&quot;/targets/&quot;</span> <span class="o">+</span> <span class="n">target</span> <span class="o">+</span> <span class="s2">&quot;/config.ini&quot;</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">path_ConfigFile</span><span class="p">)</span>
+        <span class="n">upgrade</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;execution&#39;</span><span class="p">,</span> <span class="s1">&#39;upgrading&#39;</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">upgrade</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, AlexisLenoir,HeXin,YangZhuangzhuang.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

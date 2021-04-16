@@ -1,7 +1,6 @@
 import unittest
 from benchTrack import *
 from tools import *
-from unittest.mock import patch
 
 class TestMathFunc(unittest.TestCase):
     """Test benchTrack.py"""
@@ -13,7 +12,6 @@ class TestMathFunc(unittest.TestCase):
 
     def test_structure(self):
         bench = BenchTrack("../infrastructures/PGM","")
-        # string = "{'inference': {'BIFreading': ['pyAgrum.py']}}"
         structure = bench.get_structure_tasks()
         theme = structure['inference']
         task = theme['BIFreading']

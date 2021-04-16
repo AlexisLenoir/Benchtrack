@@ -1,7 +1,6 @@
 from tools import *
 from theme import Theme
 from task import Task
-#class BenchTrack
 class BenchTrack:
     
     def __init__(self, path_inf, path_benchTrack):

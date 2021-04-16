@@ -3,8 +3,6 @@
 Ce module contient toutes les fonctions permettant de générer les fichiers rst pour le répertoire content
 
 """
-
-
 def create_title_rst(readme,name_title):
     """
     Deprecated

@@ -127,6 +127,13 @@ class Theme:
         '''
         Get the structure of every task
 
+        Parameters
+        -------
+        path :string path
+
+        Returns
+        -------
+        a dictionnaire
         '''
         list_structure_task = {}
         for task in self.__listTasks:

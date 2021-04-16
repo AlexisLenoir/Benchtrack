@@ -1,0 +1,493 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>structureBench &mdash; BenchTrack 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> BenchTrack
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BenchTrack</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>structureBench</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for structureBench</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">tools</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">theme</span> <span class="kn">import</span> <span class="n">Theme</span>
+<span class="kn">from</span> <span class="nn">task</span> <span class="kn">import</span> <span class="n">Task</span>
+<div class="viewcode-block" id="BenchTrack"><a class="viewcode-back" href="../structureBench.html#structureBench.BenchTrack">[docs]</a><span class="k">class</span> <span class="nc">BenchTrack</span><span class="p">:</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path_inf</span><span class="p">,</span> <span class="n">path_benchTrack</span><span class="p">):</span>
+
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        constructor of class BenchTrack</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        path_inf : string</span>
+<span class="sd">            the relative path that contains the infrastructure.</span>
+<span class="sd">            which is also the first parameter of input</span>
+<span class="sd">        path_benchTrack : string</span>
+<span class="sd">            the absolu path that contains the benchTrack.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None.</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__path</span> <span class="o">=</span> <span class="n">path_inf</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__name</span> <span class="o">=</span> <span class="n">path_inf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="c1">#dictionaire of targets,&lt;key = nameTarget&gt; = objetTarget</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dictTargets</span><span class="o">=</span><span class="p">{}</span>
+        <span class="c1">#list of</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__listThemes</span><span class="o">=</span><span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__allTarget</span><span class="o">=</span><span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__allTask</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__path_benchTrack</span> <span class="o">=</span> <span class="n">path_benchTrack</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__construct</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error:Construct&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__outputFile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__path</span><span class="o">+</span><span class="s2">&quot;/output.csv&quot;</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Output list of all the themes of the infrastructure</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        string : TYPE</span>
+<span class="sd">            DESCRIPTION.</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span>
+        <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;:list Themes[&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__listThemes</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">string</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__listThemes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__listThemes</span><span class="p">)):</span>
+            <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;,&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">__listThemes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
+        <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;]&quot;</span>
+        <span class="k">return</span> <span class="n">string</span>
+
+    <span class="k">def</span> <span class="nf">__construct</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        construct all theme,target,task</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__path</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error:Test name&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="n">path</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__name</span>
+        <span class="c1">#for every theme in the folder test</span>
+        <span class="n">path</span> <span class="o">+=</span> <span class="s1">&#39;/tasks&#39;</span>
+
+        <span class="c1">#construt list of targets</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__path</span><span class="o">+</span><span class="s2">&quot;/targets&quot;</span>
+        <span class="k">for</span> <span class="n">targetName</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">targetName</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;.&#39;</span> <span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__allTarget</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">targetName</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__path</span><span class="o">+</span><span class="s1">&#39;/tasks&#39;</span>
+        <span class="k">for</span> <span class="n">themeName</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">themeName</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;.&#39;</span> <span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">theme</span> <span class="o">=</span> <span class="n">Theme</span><span class="p">(</span><span class="n">themeName</span><span class="p">)</span>
+            <span class="c1">#for every task in the folder theme</span>
+            <span class="n">pathT</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">themeName</span>
+            <span class="k">for</span> <span class="n">taskName</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">pathT</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">taskName</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;.&#39;</span> <span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="c1">#set in the list alltask</span>
+                <span class="k">if</span> <span class="n">taskName</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__allTask</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__allTask</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">taskName</span><span class="p">)</span>
+                <span class="n">pathTs</span> <span class="o">=</span> <span class="n">pathT</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="n">taskName</span> <span class="o">+</span><span class="s1">&#39;/&#39;</span>
+                <span class="n">path_config</span> <span class="o">=</span> <span class="n">pathTs</span> <span class="o">+</span> <span class="s1">&#39;config.ini&#39;</span>
+                <span class="c1">#resd config.ini and construct task</span>
+                <span class="n">sample_size</span> <span class="o">=</span> <span class="mi">20</span>
+                <span class="n">args</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_config</span><span class="p">):</span>
+                    <span class="n">sample_size</span><span class="p">,</span><span class="n">args</span> <span class="o">=</span> <span class="n">ConfigFileTask</span><span class="p">(</span><span class="n">path_config</span><span class="p">)</span>
+                <span class="n">task</span> <span class="o">=</span> <span class="n">Task</span><span class="p">(</span><span class="n">taskName</span><span class="p">,</span><span class="n">args</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">),</span><span class="n">sample_size</span><span class="p">)</span>
+                <span class="c1"># set all target</span>
+                <span class="k">for</span> <span class="n">targetName</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__allTarget</span><span class="p">:</span>
+                    <span class="c1"># path_target = pathTs + targetName+&quot;.py&quot;</span>
+                    <span class="k">if</span> <span class="n">existFile</span><span class="p">(</span><span class="n">targetName</span><span class="p">,</span><span class="n">pathTs</span><span class="p">):</span>
+                        <span class="n">task</span><span class="o">.</span><span class="n">addTarget</span><span class="p">(</span><span class="n">targetName</span><span class="p">)</span>
+                        
+                <span class="n">theme</span><span class="o">.</span><span class="n">addTask</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">__listThemes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">theme</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+<div class="viewcode-block" id="BenchTrack.getName"><a class="viewcode-back" href="../structureBench.html#structureBench.BenchTrack.getName">[docs]</a>    <span class="k">def</span> <span class="nf">getName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Getter of parameter __name</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        TYPE</span>
+<span class="sd">            DESCRIPTION.</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__name</span></div>
+
+<div class="viewcode-block" id="BenchTrack.ToCsv"><a class="viewcode-back" href="../structureBench.html#structureBench.BenchTrack.ToCsv">[docs]</a>    <span class="k">def</span> <span class="nf">ToCsv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        write infos of the infrastructure to csv file</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None.</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__outputFile</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span><span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">csvfile</span><span class="p">:</span>
+            <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">csvfile</span><span class="p">)</span>
+            <span class="c1"># name of columns</span>
+            <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s2">&quot;theme&quot;</span><span class="p">,</span> <span class="s2">&quot;task&quot;</span><span class="p">,</span> <span class="s2">&quot;target&quot;</span><span class="p">,</span><span class="s2">&quot;args&quot;</span><span class="p">,</span><span class="s2">&quot;run_time&quot;</span><span class="p">])</span>
+            <span class="c1"># values of columns</span>
+            <span class="k">for</span> <span class="n">theme</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__listThemes</span><span class="p">:</span>
+                <span class="n">theme</span><span class="o">.</span><span class="n">ToCsv</span><span class="p">(</span><span class="n">writer</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BenchTrack.addTargets"><a class="viewcode-back" href="../structureBench.html#structureBench.BenchTrack.addTargets">[docs]</a>    <span class="k">def</span> <span class="nf">addTargets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name_target</span><span class="p">,</span><span class="n">lang_target</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Add targets at the dictionay dictTargets</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name_target : string</span>
+<span class="sd">            targets of the infrastructure.</span>
+<span class="sd">        lang_target : string</span>
+<span class="sd">            programming languague of the target.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None.</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dictTargets</span><span class="p">[</span><span class="n">name_target</span><span class="p">]</span> <span class="o">=</span> <span class="n">lang_target</span></div>
+
+    <span class="k">def</span> <span class="nf">__addThemes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">theme</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Add themes of the infrastructure to the listThemes</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        theme : TYPE</span>
+<span class="sd">            DESCRIPTION.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None.</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__listThemes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">theme</span><span class="p">)</span>
+
+    <span class="c1"># execution of bench</span>
+<div class="viewcode-block" id="BenchTrack.exe_bench"><a class="viewcode-back" href="../structureBench.html#structureBench.BenchTrack.exe_bench">[docs]</a>    <span class="k">def</span> <span class="nf">exe_bench</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Execution of the programme</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None.</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Execution de &quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">__name</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__listThemes</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__listThemes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">exe_theme</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__allTask</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">__allTarget</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">__path</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BenchTrack.filter_target"><a class="viewcode-back" href="../structureBench.html#structureBench.BenchTrack.filter_target">[docs]</a>    <span class="k">def</span> <span class="nf">filter_target</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">lis</span><span class="p">,</span><span class="n">model</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        delet the target has been excluded from the command</span>
+<span class="sd">        of user</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        lis : list of string</span>
+<span class="sd">            list of targets will be excluded/included.</span>
+<span class="sd">        model : Bool</span>
+<span class="sd">            if true, all the targets selected will be added in the list of execution.</span>
+<span class="sd">            else, delet those targets excluded</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        The number of targets to be tested</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">model</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__allTarget</span> <span class="o">=</span> <span class="n">lis</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__allTarget</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__allTarget</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">lis</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__allTarget</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BenchTrack.filter_task"><a class="viewcode-back" href="../structureBench.html#structureBench.BenchTrack.filter_task">[docs]</a>    <span class="k">def</span> <span class="nf">filter_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">lis</span><span class="p">,</span><span class="n">model</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        delet the task has been excluded from the command</span>
+<span class="sd">        of user</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        lis : list of string</span>
+<span class="sd">            list of tasks will be excluded/included.</span>
+<span class="sd">        model : Bool</span>
+<span class="sd">            if true, all the tasks selected will be added in the list of execution.</span>
+<span class="sd">            else, delet those tasks excluded</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        The number of targets to be tested</span>
+
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">model</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__allTask</span> <span class="o">=</span> <span class="n">lis</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__allTask</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__allTask</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">lis</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__allTask</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BenchTrack.show_list_target"><a class="viewcode-back" href="../structureBench.html#structureBench.BenchTrack.show_list_target">[docs]</a>    <span class="k">def</span> <span class="nf">show_list_target</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Output the list of targets that will be executed</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None.</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;List of targets:&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__allTarget</span><span class="p">)):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__allTarget</span><span class="p">[</span><span class="n">i</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="BenchTrack.showInfoTarget"><a class="viewcode-back" href="../structureBench.html#structureBench.BenchTrack.showInfoTarget">[docs]</a>    <span class="k">def</span> <span class="nf">showInfoTarget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">nomTarget</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Output infos (readme) of the target </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        nomTarget : string</span>
+<span class="sd">            target&#39;s name.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None.</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Information of &quot;</span> <span class="o">+</span> <span class="n">nomTarget</span> <span class="o">+</span> <span class="s2">&quot; in the test &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">__name</span> <span class="o">+</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+        <span class="n">file_read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__path</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">__name</span><span class="p">,</span><span class="n">nomTarget</span><span class="p">,</span><span class="s2">&quot;targets&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BenchTrack.showListTasks"><a class="viewcode-back" href="../structureBench.html#structureBench.BenchTrack.showListTasks">[docs]</a>    <span class="k">def</span> <span class="nf">showListTasks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        output all the tasks that will be executed</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None.</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;List of tasks:&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__listThemes</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__listThemes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">showlistTasks</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="BenchTrack.showInfoTask"><a class="viewcode-back" href="../structureBench.html#structureBench.BenchTrack.showInfoTask">[docs]</a>    <span class="k">def</span> <span class="nf">showInfoTask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">nameTask</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        output info(readme) of the task</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        nameTask : string</span>
+<span class="sd">            task&#39;s name.</span>
+
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__listThemes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">showInfoTask</span><span class="p">(</span><span class="n">nameTask</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">__name</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">__path</span><span class="p">):</span>
+                <span class="k">return</span> <span class="mi">1</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Task &quot;</span><span class="o">+</span><span class="n">nameTask</span><span class="o">+</span><span class="s2">&quot; doesn&#39;t exite&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span></div>
+
+<div class="viewcode-block" id="BenchTrack.get_structure_tasks"><a class="viewcode-back" href="../structureBench.html#structureBench.BenchTrack.get_structure_tasks">[docs]</a>    <span class="k">def</span> <span class="nf">get_structure_tasks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        return the structure of the tasks</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">list_structure_theme</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">theme</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__listThemes</span><span class="p">:</span>
+            <span class="n">list_structure_theme</span><span class="p">[</span><span class="n">theme</span><span class="o">.</span><span class="n">getName</span><span class="p">()]</span> <span class="o">=</span> <span class="n">theme</span><span class="o">.</span><span class="n">get_structure_tasks</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__path</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">list_structure_theme</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, AlexisLenoir,HeXin,YangZhuangzhuang.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
