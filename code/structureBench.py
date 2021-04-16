@@ -27,15 +27,12 @@ class BenchTrack:
         '''
         self.__path = path_inf
         self.__name = path_inf.split('/')[-1]
-        #dictionaire of targets,<key = nameTarget> = objetTarget
         self.__dictTargets={}
-        #list of
         self.__listThemes=[]
         self.__allTarget=[]
         self.__allTask = []
         self.__path_benchTrack = path_benchTrack
-        if not self.__construct():
-            print("Error:Construct")
+        self.__construct()
         self.__outputFile = self.__path+"/output.csv"
     def __str__(self):
         '''
@@ -60,10 +57,8 @@ class BenchTrack:
         try:
             path = self.__path
             path += self.__name
-            #for every theme in the folder test
             path += '/tasks'
 
-            #construt list of targets
             path = self.__path+"/targets"
             for targetName in os.listdir(path):
                 if targetName[0] == '.' :
@@ -90,9 +85,7 @@ class BenchTrack:
                     if os.path.exists(path_config):
                         sample_size,args = ConfigFileTask(path_config)
                     task = Task(taskName,args.split(' '),sample_size)
-                    # set all target
                     for targetName in self.__allTarget:
-                        # path_target = pathTs + targetName+".py"
                         if existFile(targetName,pathTs):
                             task.addTarget(targetName)
 
@@ -118,9 +111,7 @@ class BenchTrack:
         '''
         with open(self.__outputFile, "w",newline="") as csvfile:
             writer = csv.writer(csvfile)
-            # name of columns
             writer.writerow(["theme", "task", "target","args","run_time"])
-            # values of columns
             for theme in self.__listThemes:
                 theme.ToCsv(writer)
 

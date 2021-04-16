@@ -46,14 +46,14 @@ def exeCmd(path,parameter,cmd,language,target):
     :return: no return
 
     """
-    target+=get_suffixe(language)
+    target += get_suffixe(language)
     new_cmd=cmd.replace("{script}",target)
     new_cmd2=new_cmd.replace("{arg}",parameter)
     try:
         execute(path,new_cmd2)
     except ImportError:
         print("ModuleNotFoundError")
-
+    return True
 
 def get_suffixe(language):
     """

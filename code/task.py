@@ -91,7 +91,7 @@ class Task:
                         self.exe_target(themeName, target, path,self.__args[j])
                     list_times.append((time.time() - start - times_before) / self.__sample_size)
 
-                    print("--execute target " + target + ' ' + self.__sample_size.__str__() + ' times avec parameter:' + self.__args[j])
+                    print("--execute target " + target + ' ' + self.__sample_size.__str__() + ' times with arg:' + self.__args[j])
                     print("Execution time:" + list_times[-1].__str__())
                 self.__dictTargets[target] = list_times
 
@@ -167,12 +167,12 @@ class Task:
                 writer.writerow([theme, self.__Name, target,self.__args[i], run_time])
 
     def get_structure_tasks(self,path):
-        '''
+        """
         get targets of tasks
 
         :return: list_target : TYPE DESCRIPTION.
 
-        '''
+        """
         list_target=[]
         for target in list(self.__dictTargets.keys()):
             path_configFile = path + "/targets/" + target + "/config.ini"
@@ -183,10 +183,10 @@ class Task:
         return list_target
 
     def upgrade_for_target(self,path,target):
-        '''
+        """
 
         :return: no return
-        '''
+        """
         path_ConfigFile = path  + "/targets/" + target + "/config.ini"
         config = ConfigParser()
         config.read(path_ConfigFile)

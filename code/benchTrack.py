@@ -11,8 +11,8 @@ def manage_flag(argv,bench):
     with a flag include or exclude,this function change the object bench
     without flag,return 1
 
-    :param Argv:args Bench:l'object benchTrack
-    :return: no return
+    :param argv:args Bench:l'object benchTrack
+
     '''
     for i in range(len(argv)):
         if "--target-include" == argv[i]:
@@ -43,7 +43,7 @@ def exe(argv):
     execution of the tool BenchTrack
 
     :param str argv: input in the terminal.
-    :return: no return
+
     '''
     if len(argv) < 2:
         print("Missing parameter")

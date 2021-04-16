@@ -39,8 +39,11 @@ class TestMathFunc(unittest.TestCase):
         self.assertEqual(number,1)
 
     def test_execute(self):
-        self.assert_(exeCmd("../infrastructures/PGM","asia.bif","python {script} {arg}","python","pyAgrum"))
+        self.assertTrue(exeCmd("../infrastructures/PGM/tasks/inference/BIFreading","asia.bif","python {script} {arg}","python","pyAgrumTest"))
 
+    def text_To_Csv(self):
+        bench = BenchTrack("../infrastructures/PGM","")
+        bench.ToCsv()
 
 
 if __name__ == '__main__':
