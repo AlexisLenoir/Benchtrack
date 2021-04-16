@@ -58,7 +58,6 @@ class BenchTrack:
         construct all theme,target,task
         """
         path = self.__path
-        
         if not os.path.exists(path):
             print("Error:Test name")
             return 0
@@ -195,16 +194,14 @@ class BenchTrack:
 
         Returns
         -------
-        None.
+        The number of targets to be tested
 
         '''
         if model:
             self.__allTarget = lis
-            # print(self.__allTarget)
         else:
             self.__allTarget = [x for x in self.__allTarget if x not in lis]
-            # print('List:')
-            # print(self.__allTarget)
+        return len(self.__allTarget)
 
     def filter_task(self,lis,model):
         '''
@@ -221,15 +218,15 @@ class BenchTrack:
 
         Returns
         -------
-        None.
+        The number of targets to be tested
+
 
         '''
         if model:
             self.__allTask = lis
-            print(self.__allTask)
         else:
             self.__allTask = [x for x in self.__allTask if x not in lis]
-            print(self.__allTask)
+        return len(self.__allTask)
 
     def show_list_target(self):
         '''

@@ -1,56 +1,47 @@
 import unittest
 from benchTrack import *
+from tools import *
 from unittest.mock import patch
 
 class TestMathFunc(unittest.TestCase):
     """Test benchTrack.py"""
     def test_construct(self):
-        bench = BenchTrack("../PGM")
+        bench = BenchTrack("../infrastructures/PGM","")
         self.assertEqual("PGM",bench.getName())
-        string = "PGM:list Themes[inference[BIFreading[pyAgrum ]]]"
+        string = "PGM:list Themes[inference[BIFreading[pyAgrumTest ]]]"
         self.assertEqual(string,bench.__str__())
 
     def test_structure(self):
-        bench = BenchTrack("../PGM")
-        string = "{'inference': {'BIFreading': ['pyAgrum.py']}}"
-        self.assertEqual(string,bench.get_structure_tasks().__str__())
+        bench = BenchTrack("../infrastructures/PGM","")
+        # string = "{'inference': {'BIFreading': ['pyAgrum.py']}}"
+        structure = bench.get_structure_tasks()
+        theme = structure['inference']
+        task = theme['BIFreading']
+        self.assertEqual(task[0],'pyAgrumTest.py')
 
-    # def test_InfoTarget(self):
-    #     bench = BenchTrack("ConfigFichier")
-    #     with patch('builtins.print') as mocked_print:
-    #         bench.showInfoTarget("xml_demo")
-    #         # print(mocked_print)
-    #         mocked_print.assert_called_with('Fin\n')
-    #
-    # def test_ListTarget(self):
-    #     bench = BenchTrack("ConfigFichier")
-    #     with patch('builtins.print') as mocked_print:
-    #         bench.show_list_target()
-    #         # print(mocked_print)
-    #         mocked_print.assert_called_with("xml_demo")
-    #
-    # def test_InfoTask(self):
-    #     bench = BenchTrack("ConfigFichier")
-    #     with patch('builtins.print') as mocked_print:
-    #         bench.showInfoTask("charger_employe")
-    #         # print(mocked_print)
-    #         mocked_print.assert_called_with('Fin\n')
-    #
-    # def test_ListTask(self):
-    #     bench = BenchTrack("ConfigFichier")
-    #     with patch('builtins.print') as mocked_print:
-    #         bench.showListTasks()
-    #         # print(mocked_print)
-    #         mocked_print.assert_called_with("charger_employe_coordonnees")
+    def test_filter_target(self):
+        bench = BenchTrack("../infrastructures/PGM","")
+        number = bench.filter_target(['pyAgrumTest'],False)
+        self.assertEqual(number,0)
+        number = bench.filter_target(['pyAgrumTest'], True)
+        self.assertEqual(number,1)
 
-    # def test_filter_target(self):
-    #     bench = BenchTrack("ConfigFichier")
-    #     bench.filter_target("xml_demo",True)
-    #     bench.exe_bench()
-    #     bench.ToCsv()
+    def test_filter_task(self):
+        bench = BenchTrack("../infrastructures/PGM","")
+        number = bench.filter_task(['BIFreading'],False)
+        self.assertEqual(number,0)
+        number = bench.filter_task(['BIFreading'], True)
+        self.assertEqual(number,1)
 
+    def test_filter_task(self):
+        bench = BenchTrack("../infrastructures/PGM","")
+        number = bench.filter_task(['BIFreading'],False)
+        self.assertEqual(number,0)
+        number = bench.filter_task(['BIFreading'], True)
+        self.assertEqual(number,1)
 
-
+    def test_execute(self):
+        self.assert_(exeCmd("../infrastructures/PGM","asia.bif","python {script} {arg}","python","pyAgrum"))
 
 
 

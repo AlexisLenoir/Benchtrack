@@ -5,9 +5,9 @@ import csv
 import os
 import re
 
-def exeCmdPython(path, cmd):
+def execute(path, cmd):
     '''
-    This fonction is made to run python files
+    This fonction is made to run  files
     Parameters
     ----------
     path : string
@@ -21,9 +21,8 @@ def exeCmdPython(path, cmd):
     '''
     CurrentPath = os.getcwd()
     PathAbsolu = CurrentPath + "/" + path
-    os.fchdir(os.open(PathAbsolu, os.O_RDONLY))
+    os.chdir(os.open(PathAbsolu, os.O_RDONLY))
     #res = os.system("cd"+path+"&&"+cmd)
-    print(cmd)
     res=os.system(cmd)
     if res != 0:
         if os.path.exists('errorInfo.txt'):
@@ -51,7 +50,8 @@ def exeCmd(path,parameter,cmd,language,target):
         command of executing based on terminal.
     language : string
         the programming languague of task .
-
+    target: string
+        the name of target
     Returns
     -------
     None.
@@ -60,12 +60,7 @@ def exeCmd(path,parameter,cmd,language,target):
     target+=get_suffixe(language)
     new_cmd=cmd.replace("{script}",target)
     new_cmd2=new_cmd.replace("{arg}",parameter)
-    #if language == "python":
-        #new_cmd2+= get_suffixe(language)
-    exeCmdPython(path,new_cmd2)
-    # if language == "r":
-    #     path+= get_suffixe(language)
-    #     exeCmdPython(path,"Rscript"+cmd)
+    execute(path,new_cmd2)
 
 def get_suffixe(language):
     '''
@@ -106,11 +101,14 @@ def ConfigFileTask(file):
         sample_size:sample size for execute all targets in this task
         arg:all args of the target
     '''
-    config = ConfigParser()
-    config.read(file)
-    sample_size = config.get('running', 'sample_size')
-    arg = config.get('running', 'args')
-    return sample_size,arg
+    try:
+        config = ConfigParser()
+        config.read(file)
+        sample_size = config.get('running', 'sample_size')
+        arg = config.get('running', 'args')
+        return sample_size,arg
+    except IOError:
+        print("Can't find the file config:" + file)
 
 # pour trouver tous les fichers de repertoire de BASE.
 def find_all_file(base):
@@ -199,9 +197,9 @@ def file_read(nameTest, nameTarget, typeF):
 
     Parameters
     ----------
-    nomTest : string
+    nameTest : string
         name of task.
-    nomTarget : string
+    nameTarget : string
         name of target.
     typeF : string
         task/target.

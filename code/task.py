@@ -1,4 +1,5 @@
 from tools import *
+import os
 class Task:
     def __init__(self, name, args, sample_size=20):
         '''
@@ -90,23 +91,31 @@ class Task:
 
         '''
         print("-In Task " + self.__Name + ":")
-        for i in self.__dictTargets:
-            if i in lis:
+        for target in self.__dictTargets:
+            if target in lis:
+
+                try :
+                    self.exe_target(themeName, target, path, self.__args[0])
+                except ModuleNotFoundError:
+                    self.upgrade_for_target(path,target)
+
                 list_times = []
                 for j in range(len(self.__args)):
                     # time to execute before_test
                     times_before = time.time()
-                    self.exe_before_test(themeName, i, path,self.__args[j])
+                    for _ in range(self.__sample_size):
+                        self.exe_before_test(themeName, target, path,self.__args[j])
                     times_before = time.time() - times_before
 
                     # time to execute test
                     start = time.time()
-                    self.exe_target(themeName, i, path,self.__args[j])
+                    for _ in range(self.__sample_size):
+                        self.exe_target(themeName, target, path,self.__args[j])
                     list_times.append((time.time() - start - times_before) / self.__sample_size)
 
-                    print("--execute target " + i + ' ' + self.__sample_size.__str__() + ' times avec parameter:' + self.__args[j])
+                    print("--execute target " + target + ' ' + self.__sample_size.__str__() + ' times avec parameter:' + self.__args[j])
                     print("Execution time:" + list_times[-1].__str__())
-                self.__dictTargets[i] = list_times
+                self.__dictTargets[target] = list_times
 
     def exe_before_test(self, themeName, targets, path,args):
         '''
@@ -143,17 +152,9 @@ class Task:
         None.
 
         '''
-        
-        #path_file+=".py"
-        if os.path.exists(path_configFile):
-            command, language = ConfigFileTarget(path_configFile)
-            for n in range(1):
-                
-                #if os.path.exists(path_file):
-                    
-                    exeCmd(path_file, args, command, language,target)
-        else:
-            print("Can't find the file config:" + path_configFile)
+        command, language = ConfigFileTarget(path_configFile)
+        exeCmd(path_file, args, command, language,target)
+
 
     def getName(self):
         '''
@@ -202,3 +203,10 @@ class Task:
                 target += get_suffixe(language)
                 list_target.append(target)
         return list_target
+
+    def upgrade_for_target(self,path,target):
+        path_ConfigFile = path  + "/targets/" + target + "/config.ini"
+        config = ConfigParser()
+        config.read(path_ConfigFile)
+        upgrade = config.get('execution', 'upgrading')
+        os.system(upgrade)
