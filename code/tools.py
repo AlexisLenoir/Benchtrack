@@ -21,7 +21,7 @@ def execute(path, cmd):
     '''
     CurrentPath = os.getcwd()
     PathAbsolu = CurrentPath + "/" + path
-    os.chdir(os.open(PathAbsolu, os.O_RDONLY))
+    os.fchdir(os.open(PathAbsolu, os.O_RDONLY))
     #res = os.system("cd"+path+"&&"+cmd)
     res=os.system(cmd)
     if res != 0:
