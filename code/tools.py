@@ -10,8 +10,6 @@ def execute(path, cmd):
 
     :param str path :the path that contains the task need to be execute.
     :param str cmd :command of executing based on terminal.
-
-    :return: no return
     '''
     CurrentPath = os.getcwd()
     PathAbsolu = CurrentPath + "/" + path+"/"
@@ -42,8 +40,6 @@ def exeCmd(path,parameter,cmd,language,target):
     :param str cmd : command of executing based on terminal.
     :param str language : the programming languague of task .
     :param str target: the name of target
-
-    :return: no return
 
     """
     target += get_suffixe(language)
@@ -99,7 +95,10 @@ def ConfigFileTask(file):
         config = ConfigParser()
         config.read(file)
         sample_size = config.get('running', 'sample_size')
-        arg = config.get('running', 'args')
+        if config.has_option('running', 'args'):
+            arg = config.get('running', 'args')
+        else:
+            arg = ''
         return sample_size,arg
     except IOError:
         print("Can't find the file config:" + file)
@@ -159,8 +158,6 @@ def to_txt(list_res):
     ----------
     list_res : float list 
         time of executing.
-
-    :return: no return
 
     '''
     with  open('PGM/result.txt', 'w') as f:
@@ -222,8 +219,6 @@ def flagTasks(argv, bench, flag):
     :param str argv :name of the benchmark.
     :param str bench :name of bench for testing.
     :param str flag : type of flags.
-
-    :return: no return
     '''
     if flag == 'info':
         if len(argv) < 3:
@@ -252,8 +247,6 @@ def flagTargets(argv, bench, flag):
     :param str argv : name of the benchmark.
     :param str bench : name of bench for testing.
     :param str flag : type of flags.
-
-    :return: no return
     '''
 
     if flag == 'info':

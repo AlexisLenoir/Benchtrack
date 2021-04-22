@@ -1,5 +1,6 @@
 from tools import *
 import os
+from target import *
 class Task:
     """
     This class contains the structure of the Task
@@ -23,7 +24,10 @@ class Task:
         self.__Name = name
         self.__dictTargets = {}
         self.__sample_size = int(sample_size)
-        self.__args = args
+        if len(args) >= 1:
+            self.__args = args
+        else:
+            self.__args = ['']
     def __str__(self):
         """
         Return a string of all the targets from the task
@@ -32,7 +36,7 @@ class Task:
 
         """
         string = self.getName() + "["
-        for i in self.__dictTargets:
+        for i,_ in self.__dictTargets:
             string += i + " "
         return string + "]"
 
@@ -42,10 +46,8 @@ class Task:
 
         param str name_Target :name of target.
 
-        :return: no return
-
         '''
-        self.__dictTargets[name_Target] = [-1] * len(self.__args)
+        self.__dictTargets[name_Target] = Target(name_Target)
 
     def modifyTarget(self, name_Target, res_Target):
         """
@@ -70,78 +72,28 @@ class Task:
         :return: no return
 
         """
-        print("-In Task " + self.__Name + ":")
-        for target in self.__dictTargets:
-            if target in lis:
-                try :
-                    self.exe_target(themeName, target, path, self.__args[0])
-                except ModuleNotFoundError:
-                    self.upgrade_for_target(path,target)
-                list_times = []
-                for j in range(len(self.__args)):
+        print("-In Task " + self.getName() + ":")
+        for target_name,target in self.__dictTargets.items():
+            if target_name in lis:
+                # try :
+                #     self.__dictTargets[self.__args[0]].exe_target(themeName, self.getName(), path)
+                # except ModuleNotFoundError:
+                #     self.upgrade_for_target(path,target)
+                for arg in self.__args:
                     # time to execute before_test
                     times_before = time.time()
                     for _ in range(self.__sample_size):
-                        self.exe_before_test(themeName, target, path,self.__args[j])
+                        target.exe_before_test(themeName, self.getName(), path,arg)
                     times_before = time.time() - times_before
 
                     # time to execute test
                     start = time.time()
                     for _ in range(self.__sample_size):
-                        self.exe_target(themeName, target, path,self.__args[j])
-                    list_times.append((time.time() - start - times_before) / self.__sample_size)
-
-                    print("--execute target " + target + ' ' + self.__sample_size.__str__() + ' times with arg:' + self.__args[j])
-                    print("Execution time:" + list_times[-1].__str__())
-                self.__dictTargets[target] = list_times
-
-    def exe_before_test(self, themeName, targets, path,args):
-        """
-        execute some before-task file like imports
-
-        :param str themeName:name of theme
-        :param str targets:name of target
-        :param str path :path of the infrastructure
-        :param str args:args of execution
-
-        :return: no return
-
-        """
-        path_File = path  + "/tasks/" + themeName + "/" + self.getName() 
-        path_ConfigFile = path  + "/targets/" + targets + "/config.ini"
-        self.exe_file(path_ConfigFile, path_File,args,"before_"+targets)
-
-    def exe_target(self, themeName, targets,path,args):
-        '''
-        drive infos from configure file of target and transforme these infos
-
-        :param str themeName:name of theme
-        :param str targets:name of target
-        :param str path :path of the infrastructure
-        :param str args:args of execution
-
-        :return: no return
-
-        '''
-        path_ConfigFile = path  + "/targets/" + targets + "/config.ini"
-        path_File = path  + "/tasks/" + themeName + "/" + self.getName()
-        self.exe_file(path_ConfigFile, path_File,args,targets)
-
-    def exe_file(self, path_configFile, path_file, args,target):
-        '''
-        execution of a target
-
-        :param str path_configFile:path of file config of target
-        :param str path_file:file to execute
-        :param str args:args of execution
-        :param str target :name of target
-
-        :return: no return
-
-        '''
-        command, language = ConfigFileTarget(path_configFile)
-        exeCmd(path_file, args, command, language,target)
-
+                        target.exe_target(themeName, self.getName(), path,arg)
+                    time_mean = (time.time() - start - times_before) / self.__sample_size
+                    self.__dictTargets[target_name].addResult(arg,time_mean)
+                    print("--execute target " + target_name + ' ' + self.__sample_size.__str__() + ' times with arg:' + arg)
+                    print("Execution time:" + time_mean.__str__())
 
     def getName(self):
         '''
@@ -157,14 +109,12 @@ class Task:
         generetor the csv file which contains some
         infos about results of execution
 
-        :return: no return
-
         '''
         targetNames = dict.keys(self.__dictTargets)
         for target in targetNames:
-            for i in range(len(self.__args)):
-                run_time = self.__dictTargets[target][i]
-                writer.writerow([theme, self.__Name, target,self.__args[i], run_time])
+            for arg in self.__args:
+                run_time = self.__dictTargets[target].getResult()[arg]
+                writer.writerow([theme, self.__Name, target,arg, run_time])
 
     def get_structure_tasks(self,path):
         """
@@ -185,7 +135,6 @@ class Task:
     def upgrade_for_target(self,path,target):
         """
 
-        :return: no return
         """
         path_ConfigFile = path  + "/targets/" + target + "/config.ini"
         config = ConfigParser()
