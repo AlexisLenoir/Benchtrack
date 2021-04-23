@@ -1,9 +1,9 @@
 import unittest
-import benchTrack.tools as tl
-import benchTrack.structureBench as bt
+import BenchTrack.tools as tl
+import BenchTrack.structureBench as bt
 
 class TestMathFunc(unittest.TestCase):
-    """Test benchTrack.py"""
+    """Test BenchTrack.py"""
     def test_construct(self):
         bench = bt.BenchTrack("../infrastructures/PGM","")
         self.assertEqual("PGM",bench.getName())

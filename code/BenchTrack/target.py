@@ -1,4 +1,4 @@
-from tools import *
+from BenchTrack.tools import *
 
 class Target:
     """
@@ -18,21 +18,21 @@ class Target:
         self.__result = {}
 
     def getName(self):
-        '''
+        """
         get name of the task
 
         :return:name of the task.
 
-        '''
+        """
         return self.__name
 
     def getResult(self):
-        '''
+        """
         get result of the target
 
         :return:the dictionnaire of result.
 
-        '''
+        """
         return self.__result
 
     def addResult(self,arg,value):
@@ -71,11 +71,10 @@ class Target:
         """
         path_ConfigFile = path  + "/targets/" + self.getName() + "/config.ini"
         path_File = path  + "/tasks/" + themeName + "/" + task
-        print("arg::::::::",args)
         self.exe_file(path_ConfigFile, path_File,args,self.getName())
 
     def exe_file(self, path_configFile, path_file, args,target):
-        '''
+        """
         execution of a target
 
         :param str path_configFile:path of file config of target
@@ -83,6 +82,6 @@ class Target:
         :param str args:args of execution
         :param str target :name of target
 
-        '''
+        """
         command, language = ConfigFileTarget(path_configFile)
         exeCmd(path_file, args, command, language,target)

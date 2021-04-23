@@ -1,4 +1,4 @@
-from tools import *
+from BenchTrack.tools import *
 #theme
 
 class Theme:

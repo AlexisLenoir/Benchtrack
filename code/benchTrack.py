@@ -1,7 +1,7 @@
 import os
 import sys
-import benchTrack.tools as tl
-import benchTrack.structureBench as bt
+import BenchTrack.tools as tl
+import BenchTrack.structureBench as bt
 
 def manage_flag(argv,bench):
     """
@@ -11,7 +11,7 @@ def manage_flag(argv,bench):
     with a flag include or exclude,this function change the object bench
     without flag,return 1
 
-    :param argv:args Bench:l'object benchTrack
+    :param argv:args Bench:l'object BenchTrack
 
     """
     for i in range(len(argv)):
@@ -53,5 +53,6 @@ def exe(argv):
     if manage_flag(argv,bench):
         bench.exe_bench()
         bench.ToCsv()
+
 if __name__ == '__main__':
     exe(sys.argv)

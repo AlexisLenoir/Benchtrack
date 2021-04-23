@@ -1,9 +1,9 @@
-from tools import *
-from theme import Theme
-from task import Task
+from BenchTrack.tools import *
+from BenchTrack.theme import Theme
+from BenchTrack.task import Task
 class BenchTrack:
     '''
-    This class contains the structure of the benchTrack
+    This class contains the structure of the BenchTrack
 
     :cvar str __path:the relative path that contains the infrastructure.which is also the first parameter of input
     :cvar str __name:name of bench
@@ -11,7 +11,7 @@ class BenchTrack:
     :cvar list __listThemes:a list contains of object theme
     :cvar list __allTarget:a list of all targets must be tested
     :cvar list __allTask:a list of all tasks must be tested
-    :cvar str __path_benchTrack:path of benchTrack.py
+    :cvar str __path_benchTrack:path of BenchTrack.py
     :cvar str __outputFile:path of output.csv
     '''
     def __init__(self, path_inf, path_benchTrack):
@@ -20,7 +20,7 @@ class BenchTrack:
         constructor of class BenchTrack
 
         :param str path_inf:the relative path that contains the infrastructure.which is also the first parameter of input
-        :param str path_benchTrack : the absolu path that contains the benchTrack.
+        :param str path_benchTrack : the absolu path that contains the BenchTrack.
 
         :return:no return
 
