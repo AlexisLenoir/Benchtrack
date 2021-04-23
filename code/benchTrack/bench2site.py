@@ -5,11 +5,7 @@ Ce module permet de générer le site
 
 import os
 import csv
-import shutil
-import numpy as np
 import sys
-from os import getcwd, chdir, mkdir
-import pathlib as pl
 import structureBench
 from generateRst import *
 

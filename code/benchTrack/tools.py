@@ -19,12 +19,12 @@ def execute(path, cmd):
 
     res=os.system(cmd)
     if res != 0:
-        if os.path.exists('errorInfo.txt'):
-            with open('errorInfo.txt', mode='w', encoding='utf-8') as ff:
+        if os.path.exists('../errorInfo.txt'):
+            with open('../errorInfo.txt', mode='w', encoding='utf-8') as ff:
                 #print(ff.read())
                 ff.write(str(res))
         else:
-            with open("errorInfo.txt", mode='w+', encoding='utf-8') as ff:
+            with open("../errorInfo.txt", mode='w+', encoding='utf-8') as ff:
                 #print(ff.read())
                 ff.write(str(res))
 
