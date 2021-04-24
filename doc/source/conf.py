@@ -21,7 +21,7 @@ source_parsers = {
     '.md': CommonMarkParser,
 }
 source_suffix = ['.rst', '.md']
-sys.path.insert(0, os.path.abspath('../../code'))
+sys.path.insert(0, os.path.abspath('../../src'))
 # -- Project information -----------------------------------------------------
 
 project = 'BenchTrack'

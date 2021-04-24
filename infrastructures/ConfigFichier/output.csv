@@ -1,8 +1,1 @@
 theme,task,target,args,run_time
-default,charger_employe,ini_demo,,-0.0013270258903503418
-default,charger_employe,json_demo,,-0.0009031534194946289
-default,charger_employe,r_demo,,-0.00017491579055786132
-default,charger_employe,xml_demo,,-0.0010773062705993653
-default,charger_employe_coordonnees,ini_demo,,-0.00011423826217651367
-default,charger_employe_coordonnees,json_demo,,-0.001406240463256836
-default,charger_employe_coordonnees,xml_demo,,0.0010613799095153809
