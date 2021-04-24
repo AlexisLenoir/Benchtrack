@@ -86,7 +86,7 @@ class BenchTrack:
                     args = ''
                     if os.path.exists(path_config):
                         sample_size,args = tl.ConfigFileTask(path_config)
-                    task = Task(taskName,args.split(' '),sample_size)
+                    task = Task(taskName,args.split(','),sample_size)
                     for targetName in self.__allTarget:
                         if tl.existFile(targetName,pathTs):
                             task.addTarget(targetName)

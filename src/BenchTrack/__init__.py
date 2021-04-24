@@ -1,4 +1,4 @@
 #__init__
 import sys
-from tools import *
-from structureBench import BenchTrack
+from BenchTrack.tools import *
+from BenchTrack.structureBench import BenchTrack

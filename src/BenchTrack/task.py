@@ -28,6 +28,7 @@ class Task:
             self.__args = args
         else:
             self.__args = ['']
+
     def __str__(self):
         """
         Return a string of all the targets from the task
