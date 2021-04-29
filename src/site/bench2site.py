@@ -6,7 +6,7 @@ Ce module permet de générer le site
 import os
 import csv
 import sys
-import structureBench
+import src.BenchTrack.structureBench
 from generateRst import *
 
 

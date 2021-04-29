@@ -1,4 +1,5 @@
 .DS_Store
+#document of sphinx
 doc/build
 doc/source
 doc/make.bat
