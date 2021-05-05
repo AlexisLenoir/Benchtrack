@@ -1,4 +1,4 @@
-from src.BenchTrack.tools import *
+from BenchTrack.tools import *
 
 class Target:
     """

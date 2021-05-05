@@ -1,6 +1,6 @@
-from src.BenchTrack.tools import *
+from BenchTrack.tools import *
 import os
-from src.BenchTrack.target import *
+from BenchTrack.target import *
 class Task:
     """
     This class contains the structure of the Task

@@ -1,8 +1,8 @@
-import src.BenchTrack.tools as tl
+import BenchTrack.tools as tl
 import os
 import csv
-from src.BenchTrack.theme import Theme
-from src.BenchTrack.task import Task
+from BenchTrack.theme import Theme
+from BenchTrack.task import Task
 class BenchTrack:
     '''
     This class contains the structure of the BenchTrack
