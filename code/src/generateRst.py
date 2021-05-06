@@ -220,7 +220,7 @@ def create_targetXtask_rst(name_target, name_task,path_code, path_targetsXtasks,
         f.write("\n")
         f.write("Code source: \n")
         f.write("\n")
-        f.write(".. src-block:: python \n")
+        f.write(".. code-block:: python \n")
         f.write("   :linenos: table\n")
         f.write("   :linenostart: 1\n")
         f.write("\n")

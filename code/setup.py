@@ -14,7 +14,7 @@ setup(name='BenchTrack',
       author='Alexis Lenoir,He Xin,Yang Zhuangzhuang',
       # author_email='',
       # license='',
-      packages= find_packages(where="src"),
+      packages= find_packages(where="code"),
       install_requires=[
       ],
       classifiers=[

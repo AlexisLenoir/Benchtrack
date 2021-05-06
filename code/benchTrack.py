@@ -1,7 +1,7 @@
 import os
 import sys
-import src.code.BenchTrack.tools as tl
-import src.code.BenchTrack.structureBench as bt
+import src.src.BenchTrack.tools as tl
+import src.src.BenchTrack.structureBench as bt
 
 def manage_flag(argv,bench):
     """
