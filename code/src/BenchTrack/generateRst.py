@@ -1,31 +1,23 @@
 """
 -----------------------------------------------generateRst---------------------------------------------------
-Ce module contient toutes les fonctions permettant de générer les fichiers rst pour le répertoire content
+This module contains all functions to generate rst files for the content directory
 
 """
-def create_title_rst(readme,name_title):
-    """
-    Deprecated
-    Pour gérer les cas où il y a déjà un titre
-    readme est une chaîne de carac d'un fichier readme
-    """
-    title = ""
-    title_exists = True
-    for i in range(len(readme)):
-        if readme[i] == '\n':
-            if readme[i+1] == '#' or readme[i+1] == '=':
-                return title_exists, title
-            else:
-                break
-    title_exists = False
-    title = name_title + " [Error]\n"
-    nb_carac = len(title)
-    for i in range(nb_carac):
-        title += "="
-    title += "\n"
-    return title_exists, title
+
+import matplotlib.pyplot as plt
+
 
 def meta_data():
+    """
+    This function writes the string that contains all the metadata
+
+    Parameters
+    ----------
+        Nothing
+    Returns
+    -------
+        Nothing
+    """
     md = "\n"
     md = "\n"
     md += ":authors: Benchtrack\n"
@@ -33,8 +25,20 @@ def meta_data():
     md += "\n"
     return md
 
-def create_rst_base(readme, name_title):
+def create_rst_base(readme, title_rst):
+    """
+    This function generates the beginning of the rst files, it manages the titles
+
+    Parameters
+    ----------
+        readme : String, the content of a readme file
+        title_rst: String, title of the rst file
+    Returns
+    -------
+        base_rst: String, the beginning of the rst file 
+    """
     base_rst = ""
+    # For file text without \n: 
     one_line = True
 
     for i in range(len(readme)):
@@ -48,7 +52,7 @@ def create_rst_base(readme, name_title):
                 base_rst = base_rst[:j] + meta_data() + base_rst[j:]
                 break
             else:
-                title = name_title + " [Error]\n"
+                title = title_rst + " [Automatic]\n"
                 base_rst += title
                 nb_carac = len(title)
                 for i in range(nb_carac-1):
@@ -59,7 +63,7 @@ def create_rst_base(readme, name_title):
                 break
 
     if one_line:
-        title = name_title + " [Error]\n"
+        title = title_rst + " [Automatic]\n"
         base_rst += title
         nb_carac = len(title)
         for i in range(nb_carac-1):
@@ -72,7 +76,20 @@ def create_rst_base(readme, name_title):
 
 
 def create_infra_rst(name_infra, path_content, path_readme, structure_run_time, list_targets):
-
+    """
+    Write the rst file of the infrastructure presentation and the summary of results    
+    
+    Parameters
+    ----------
+        name_infra : String, name of the infrastructure
+        path_content: String, absolute path of the content directory
+        path_readme: String, absolute path of the corresponding readme file
+        structure_run_time: Dictionary 3D [task][target][arg]
+        list_targets: String, list of the targets
+    Returns
+    -------
+        Nothing
+    """
     readme = ''
     with open(path_readme,'r') as f:
         readme = f.read()
@@ -85,19 +102,22 @@ def create_infra_rst(name_infra, path_content, path_readme, structure_run_time, 
 
         f.write("\n")
         f.write("\n")
-        f.write(".. list-table:: Results\n")
+
+        f.write(".. list-table:: \n")
         f.write("   :widths: auto\n")
         f.write("   :header-rows: 1\n")
         f.write("   :stub-columns: 1\n")
         f.write("\n")
         f.write("   * - Tasks/Targets\n")
         for target in list_targets:
-            f.write("     - "+target+"\n")
+            f.write("     - `"+target+" <{filename}/targets/"+target + ".rst>`__ \n")
+            #f.write("     - "+target+"\n")
 
         problem_exec = False
 
         for task in list(structure_run_time.keys()):
-            f.write("   * - "+task+"\n")
+            f.write("   * - `"+task+" <{filename}/tasks/"+task + ".rst>`__ \n")
+            #f.write("   * - "+task+"\n")
             for target in list(structure_run_time[task].keys()):
                 if len(list(structure_run_time[task][target].keys())) == 0:
                     f.write("     -  \n")
@@ -108,10 +128,25 @@ def create_infra_rst(name_infra, path_content, path_readme, structure_run_time, 
                             f.write("     - X\n")
                             break
                     if not problem_exec:
-                        f.write("     - OK\n")
+                        f.write("     - `OK <{filename}/targetsXtasks/"+target+"X"+task +".rst>`__ \n")
+                        #f.write("     - OK\n")
 
         
-def create_target_rst(name_target, path_readme, path_targets, list_tasks, structure_run_time):
+def create_target_rst(name_target, path_readme, path_targets, structure_run_time, list_tasks):
+    """
+    Write the rst file for a target (presentation and result)    
+    
+    Parameters
+    ----------
+        name_target : String, name of the target
+        path_readme: String, absolute path of the corresponding readme file
+        path_targets: String, absolute path of the targets directory
+        structure_run_time: Dictionary 3D [task][target][arg]
+        list_tasks: String, list of the tasks
+    Returns
+    -------
+        Nothing
+    """
     readme = ''
     with open(path_readme,'r') as f:
         readme = f.read()
@@ -123,29 +158,85 @@ def create_target_rst(name_target, path_readme, path_targets, list_tasks, struct
 
         f.write("\n")
         f.write("\n")
-        f.write(".. list-table:: Results\n")
+        f.write(".. list-table:: \n")
         f.write("   :widths: auto\n")
         #f.write("   :header-rows: 1\n")
         #f.write("   :stub-columns: 1\n")
         f.write("\n")
-        f.write("   * - Arg/Tasks\n")
-        list_args = []
+
+        list_tasks2 = []
+        one_argument = True
         for task in list_tasks:
-            f.write("     - "+task+"\n")
-            for arg in list(structure_run_time[task][name_target].keys()):
-                if arg not in list_args:
-                    list_args.append(arg)
+            if len(list(structure_run_time[task][name_target].keys())) > 0:
+                list_tasks2.append(task)
+            if len(list(structure_run_time[task][name_target].keys())) > 1:
+                one_argument = False
+                break
 
-        for arg in list_args:
-            f.write("   * - "+arg+"\n")
-            for task in list_tasks:
-                if arg in list(structure_run_time[task][name_target].keys()):
+
+        if one_argument:
+
+            f.write("   * - Tasks\n")
+            for task in list_tasks2:
+                f.write("     - `"+task+ " <{filename}/targetsXtasks/"+name_target+"X"+task +".rst>`__ \n")
+            f.write("   * - Run_time\n")
+            for task in list_tasks2:
+                for arg in list(structure_run_time[task][name_target].keys()):
                     f.write("     - "+structure_run_time[task][name_target][arg]+"\n")
-                else:
-                    f.write("     -  \n")
 
+        else:
+            f.write("   * - Arg/Tasks\n")
+            list_allArgs = []
+            for task in list_tasks:
+                f.write("     - `"+task+ " <{filename}/targetsXtasks/"+name_target+"X"+task +".rst>`__ \n")
+                for arg in list(structure_run_time[task][name_target].keys()):
+                    if arg not in list_allArgs:
+                        list_allArgs.append(arg)
 
-def create_task_rst(name_task, path_readme, path_tasks, list_targets, structure_run_time):
+            for arg in list_allArgs:
+                f.write("   * - "+arg+"\n")
+                for task in list_tasks:
+                    if arg in list(structure_run_time[task][name_target].keys()):
+                        f.write("     - "+structure_run_time[task][name_target][arg]+"\n")
+                    else:
+                        f.write("     -  \n")
+
+def create_line (name_task, structure_run_time, list_target, path_images):
+    """
+    Pour créer des courbes pour les pages par task
+    """
+
+    fig, ax = plt.subplots()
+
+    for target in list_target:
+        list_args = list(structure_run_time[name_task][target].keys())
+        list_runTime = list(structure_run_time[name_task][target].values())
+        list_runTime = list(map(float, list_runTime))
+        ax.plot(list_args,list_runTime, label = "target: "+target)
+
+    ax.set_xlabel('Args')
+    ax.set_ylabel('run_time(s)')
+    ax.set_title('Time execution of ' + name_task + ' by targets by args')
+    ax.legend()
+
+    path_file = path_images + "/" + name_task + ".jpg"
+    plt.savefig(path_file)
+
+def create_task_rst(name_task, path_readme, path_tasks, structure_run_time, list_targets, path_images):
+    """
+    Write the rst file for a task (presentation and result)     
+    
+    Parameters
+    ----------
+        name_task : String, name of the task
+        path_readme: String, absolute path of the corresponding readme file
+        path_tasks: String, absolute path of the tasks directory
+        structure_run_time: Dictionary 3D [task][target][arg]
+        list_targets: String, list of the targets
+    Returns
+    -------
+        Nothing
+    """
     readme = ''
     with open(path_readme,'r') as f:
         readme = f.read()
@@ -157,28 +248,66 @@ def create_task_rst(name_task, path_readme, path_tasks, list_targets, structure_
 
         f.write("\n")
         f.write("\n")
-        f.write(".. list-table:: Results\n")
+        f.write(".. list-table:: \n")
         f.write("   :widths: auto\n")
         #f.write("   :header-rows: 1\n")
         #f.write("   :stub-columns: 1\n")
         f.write("\n")
-        f.write("   * - Arg/Targets\n")
-        list_args = []
+
+        # For get only target which have at least one arg
+        list_ownTargets = []
+        one_argument = True
         for target in list_targets:
-            f.write("     - "+target+"\n")
-            for arg in list(structure_run_time[name_task][target].keys()):
-                if arg not in list_args:
-                    list_args.append(arg)
+            if len(list(structure_run_time[name_task][target].keys())) > 0:
+                list_ownTargets.append(target)
+            if len(list(structure_run_time[name_task][target].keys())) > 1:
+                one_argument = False
+                break
 
-        for arg in list_args:
-            f.write("   * - "+arg+"\n")
-            for target in list_targets:
-                if arg in list(structure_run_time[name_task][target].keys()):
+        create_line(name_task, structure_run_time, list_ownTargets, path_images)
+
+        if one_argument:
+            f.write("   * - Targets\n")
+            for target in list_ownTargets:
+                f.write("     - `"+target+ " <{filename}/targetsXtasks/"+target+"X"+name_task +".rst>`__ \n")
+            f.write("   * - Run_time\n")
+            for target in list_ownTargets:
+                for arg in list(structure_run_time[name_task][target].keys()):
                     f.write("     - "+structure_run_time[name_task][target][arg]+"\n")
-                else:
-                    f.write("     -  \n")
 
-def create_targetXtask_rst(name_target, name_task,path_code, path_targetsXtasks, path_pages, structure_run_time):
+        else:
+            f.write("   * - Arg/Targets\n")
+            list_allArgs = []
+
+            for target in list_targets:
+                f.write("     - `"+target+ " <{filename}/targetsXtasks/"+target+"X"+name_task +".rst>`__ \n")
+                for arg in list(structure_run_time[name_task][target].keys()):
+                    if arg not in list_allArgs:
+                        list_allArgs.append(arg)
+
+            for arg in list_allArgs:
+                f.write("   * - "+arg+"\n")
+                for target in list_targets:
+                    if arg in list(structure_run_time[name_task][target].keys()):
+                        f.write("     - "+structure_run_time[name_task][target][arg]+"\n")
+                    else:
+                        f.write("     -  \n")
+
+def create_targetXtask_rst(name_target, name_task,path_code, path_targetsXtasks, structure_run_time):
+    """
+    Write the rst file for a target of a task (result and source code)  
+    
+    Parameters
+    ----------
+        name_target: String, name of the target
+        name_tasks: String, name of the task
+        path_code: String, absolute path of the code file
+        path_targetsXtasks: String, absolute path of the targetsXtasks directory
+        structure_run_time: Dictionary 3D [task][target][arg]
+    Returns
+    -------
+        Nothing
+    """
     path_file = path_targetsXtasks + "/" + name_target + "X" + name_task + ".rst"
 
     with open(path_code,'r') as f:
@@ -192,14 +321,13 @@ def create_targetXtask_rst(name_target, name_task,path_code, path_targetsXtasks,
 
         f.write(meta_data())
 
-        #f.write ("La target "+name_target+" de la task "+name_task+": \n")
-        f.write ("La target ")
+        f.write ("The target ")
         f.write("`"+name_target+" <{filename}/targets/"+name_target+".rst>`_")
-        f.write(" de la task ")
+        f.write(" of the task ")
         f.write("`"+name_task+" <{filename}/tasks/"+name_task+".rst>`_ \n")
         f.write("\n")
         f.write("\n")
-        f.write(".. list-table:: Results\n")
+        f.write(".. list-table:: \n")
         f.write("   :widths: auto\n")
         f.write("\n")
         list_args = list(structure_run_time[name_task][name_target].keys())
@@ -218,7 +346,7 @@ def create_targetXtask_rst(name_target, name_task,path_code, path_targetsXtasks,
                 f.write("     - "+structure_run_time[name_task][name_target][list_args[0]]+"\n")
         f.write("\n")
         f.write("\n")
-        f.write("Code source: \n")
+        f.write("Source code: \n")
         f.write("\n")
         f.write(".. code-block:: python \n")
         f.write("   :linenos: table\n")
@@ -231,43 +359,4 @@ def create_targetXtask_rst(name_target, name_task,path_code, path_targetsXtasks,
                 f.write("   ")
             else:
                 f.write(code[i])
-    """
-    #deprecated
-    with open(path_pages+"/targetsXtasks.rst",'a') as f:
-        f.write("- `"+name_target+" for "+name_task+" <{filename}/targetsXtasks/"+name_target + "X" + name_task + ".rst>`_\n")
-        f.write("\n"
-    """
-
-def create_pages_rst(path_pages,results):
-    # Deprecated
-    list_tasks = results[0]
-    list_targets = results[1]
-    run_times = results[2]
-
-    with open(path_pages+"/targets.rst",'w') as f:
-        f.write("Targets\n")
-        f.write("#######\n")
-        f.write("\n")
-        f.write(":authors: Benchtrack\n")
-        f.write(":date: 2010-10-03 10:20\n")
-        f.write("\n")
-        for tg in list(list_targets.keys()):
-            f.write("- `"+tg+" <{filename}/targets/"+tg+".rst>`_\n")
-
-    with open(path_pages+"/tasks.rst",'w') as f:
-        f.write("Tasks\n")
-        f.write("#####\n")
-        f.write("\n")
-        f.write(":authors: Benchtrack\n")
-        f.write(":date: 2010-10-03 10:20\n")
-        f.write("\n")
-        for tk in list(list_tasks.keys()):
-            f.write("- `"+tk+" <{filename}/tasks/"+tk+".rst>`_\n")
-
-    with open(path_pages+"/targetsXtasks.rst",'w') as f:
-        f.write("Targets per task\n")
-        f.write("################\n")
-        f.write("\n")
-        f.write(":authors: Benchtrack\n")
-        f.write(":date: 2010-10-03 10:20\n")
-        f.write("\n")
+   
