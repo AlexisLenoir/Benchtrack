@@ -54,7 +54,8 @@ class BenchTrack:
             string += "," + self.__listThemes[i].__str__()
         string += "]"
         return string
-
+    def getDisplay(self):
+        return self.__display_mode
     def __construct(self):
         """
         construct all theme,target,task
@@ -91,9 +92,9 @@ class BenchTrack:
                     if os.path.exists(path_config):
                         sample_size,args,display = tl.ConfigFileTask(path_config)
                         self.__display_mode[taskName]=display
-                    task = Task(taskName,tl.generateArgsList(args),sample_size)
                     for targetName in self.__allTarget:
                         if tl.existFile(targetName,pathTs):
+                            task = Task(taskName,tl.generateArgsList(args),sample_size)
                             task.addTarget(targetName)
 
                     theme.addTask(task)

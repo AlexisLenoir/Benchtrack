@@ -51,6 +51,7 @@ def exe(argv):
         return -1
     path_benchTrack = os.path.dirname(os.path.dirname(os.path.abspath( __file__ )))
     bench = bt.BenchTrack(argv[-1], path_benchTrack)
+    print(bench.getDisplay())
     if manage_flag(argv,bench):
         bench.exe_bench()
         bench.ToCsv()

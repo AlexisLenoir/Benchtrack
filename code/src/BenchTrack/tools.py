@@ -96,7 +96,7 @@ def ConfigFileTask(file):
         config = ConfigParser()
         config.read(file)
         sample_size = config.get('running', 'sample_size')
-        display_mode = config.get('running', 'dispaly_mode')
+        display_mode = config.get('running', 'display_mode')
         if config.has_option('running', 'args'):
             arg = config.get('running', 'args')
         else:
