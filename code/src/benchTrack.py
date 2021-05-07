@@ -1,7 +1,7 @@
 import os
 import sys
-import src.src.BenchTrack.tools as tl
-import src.src.BenchTrack.structureBench as bt
+import BenchTrack.tools as tl
+import BenchTrack.structureBench as bt
 
 def manage_flag(argv,bench):
     """
@@ -45,6 +45,7 @@ def exe(argv):
     :param str argv: input in the terminal.
 
     """
+
     if len(argv) < 2:
         print("Missing parameter")
         return -1

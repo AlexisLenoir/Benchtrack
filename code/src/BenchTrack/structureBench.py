@@ -28,6 +28,7 @@ class BenchTrack:
 
         '''
         self.__path = path_inf
+        print("PathInf",self.__path)
         self.__name = path_inf.split('/')[-1]
         self.__dictTargets={}
         self.__listThemes=[]
@@ -35,7 +36,8 @@ class BenchTrack:
         self.__allTask = []
         self.__path_benchTrack = path_benchTrack
         self.__construct()
-        self.__outputFile = self.__path+"/output.csv"
+        self.__outputFile = self.__path+"/output"+tl.getDate()+".csv"
+
     def __str__(self):
         '''
         Output list of all the themes of the infrastructure
@@ -116,6 +118,10 @@ class BenchTrack:
             writer.writerow(["theme", "task", "target","args","run_time"])
             for theme in self.__listThemes:
                 theme.ToCsv(writer)
+    def getPathInf(self):
+        return self.__path
+    def getPathOutputFile(self):
+        return self.__outputFile
 
     def addTargets(self,name_target,lang_target):
         '''
