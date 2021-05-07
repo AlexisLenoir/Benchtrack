@@ -90,7 +90,7 @@ class BenchTrack:
                     args = ''
                     if os.path.exists(path_config):
                         sample_size,args,display = tl.ConfigFileTask(path_config)
-                        display_mode[taskName]=display
+                        self.__display_mode[taskName]=display
                     task = Task(taskName,tl.generateArgsList(args),sample_size)
                     for targetName in self.__allTarget:
                         if tl.existFile(targetName,pathTs):
