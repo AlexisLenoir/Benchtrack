@@ -1,5 +1,5 @@
 theme,task,target,args,run_time
-inference,BIFreading,pyAgrumTest,asia.bif 1,-0.09681625366210937
-inference,BIFreading,pyAgrumTest,alarm.bif 2,0.04139714241027832
-inference,BIFreading,pyAgrumTest,Mildew.bif 3,18.825843381881715
-inference,BIFreading,pyAgrumTest,Diabetes.bif 4,17.345950269699095
+inference,BIFreading,pyAgrumTest,asia.bif 1,0.011284685134887696
+inference,BIFreading,pyAgrumTest,alarm.bif 2,0.038901138305664065
+inference,BIFreading,pyAgrumTest,Mildew.bif 3,18.093370246887208
+inference,BIFreading,pyAgrumTest,Diabetes.bif 4,16.873915433883667

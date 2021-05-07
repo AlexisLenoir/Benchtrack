@@ -1,5 +1,17 @@
 theme,task,target,args,run_time
-inference,BIFreading,pyAgrumTest,asia.bif 1,0.007067537307739258
-inference,BIFreading,pyAgrumTest,alarm.bif 2,0.03697571754455566
-inference,BIFreading,pyAgrumTest,Mildew.bif 3,17.78565135002136
-inference,BIFreading,pyAgrumTest,Diabetes.bif 4,17.426939821243288
+inference,BIFreading,pyAgrumTest,asia.bif 1,0.01212012767791748
+inference,BIFreading,pyAgrumTest,alarm.bif 2,0.04143691062927246
+inference,BIFreading,pyAgrumTest,Mildew.bif 3,19.64344346523285
+inference,BIFreading,pyAgrumTest,Diabetes.bif 4,17.744732975959778
+inference,randomBN,testArgs, toto a 0.1 10,0.07095837593078613
+inference,randomBN,testArgs, titi a 0.1 10,0.06995868682861328
+inference,randomBN,testArgs, toto a 0.4 10,0.06817817687988281
+inference,randomBN,testArgs, titi a 0.4 10,0.07599854469299316
+inference,randomBN,testArgs, toto a 0.1 7,0.0719759464263916
+inference,randomBN,testArgs, titi a 0.1 7,0.06697797775268555
+inference,randomBN,testArgs, toto a 0.4 7,0.06896805763244629
+inference,randomBN,testArgs, titi a 0.4 7,0.06583738327026367
+inference,randomBN,testArgs, toto a 0.1 4,0.06898808479309082
+inference,randomBN,testArgs, titi a 0.1 4,0.06897783279418945
+inference,randomBN,testArgs, toto a 0.4 4,0.06596732139587402
+inference,randomBN,testArgs, titi a 0.4 4,0.0659933090209961

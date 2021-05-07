@@ -29,7 +29,6 @@ class BenchTrack:
         '''
         self.__display_mode={} #three types of modes: line, tabular, histogram
         self.__path = path_inf
-        print("PathInf",self.__path)
         self.__name = path_inf.split('/')[-1]
         self.__dictTargets={}
         self.__listThemes=[]
@@ -66,7 +65,6 @@ class BenchTrack:
             path += '/tasks'
             
             path = self.__path+"/targets"
-            print(path)
             for targetName in os.listdir(path):
                 if targetName[0] == '.' :
                     continue
@@ -92,11 +90,10 @@ class BenchTrack:
                     if os.path.exists(path_config):
                         sample_size,args,display = tl.ConfigFileTask(path_config)
                         self.__display_mode[taskName]=display
+                    task = Task(taskName, tl.generateArgsList(args), sample_size)
                     for targetName in self.__allTarget:
                         if tl.existFile(targetName,pathTs):
-                            task = Task(taskName,tl.generateArgsList(args),sample_size)
                             task.addTarget(targetName)
-
                     theme.addTask(task)
                 self.__listThemes.append(theme)
         except IOError:

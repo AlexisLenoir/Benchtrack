@@ -30,7 +30,7 @@ def manage_flag(argv,bench):
             tl.flagTasks(argv[i:],bench,"include")
         if "--task-exclude" == argv[i]:
             tl.flagTasks(argv[i:],bench,"exclude")
-        if "--task-liste" == argv[i]:
+        if "--task-list" == argv[i]:
             tl.flagTasks(argv[i:],bench,"list")
             return 0
         if "--task-info" == argv[i]:
@@ -51,7 +51,7 @@ def exe(argv):
         return -1
     path_benchTrack = os.path.dirname(os.path.dirname(os.path.abspath( __file__ )))
     bench = bt.BenchTrack(argv[-1], path_benchTrack)
-    print(bench.getDisplay())
+
     if manage_flag(argv,bench):
         bench.exe_bench()
         bench.ToCsv()

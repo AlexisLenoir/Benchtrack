@@ -16,8 +16,6 @@ def execute(path, cmd):
 
     os.chdir(PathAbsolu)
     #res = os.system("cd"+path+"&&"+cmd)
-
-
     res=os.system(cmd)
     # if res != 0:
     #     if os.path.exists('../errorInfo.txt'):
