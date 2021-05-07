@@ -27,6 +27,7 @@ class BenchTrack:
         :return:no return
 
         '''
+        self.__display_mode={} #three types of modes: line, tabular, histogram
         self.__path = path_inf
         print("PathInf",self.__path)
         self.__name = path_inf.split('/')[-1]
@@ -62,8 +63,9 @@ class BenchTrack:
             path = self.__path
             path += self.__name
             path += '/tasks'
-
+            
             path = self.__path+"/targets"
+            print(path)
             for targetName in os.listdir(path):
                 if targetName[0] == '.' :
                     continue
@@ -87,7 +89,8 @@ class BenchTrack:
                     sample_size = 20
                     args = ''
                     if os.path.exists(path_config):
-                        sample_size,args = tl.ConfigFileTask(path_config)
+                        sample_size,args,display = tl.ConfigFileTask(path_config)
+                        display_mode[taskName]=display
                     task = Task(taskName,tl.generateArgsList(args),sample_size)
                     for targetName in self.__allTarget:
                         if tl.existFile(targetName,pathTs):
