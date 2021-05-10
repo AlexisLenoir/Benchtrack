@@ -1,7 +1,7 @@
 import os
 import sys
-import src.src.BenchTrack.tools as tl
-import src.src.BenchTrack.structureBench as bt
+import BenchTrack.tools as tl
+import BenchTrack.structureBench as bt
 
 def manage_flag(argv,bench):
     """
@@ -53,6 +53,7 @@ def exe(argv):
     if manage_flag(argv,bench):
         bench.exe_bench()
         bench.ToCsv()
+        #bench2site(path_infra, file_csv)
 
 if __name__ == '__main__':
     exe(sys.argv)

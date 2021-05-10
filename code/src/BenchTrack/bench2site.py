@@ -138,7 +138,7 @@ def csv2content(path_infra, path_benchTrack, file_csv):
                 # Generation of page by target x task 
                 path_code = path_infra+"/tasks/"+theme+"/"+task+"/"+target
                 name_target = os.path.splitext(os.path.basename(target))[0]
-                create_targetXtask_rst(name_target, task, path_code, path_targetsXtasks, structure_run_time)
+                create_targetXtask_rst(name_target, task, path_code, path_targetsXtasks, structure_run_time,path_images)
 
 
     return path_site_infra, name_infra
