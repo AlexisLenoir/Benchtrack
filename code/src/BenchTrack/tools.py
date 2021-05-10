@@ -48,6 +48,8 @@ def exeCmd(path,parameter,cmd,language,target):
         execute(path,new_cmd2)
     except ImportError:
         print("ModuleNotFoundError")
+    # except:
+    #     print("Error for execution")
     return True
 
 def get_suffixe(language):
@@ -273,13 +275,17 @@ def generateArgsIter(listIter):
     end = listIter[1]
     step = listIter[2]
     if step > 0:
-        while begin < end:
-            argsIter.append(begin)
+        while begin <= end:
+            print("begin",begin)
+            argsIter.append(begin.__str__())
             begin += step
+            print("step",step)
+            print("begin",begin)
     else:
-        while begin > end:
-            argsIter.append(begin)
+        while begin >= end:
+            argsIter.append(begin.__str__())
             begin += step
+    print("Argssss",argsIter)
     return argsIter
 
 def generateAgrs2D(list2D):

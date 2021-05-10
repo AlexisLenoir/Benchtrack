@@ -55,6 +55,7 @@ def exe(argv):
     if manage_flag(argv,bench):
         bench.exe_bench()
         bench.ToCsv()
-
+def mainFonction():
+    exe(sys.argv)
 if __name__ == '__main__':
     exe(sys.argv)

@@ -1,0 +1,13 @@
+theme,task,target,args,run_time
+inference,randomBN,testArgs, toto a 0.1 10,0.06896710395812988
+inference,randomBN,testArgs, titi a 0.1 10,0.0679776668548584
+inference,randomBN,testArgs, toto a 0.4 10,0.06699371337890625
+inference,randomBN,testArgs, titi a 0.4 10,0.06899404525756836
+inference,randomBN,testArgs, toto a 0.1 7,0.06702899932861328
+inference,randomBN,testArgs, titi a 0.1 7,0.06599283218383789
+inference,randomBN,testArgs, toto a 0.4 7,0.06696414947509766
+inference,randomBN,testArgs, titi a 0.4 7,0.06697797775268555
+inference,randomBN,testArgs, toto a 0.1 4,0.06699180603027344
+inference,randomBN,testArgs, titi a 0.1 4,0.06699323654174805
+inference,randomBN,testArgs, toto a 0.4 4,0.06697678565979004
+inference,randomBN,testArgs, titi a 0.4 4,0.06547665596008301
