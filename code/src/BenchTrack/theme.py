@@ -66,7 +66,6 @@ class Theme:
         '''
         print("\nIn theme " + self.getName() + ":")
         for i in range(len(self.__listTasks)):
-            # print(listTask)
             if self.__listTasks[i].getName() in listTask:
                 self.__listTasks[i].exe_task(listTarget,self.__themeName,path)
 

@@ -1,10 +1,10 @@
 from setuptools import setup, find_packages
 
-with open("../../../README.md", "r", encoding="utf-8") as fh:
+with open("../README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(name='BenchTrack',
-      version='0.0.1',
+      version='0.0.2',
       description='A python framework for generating a benchmark, by running specific tasks on specific targets.',
       long_description=long_description,
       url='https://github.com/AlexisLenoir/Benchtrack',

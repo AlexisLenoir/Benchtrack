@@ -27,6 +27,7 @@ class BenchTrack:
         :return:no return
 
         '''
+        self.__display_mode={} #three types of modes: line, tabular, histogram
         self.__path = path_inf
         self.__name = path_inf.split('/')[-1]
         self.__dictTargets={}
@@ -35,7 +36,8 @@ class BenchTrack:
         self.__allTask = []
         self.__path_benchTrack = path_benchTrack
         self.__construct()
-        self.__outputFile = self.__path+"/output.csv"
+        self.__outputFile = self.__path+"/output"+tl.getDate()+".csv"
+
     def __str__(self):
         '''
         Output list of all the themes of the infrastructure
@@ -51,7 +53,8 @@ class BenchTrack:
             string += "," + self.__listThemes[i].__str__()
         string += "]"
         return string
-
+    def getDisplay(self):
+        return self.__display_mode
     def __construct(self):
         """
         construct all theme,target,task
@@ -60,7 +63,7 @@ class BenchTrack:
             path = self.__path
             path += self.__name
             path += '/tasks'
-
+            
             path = self.__path+"/targets"
             for targetName in os.listdir(path):
                 if targetName[0] == '.' :
@@ -85,12 +88,12 @@ class BenchTrack:
                     sample_size = 20
                     args = ''
                     if os.path.exists(path_config):
-                        sample_size,args = tl.ConfigFileTask(path_config)
-                    task = Task(taskName,args.split(','),sample_size)
+                        sample_size,args,display = tl.ConfigFileTask(path_config)
+                        self.__display_mode[taskName]=display
+                    task = Task(taskName, tl.generateArgsList(args), sample_size)
                     for targetName in self.__allTarget:
                         if tl.existFile(targetName,pathTs):
                             task.addTarget(targetName)
-
                     theme.addTask(task)
                 self.__listThemes.append(theme)
         except IOError:
@@ -116,6 +119,10 @@ class BenchTrack:
             writer.writerow(["theme", "task", "target","args","run_time"])
             for theme in self.__listThemes:
                 theme.ToCsv(writer)
+    def getPathInf(self):
+        return self.__path
+    def getPathOutputFile(self):
+        return self.__outputFile
 
     def addTargets(self,name_target,lang_target):
         '''

@@ -16,8 +16,6 @@ def execute(path, cmd):
 
     os.chdir(PathAbsolu)
     #res = os.system("cd"+path+"&&"+cmd)
-
-
     res=os.system(cmd)
     # if res != 0:
     #     if os.path.exists('../errorInfo.txt'):
@@ -96,11 +94,12 @@ def ConfigFileTask(file):
         config = ConfigParser()
         config.read(file)
         sample_size = config.get('running', 'sample_size')
+        display_mode = config.get('running', 'display_mode')
         if config.has_option('running', 'args'):
             arg = config.get('running', 'args')
         else:
             arg = ''
-        return sample_size,arg
+        return sample_size,arg,display_mode
     except IOError:
         print("Can't find the file config:" + file)
 
@@ -267,3 +266,62 @@ def flagTargets(argv, bench, flag):
     if flag == 'exclude':
         list_Include = argv[1:len(argv) - 1]
         bench.filter_target(list_Include, False)
+
+def generateArgsIter(listIter):
+    argsIter = []
+    begin = listIter[0]
+    end = listIter[1]
+    step = listIter[2]
+    if step > 0:
+        while begin < end:
+            argsIter.append(begin)
+            begin += step
+    else:
+        while begin > end:
+            argsIter.append(begin)
+            begin += step
+    return argsIter
+
+def generateAgrs2D(list2D):
+    args = [""]
+    for listArgs in list2D:
+        aux = []
+        for i in listArgs:
+            for j in args:
+                aux.append(j+' '+str(i))
+        args = aux
+    return args
+
+def generateArgsList(string):
+    '''
+    gernerate the list of args from a string
+
+    :param str string : string of args from config.
+
+    :return list:list of all args
+    '''
+    if '*' in string:
+        str_args = []
+        list_args_2d = []
+        string = string.split('*')
+        for i in string:
+            str_args.append(i.strip(' ( )'))
+        for i in str_args:
+            if ':' in i:
+                if '.' in i:
+                    aux = list(map(float, i.split(':')))
+                else:
+                    aux = list(map(int, i.split(':')))
+                list_args_2d.append(generateArgsIter(aux))
+            else:
+                list_args_2d.append(i.split(','))
+        return generateAgrs2D(list_args_2d)
+    elif ':' in string:
+        print(string)
+        aux= list(map(int,string.strip(' ()').split(':')))
+        return generateArgsIter(aux)
+    else:
+        return string.split(',')
+
+def getDate():
+    return str(datetime.date.today())

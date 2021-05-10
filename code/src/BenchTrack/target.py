@@ -57,7 +57,8 @@ class Target:
         """
         path_File = path  + "/tasks/" + themeName + "/" + task
         path_ConfigFile = path  + "/targets/" + self.getName() + "/config.ini"
-        self.exe_file(path_ConfigFile, path_File,args,"before_"+self.getName())
+        if existFile("before_"+self.getName(),path_File):
+            self.exe_file(path_ConfigFile, path_File,args,"before_"+self.getName())
 
     def exe_target(self, themeName, task,path,args):
         """

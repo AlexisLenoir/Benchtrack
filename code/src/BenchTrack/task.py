@@ -24,10 +24,9 @@ class Task:
         self.__Name = name
         self.__dictTargets = {}
         self.__sample_size = int(sample_size)
-        if len(args) >= 1:
-            self.__args = args
-        else:
-            self.__args = ['']
+        self.__args = args
+
+
 
     def __str__(self):
         """
@@ -113,9 +112,11 @@ class Task:
         '''
         targetNames = dict.keys(self.__dictTargets)
         for target in targetNames:
+            result = self.__dictTargets[target].getResult()
             for arg in self.__args:
-                run_time = self.__dictTargets[target].getResult()[arg]
-                writer.writerow([theme, self.__Name, target,arg, run_time])
+                if arg in result:
+                    run_time = result[arg]
+                    writer.writerow([theme, self.__Name, target,arg, run_time])
 
     def get_structure_tasks(self,path):
         """

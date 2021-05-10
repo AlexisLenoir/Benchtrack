@@ -5,7 +5,3 @@ Created on Fri Apr  2 14:53:33 2021
 
 @author: radar
 """
-
-import numpy
-import sys
-print("This is a test of before_xml_demo.py")
