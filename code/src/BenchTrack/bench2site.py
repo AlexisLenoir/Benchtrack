@@ -66,6 +66,7 @@ def csv2content(path_infra, path_benchTrack, file_csv):
 
     # Loading the Benchtrack object and some attributes
     my_bench = BenchTrack(path_infra, path_benchTrack)
+    display_tasks = my_bench.getDisplay()
 
     list_targets = my_bench._BenchTrack__allTarget
     list_tasks = my_bench._BenchTrack__allTask
@@ -130,15 +131,16 @@ def csv2content(path_infra, path_benchTrack, file_csv):
 
         for task in list_tasks_in_theme:
             path_readme_task = path_infra+"/tasks/"+theme+"/"+task+"/README.rst"
+            display_mode = display_tasks[task]
             # Generation of page by task 
-            create_task_rst(task, path_readme_task, path_tasks, structure_run_time, list_targets, path_images)
+            create_task_rst(task, path_readme_task, path_tasks, structure_run_time, list_targets, path_images,display_mode)
             list_target_in_task = structure_tasks[theme][task]
 
             for target in list_target_in_task:
                 # Generation of page by target x task 
                 path_code = path_infra+"/tasks/"+theme+"/"+task+"/"+target
                 name_target = os.path.splitext(os.path.basename(target))[0]
-                create_targetXtask_rst(name_target, task, path_code, path_targetsXtasks, structure_run_time)
+                create_targetXtask_rst(name_target, task, path_code, path_targetsXtasks, structure_run_time,path_images,display_mode)
 
 
     return path_site_infra, name_infra
