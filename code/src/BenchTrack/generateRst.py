@@ -245,7 +245,7 @@ def create_target_rst(name_target, path_readme, path_targets, structure_run_time
                         f.write("     -  \n")
  
 
-def create_task_rst(name_task, path_readme, path_tasks, structure_run_time, list_targets, path_images, display ="bar"):
+def create_task_rst(name_task, path_readme, path_tasks, structure_run_time, list_targets, path_images, display):
     """
     Write the rst file for a task (presentation and result)     
     
@@ -326,7 +326,7 @@ def create_task_rst(name_task, path_readme, path_tasks, structure_run_time, list
                             f.write("     -  \n")
             
 
-def create_targetXtask_rst(name_target, name_task,path_code, path_targetsXtasks, structure_run_time, path_images,display ="bar"):
+def create_targetXtask_rst(name_target, name_task,path_code, path_targetsXtasks, structure_run_time, path_images,display):
     """
     Write the rst file for a target of a task (result and source code)  
     
