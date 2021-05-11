@@ -2,6 +2,7 @@ import os
 import sys
 import BenchTrack.tools as tl
 import BenchTrack.structureBench as bt
+from BenchTrack.bench2site import bench2site
 
 def manage_flag(argv,bench):
     """
@@ -46,15 +47,29 @@ def exe(argv):
 
     """
 
+    """
+    Intégration 
+
+    bench.getPathInf():
+    infrastructures/PGM
+    bench.getPathOutputFile():
+    infrastructures/PGM/output.csv
+
+    """
+
     if len(argv) < 2:
         print("Missing parameter")
         return -1
     path_benchTrack = os.path.dirname(os.path.dirname(os.path.abspath( __file__ )))
-    bench = bt.BenchTrack(argv[-1], path_benchTrack)
+    path_inf = argv[-1]
+    bench = bt.BenchTrack(path_inf, path_benchTrack)
 
     if manage_flag(argv,bench):
         bench.exe_bench()
         bench.ToCsv()
+        path_csvFile = bench.getPathOutputFile()
+        bench2site(path_inf, path_csvFile)
+
 def mainFonction():
     exe(sys.argv)
 if __name__ == '__main__':
