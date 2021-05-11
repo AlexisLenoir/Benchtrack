@@ -90,7 +90,7 @@ def csv2content(path_infra, path_benchTrack, file_csv):
 
     #path_content = os.path.dirname(path_infra) + "/content"
     print(" path Benchtrack", path_benchTrack)
-    path_site = path_benchTrack + "/code/site"
+    path_site = path_benchTrack + "/code/src/site"
     if not os.path.exists(path_benchTrack + "/output"):
         os.mkdir(path_benchTrack + "/output")
     path_site_infra = path_benchTrack + "/output/" + name_infra + "_pelican"
@@ -101,8 +101,11 @@ def csv2content(path_infra, path_benchTrack, file_csv):
     path_pages = path_content+"/pages"
     os.mkdir(path_pages)
 
+
     path_images = path_content + "/images"
-    os.mkdir(path_images)
+    os.system("cp -r " + path_site +"/images_content " + path_images)
+    os.system("rm -r "+path_site_infra + "/images_content")
+    #os.mkdir(path_images)
 
     #------------ Summary page ----------------
     create_infra_rst(name_infra,path_pages,path_infra+"/README.rst",structure_run_time,list_targets)

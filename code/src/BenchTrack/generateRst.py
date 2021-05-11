@@ -163,15 +163,24 @@ def create_infra_rst(name_infra, path_content, path_readme, structure_run_time, 
             #f.write("   * - "+task+"\n")
             for target in list(structure_run_time[task].keys()):
                 if len(list(structure_run_time[task][target].keys())) == 0:
-                    f.write("     -  \n")
+                    f.write("     - .. image:: {static}/images/rect_orange.png \n")
+                    f.write("          :target: {filename}/targetsXtasks/"+target+"X"+task+".rst \n")
+                    f.write("          :alt: image orange rectangle \n")
+                    #f.write("     -  \n")
                 else:
                     for arg in list(structure_run_time[task][target].keys()):
                         if structure_run_time[task][target][arg] == -2:
                             problem_exec = True
-                            f.write("     - X\n")
+                            f.write("     - .. image:: {static}/images/rect_red.png \n")
+                            f.write("          :target: {filename}/targetsXtasks/"+target+"X"+task+".rst \n")
+                            f.write("          :alt: image red rectangle \n")
+                            #f.write("     - X\n")
                             break
                     if not problem_exec:
-                        f.write("     - `OK <{filename}/targetsXtasks/"+target+"X"+task +".rst>`__ \n")
+                        f.write("     - .. image:: {static}/images/rect_green.png \n")
+                        f.write("          :target: {filename}/targetsXtasks/"+target+"X"+task+".rst \n")
+                        f.write("          :alt: image green rectangle \n")
+                        #f.write("     - `OK <{filename}/targetsXtasks/"+target+"X"+task +".rst>`__ \n")
                         #f.write("     - OK\n")
 
         
