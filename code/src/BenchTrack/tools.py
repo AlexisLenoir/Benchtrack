@@ -227,7 +227,7 @@ def flagTasks(argv, bench, flag):
     '''
     if flag == 'info':
         if len(argv) < 3:
-            print('Without' + (3 - len(argv)).__init__() + 'parameter')
+            print('Without' + 'parameter')
             return - 1
         bench.showInfoTask(argv[1])
     if flag == 'list':
@@ -236,12 +236,12 @@ def flagTasks(argv, bench, flag):
             return -1
         bench.showListTasks()
     if flag == 'include':
-        list_Include = argv[1:len(argv) - 1]
+        list_Include = argv[1].split(',')
         bench.filter_task(list_Include, True)
 
     if flag == 'exclude':
-        list_Include = argv[1:len(argv) - 1]
-        bench.filter_task(list_Include, False)
+        list_Exclude = argv[1].split(',')
+        bench.filter_task(list_Exclude, False)
 
 
 def flagTargets(argv, bench, flag):
