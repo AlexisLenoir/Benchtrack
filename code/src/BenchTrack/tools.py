@@ -279,11 +279,8 @@ def generateArgsIter(listIter):
     step = listIter[2]
     if step > 0:
         while begin <= end:
-            print("begin",begin)
             argsIter.append(begin.__str__())
             begin += step
-            print("step",step)
-            print("begin",begin)
     else:
         while begin >= end:
             argsIter.append(begin.__str__())
