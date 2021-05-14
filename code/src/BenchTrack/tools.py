@@ -372,3 +372,16 @@ def manage_flag(argv,bench):
 
 def checkInfrastructure():
     pass
+
+def help():
+    print("Commande format:benchTrack [Option] path_infrastructure\n\
+    Option flag:\n\
+	––targets-list :Show the list of targets\n\
+	––tasks-list :Show the list of tasks\n\
+	––target-info TOTO :Show the information from readme.rst of target\n\
+	––task-info A :Show the information from readme.rst of task\n\
+	––targets-include TOTO,TITI :Execut only the selected target\n\
+	––tasks-include A,B,C :Execut only the selected task\n\
+	––targets-exclude TOTO,TITI :Execut all the task except for the selected target\n\
+	––tasks-exclude A,B,C :Execut all the task except for the selected task\n\
+	––check :check le format de l’infrastructure)")
