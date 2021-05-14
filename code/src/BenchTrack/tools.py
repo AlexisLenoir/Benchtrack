@@ -367,7 +367,8 @@ def manage_flag(argv,bench):
         if "--task-info" == argv[i]:
             flagTasks(argv[i:],bench,"info")
             return 0
-
+        if "--output" == argv[i]:
+            bench.setPathOutput(argv[i+1])
     return 1
 
 def checkInfrastructure():
