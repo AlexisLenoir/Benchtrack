@@ -370,5 +370,31 @@ def manage_flag(argv,bench):
 
     return 1
 
-def checkInfrastructure():
-    pass
+def checkInfrastructure(path_infras):
+    os.chdir(path_infras)
+    if not os.existFile("readme.rst"):
+        return False
+    target_path=path_infras+"targets"
+    task_path=path_infras+"tasks"
+    os.chdir(target_path)
+    for files_sous in os.listdir(target_path):
+        os.chdir(files_sous)
+        if not os.existFile("readme.rst") or not os.existFile("config.ini"):
+            return False
+        os.chdir(target_path)
+    os.chdir(path_infras)
+    os.chdir(task_path)
+    for files_sous in os.listdir(task_path):
+        os.chdir(files_sous)
+        for files_subs in os.listdir(files_sous):
+            if not os.existFile("config.ini") or not os.existFile("data"):
+                return False
+            os.chdir("..")
+        os.chdir(task_path)
+    return True
+
+
+
+
+
+
