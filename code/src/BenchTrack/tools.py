@@ -371,24 +371,31 @@ def manage_flag(argv,bench):
     return 1
 
 def checkInfrastructure(path_infras):
-    os.chdir(path_infras)
-    if not os.existFile("readme.rst"):
+    retval=os.getcwd()
+    infras=retval+"/"+path_infras
+    os.chdir(infras)
+    if not os.path.exists("readme.rst"):
         return False
-    target_path=path_infras+"targets"
-    task_path=path_infras+"tasks"
+        print("no readme")
+    target_path=infras+"targets/"
+    task_path=infras+"tasks/"
     os.chdir(target_path)
     for files_sous in os.listdir(target_path):
-        os.chdir(files_sous)
-        if not os.existFile("readme.rst") or not os.existFile("config.ini"):
-            return False
+        if files_sous!=".DS_Store":
+            files_sous_path=target_path+"/"+files_sous
+            os.chdir(files_sous_path)
+            if not os.path.exists("readme.rst") or not os.path.exists("config.ini"):
+                return False
+                print("no readme")
         os.chdir(target_path)
     os.chdir(path_infras)
     os.chdir(task_path)
     for files_sous in os.listdir(task_path):
         os.chdir(files_sous)
         for files_subs in os.listdir(files_sous):
-            if not os.existFile("config.ini") or not os.existFile("data"):
+            if not os.path.exists("config.ini") or not os.path.exists("data"):
                 return False
+                print("no readme")
             os.chdir("..")
         os.chdir(task_path)
     return True
