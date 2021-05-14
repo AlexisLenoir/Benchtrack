@@ -29,7 +29,7 @@ def exe(argv):
     path_benchTrack = os.path.dirname(os.path.dirname(os.path.abspath( __file__ )))
     path_inf = argv[-1]
     if "--check" in argv:
-        tl.checkInfrastructure()
+        tl.checkInfrastructure(path_inf)
     bench = bt.BenchTrack(path_inf, path_benchTrack)
 
     if tl.manage_flag(argv,bench):
