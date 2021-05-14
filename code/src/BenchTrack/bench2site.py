@@ -61,7 +61,7 @@ def csv2content(path_infra, path_benchTrack, file_csv):
         path_site_infra:
         name_infra:
     """
-    
+    print("path_infra ",path_infra)
     name_infra = os.path.basename(path_infra)
 
     # Loading the Benchtrack object and some attributes
@@ -96,7 +96,8 @@ def csv2content(path_infra, path_benchTrack, file_csv):
         os.mkdir(path_benchTrack + "/output")
     # future temp file
     path_site_infra = path_benchTrack + "/output/" + name_infra + "_pelican"
-    os.system("cp -r " + path_site + " " + path_site_infra) #zip ?
+    #os.system("cp -r " + path_site + " " + path_site_infra) #zip ?
+    shutil.copytree(path_site, path_site_infra)
 
     path_content = path_site_infra + "/content"
     os.mkdir(path_content)
@@ -105,7 +106,8 @@ def csv2content(path_infra, path_benchTrack, file_csv):
 
 
     path_images = path_content + "/images"
-    os.system("cp -r " + path_site +"/images_content " + path_images)
+    #os.system("cp -r " + path_site +"/images_content " + path_images)
+    shutil.copytree(path_site+"/images_content", path_images)
     os.system("rm -r "+path_site_infra + "/images_content")
     #os.mkdir(path_images)
 
@@ -173,7 +175,9 @@ def content2html(path_site_infra, path_infra, path_benchTrack, name_infra, path_
     if os.path.exists("img"):
         img = True
         os.system("rm -r "+ path_site_infra + "/theme/static/img")
-        os.system("cp -r " + path_infra+"/img " + path_site_infra + "/theme/static/img")
+        #os.system("cp -r " + path_infra+"/img " + path_site_infra + "/theme/static/img")
+        shutil.copytree(path_infra+"/img", path_site_infra + "/theme/static/img")
+        
 
     # Modification of  pelicanconf.py:
     path_conf_py = path_site_infra + "/pelicanconf.py"
@@ -207,7 +211,8 @@ def content2html(path_site_infra, path_infra, path_benchTrack, name_infra, path_
     if path_output == "default":
         path_output = path_benchTrack + "/output/" + name_infra + "_site"
 
-    os.system("cp -r " + path_site_infra + "/output " + path_output) #zip ?
+    #os.system("cp -r " + path_site_infra + "/output " + path_output) #zip ?
+    shutil.copytree(path_site_infra + "/output", path_output)
 
 
 
@@ -225,7 +230,7 @@ def bench2site(path_infra, file_csv, path_output = "default"):
     -------
         Nothing
     """
-
+    print("path_infra ",path_infra)
     path_benchTrack = os.path.dirname(os.path.dirname(os.path.abspath( __file__ )))
     path_benchTrack = os.path.dirname(os.path.dirname(path_benchTrack))
     path_site_infra, name_infra = csv2content(path_infra, path_benchTrack, file_csv)
