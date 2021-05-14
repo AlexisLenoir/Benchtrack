@@ -89,10 +89,12 @@ def csv2content(path_infra, path_benchTrack, file_csv):
     # !! Attention if it already exists
 
     #path_content = os.path.dirname(path_infra) + "/content"
-    print(" path Benchtrack", path_benchTrack)
+    #print(" path Benchtrack", path_benchTrack)
+
     path_site = path_benchTrack + "/code/src/site"
     if not os.path.exists(path_benchTrack + "/output"):
         os.mkdir(path_benchTrack + "/output")
+    # future temp file
     path_site_infra = path_benchTrack + "/output/" + name_infra + "_pelican"
     os.system("cp -r " + path_site + " " + path_site_infra) #zip ?
 
@@ -155,9 +157,11 @@ def content2html(path_site_infra, path_infra, path_benchTrack, name_infra, path_
 
     Parameters
     ----------
-        path_site_infra : String, absolute path of the infrastructure
+        path_site_infra : String, absolute path of the infrastructure site
+        path_infra : String, absolute path of the infrastructure
         path_benchTrack: String, absolute path of the framework Benchtrack
         name_infra: String, name of the current infrastructure
+        path_output: String
     Returns
     -------
         Nothing
