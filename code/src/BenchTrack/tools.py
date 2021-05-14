@@ -4,6 +4,7 @@ import os
 import re
 import time
 import csv
+
 def execute(path, cmd):
     '''
     This fonction is made to run  files
@@ -227,7 +228,7 @@ def flagTasks(argv, bench, flag):
     '''
     if flag == 'info':
         if len(argv) < 3:
-            print('Without' + (3 - len(argv)).__init__() + 'parameter')
+            print('Without' + 'parameter')
             return - 1
         bench.showInfoTask(argv[1])
     if flag == 'list':
@@ -236,12 +237,12 @@ def flagTasks(argv, bench, flag):
             return -1
         bench.showListTasks()
     if flag == 'include':
-        list_Include = argv[1:len(argv) - 1]
+        list_Include = argv[1].split(',')
         bench.filter_task(list_Include, True)
 
     if flag == 'exclude':
-        list_Include = argv[1:len(argv) - 1]
-        bench.filter_task(list_Include, False)
+        list_Exclude = argv[1].split(',')
+        bench.filter_task(list_Exclude, False)
 
 
 def flagTargets(argv, bench, flag):
@@ -279,11 +280,8 @@ def generateArgsIter(listIter):
     step = listIter[2]
     if step > 0:
         while begin <= end:
-            print("begin",begin)
             argsIter.append(begin.__str__())
             begin += step
-            print("step",step)
-            print("begin",begin)
     else:
         while begin >= end:
             argsIter.append(begin.__str__())
@@ -334,3 +332,91 @@ def generateArgsList(string):
 
 def getDate():
     return str(datetime.date.today())
+
+
+def manage_flag(argv,bench):
+    """
+
+    This function manage all flags,
+    with a flag for show a list or the information,this function call a function to show that
+    with a flag include or exclude,this function change the object bench
+    without flag,return 1
+
+    :param argv:args Bench:l'object BenchTrack
+
+    """
+    for i in range(len(argv)):
+        if "--target-include" == argv[i]:
+            flagTargets(argv[i:],bench,"include")
+        if "--target-exclude" == argv[i]:
+            flagTargets(argv,bench,"exclude")
+        if "--target-list" == argv[i]:
+            flagTargets(argv[i:],bench,"list")
+            return 0
+        if "--target-info" == argv[i]:
+            flagTargets(argv[i:],bench,"info")
+            return 0
+
+        if "--task-include" == argv[i]:
+            flagTasks(argv[i:],bench,"include")
+        if "--task-exclude" == argv[i]:
+            flagTasks(argv[i:],bench,"exclude")
+        if "--task-list" == argv[i]:
+            flagTasks(argv[i:],bench,"list")
+            return 0
+        if "--task-info" == argv[i]:
+            flagTasks(argv[i:],bench,"info")
+            return 0
+
+    return 1
+
+def checkInfrastructure(path_infras):
+    retval=os.getcwd()
+    infras=retval+"/"+path_infras
+    os.chdir(infras)
+    if not os.path.exists("readme.rst"):
+        return False
+        print("no readme at your infrastrature file")
+    target_path=infras+"targets/"
+    task_path=infras+"tasks/"
+    os.chdir(target_path)
+    for files_sous in os.listdir(target_path):
+        if files_sous!=".DS_Store":
+            files_sous_path=target_path+"/"+files_sous
+            os.chdir(files_sous_path)
+            if not os.path.exists("readme.rst"):
+                print("it lack at least one readme file at your targets files,please check it")
+                return False
+            if not os.path.exists("config.ini"):
+                print("it lack at least one configuration file at your targets files,please check it")
+                return False
+                
+        os.chdir(target_path)
+    os.chdir(infras)
+    os.chdir(task_path)
+    for files_sous in os.listdir(task_path):
+        if files_sous!=".DS_Store":
+            files_sous_path=task_path+"/"+files_sous
+            os.chdir(files_sous_path)
+            for files_subs in os.listdir(files_sous_path):
+                if files_subs!=".DS_Store":
+                    files_subs_path=files_sous_path+"/"+files_subs
+                    os.chdir(files_subs_path)
+                    if not os.path.exists("readme.rst"):
+                        print("it lack at least one readme file at your tasks files,please check it")
+                        return False
+                    if not os.path.exists("config.ini") :
+                        print("it lack at least one configuration file at your tasks files,please check it ")
+                        return False                    
+                    if not os.path.exists("config.ini") or not os.path.exists("data") or not os.path.exists("readme.rst"):
+                        print("it lack at least one data file at your tasks files,please check it")
+                        return False                        
+                os.chdir(files_sous_path)
+        os.chdir(task_path)
+    return True
+
+
+
+
+
+

@@ -83,7 +83,7 @@ def csv2content(path_infra, path_benchTrack, file_csv):
             structure_run_time[task][target] = {}
 
     # Instanciation of structure_run_time from file_csv 
-    structure_run_time = load_csv_results(path_infra + "/" + file_csv, structure_run_time)
+    structure_run_time = load_csv_results( file_csv, structure_run_time)
 
     #-----------Create path_content-----------
     # !! Attention if it already exists

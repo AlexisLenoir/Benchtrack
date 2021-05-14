@@ -154,7 +154,7 @@ class BenchTrack:
         :return: no return
 
         '''
-        print("Execution de "+self.__name)
+        print("Execution of "+self.__name)
         for i in range(len(self.__listThemes)):
             self.__listThemes[i].exe_theme(self.__allTask,self.__allTarget,self.__path)
 

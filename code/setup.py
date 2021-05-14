@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup, find_packages,find_namespace_packages
 
 from setuptools import (
     find_packages,
@@ -9,7 +9,7 @@ with open("../README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(name='BenchTrack',
-      version='0.0.2',
+      version='0.0.8',
       description='A python framework for generating a benchmark, by running specific tasks on specific targets.',
       long_description=long_description,
       url='https://github.com/AlexisLenoir/Benchtrack',
@@ -19,7 +19,6 @@ setup(name='BenchTrack',
       author='Alexis Lenoir,He Xin,Yang Zhuangzhuang',
       # author_email='',
       # license='',
-      packages= find_packages(where="code"),
       install_requires=[
       ],
       classifiers=[
@@ -28,7 +27,10 @@ setup(name='BenchTrack',
       ],
       tests_require=['unittest'],
       python_requires='>=3.6',
+      packages=find_namespace_packages(
+            include=["src", "src.*"], ),
+      include_package_data = True,
       entry_points={
-            'console_scripts': ['benchTrack=src.beenchTrack:mainFonction'],
+            'console_scripts': ['benchTrack=src.benchTrack:mainFonction'],
       }
-)
+      )
