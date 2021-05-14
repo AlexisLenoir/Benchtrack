@@ -376,7 +376,7 @@ def checkInfrastructure(path_infras):
     os.chdir(infras)
     if not os.path.exists("readme.rst"):
         return False
-        print("no readme")
+        print("no readme at your infrastrature file")
     target_path=infras+"targets/"
     task_path=infras+"tasks/"
     os.chdir(target_path)
@@ -384,19 +384,34 @@ def checkInfrastructure(path_infras):
         if files_sous!=".DS_Store":
             files_sous_path=target_path+"/"+files_sous
             os.chdir(files_sous_path)
-            if not os.path.exists("readme.rst") or not os.path.exists("config.ini"):
+            if not os.path.exists("readme.rst"):
+                print("it lack at least one readme file at your targets files,please check it")
                 return False
-                print("no readme")
+            if not os.path.exists("config.ini"):
+                print("it lack at least one configuration file at your targets files,please check it")
+                return False
+                
         os.chdir(target_path)
-    os.chdir(path_infras)
+    os.chdir(infras)
     os.chdir(task_path)
     for files_sous in os.listdir(task_path):
-        os.chdir(files_sous)
-        for files_subs in os.listdir(files_sous):
-            if not os.path.exists("config.ini") or not os.path.exists("data"):
-                return False
-                print("no readme")
-            os.chdir("..")
+        if files_sous!=".DS_Store":
+            files_sous_path=task_path+"/"+files_sous
+            os.chdir(files_sous_path)
+            for files_subs in os.listdir(files_sous_path):
+                if files_subs!=".DS_Store":
+                    files_subs_path=files_sous_path+"/"+files_subs
+                    os.chdir(files_subs_path)
+                    if not os.path.exists("readme.rst"):
+                        print("it lack at least one readme file at your tasks files,please check it")
+                        return False
+                    if not os.path.exists("config.ini") :
+                        print("it lack at least one configuration file at your tasks files,please check it ")
+                        return False                    
+                    if not os.path.exists("config.ini") or not os.path.exists("data") or not os.path.exists("readme.rst"):
+                        print("it lack at least one data file at your tasks files,please check it")
+                        return False                        
+                os.chdir(files_sous_path)
         os.chdir(task_path)
     return True
 
