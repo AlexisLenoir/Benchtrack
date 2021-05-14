@@ -4,6 +4,7 @@ import os
 import re
 import time
 import csv
+
 def execute(path, cmd):
     '''
     This fonction is made to run  files
@@ -331,3 +332,43 @@ def generateArgsList(string):
 
 def getDate():
     return str(datetime.date.today())
+
+
+def manage_flag(argv,bench):
+    """
+
+    This function manage all flags,
+    with a flag for show a list or the information,this function call a function to show that
+    with a flag include or exclude,this function change the object bench
+    without flag,return 1
+
+    :param argv:args Bench:l'object BenchTrack
+
+    """
+    for i in range(len(argv)):
+        if "--target-include" == argv[i]:
+            flagTargets(argv[i:],bench,"include")
+        if "--target-exclude" == argv[i]:
+            flagTargets(argv,bench,"exclude")
+        if "--target-list" == argv[i]:
+            flagTargets(argv[i:],bench,"list")
+            return 0
+        if "--target-info" == argv[i]:
+            flagTargets(argv[i:],bench,"info")
+            return 0
+
+        if "--task-include" == argv[i]:
+            flagTasks(argv[i:],bench,"include")
+        if "--task-exclude" == argv[i]:
+            flagTasks(argv[i:],bench,"exclude")
+        if "--task-list" == argv[i]:
+            flagTasks(argv[i:],bench,"list")
+            return 0
+        if "--task-info" == argv[i]:
+            flagTasks(argv[i:],bench,"info")
+            return 0
+
+    return 1
+
+def checkInfrastructure():
+    pass
