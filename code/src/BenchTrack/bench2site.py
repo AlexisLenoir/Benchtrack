@@ -11,14 +11,16 @@ str(datetime.datetime.today())
 import os
 import csv
 import shutil
-import numpy as np
 import sys
 from os import getcwd, chdir, mkdir
 import pathlib as pl
+import datetime
 from BenchTrack.structureBench import BenchTrack
 from BenchTrack.generateRst import *
 
 
+def getDate():
+    return str(datetime.datetime.today()).replace(" ","-")
 
 def load_csv_results(path_infra_csv, structure_run_time):
     """
@@ -98,7 +100,7 @@ def csv2content(path_infra, path_benchTrack, file_csv):
     if not os.path.exists(path_benchTrack + "/output"):
         os.mkdir(path_benchTrack + "/output")
     # future temp file
-    path_site_infra = path_benchTrack + "/output/" + name_infra + "_pelican"
+    path_site_infra = path_benchTrack + "/output/" + name_infra + "_pelican_" + getDate()
     #os.system("cp -r " + path_site + " " + path_site_infra) #zip ?
     shutil.copytree(path_site, path_site_infra)
 
@@ -177,7 +179,7 @@ def content2html(path_site_infra, path_infra, path_benchTrack, name_infra, path_
     os.chdir(path_infra)
     if os.path.exists("img"):
         img = True
-        os.system("rm -r "+ path_site_infra + "/theme/static/img")
+        #os.system("rm -r "+ path_site_infra + "/theme/static/img")
         #os.system("cp -r " + path_infra+"/img " + path_site_infra + "/theme/static/img")
         shutil.copytree(path_infra+"/img", path_site_infra + "/theme/static/img")
         

@@ -21,6 +21,9 @@ def exe(argv):
     bench.getPathOutputFile():
     infrastructures/PGM/output.csv
 
+    bench.isPelican()
+
+
     """
 
     if len(argv) < 2:
