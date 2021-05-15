@@ -3,6 +3,9 @@
 This module generates the site,
 It can be used by calling directly the functions,
 You can also call in a shell as follows: python bench2site.py path_infrastructure path_csv path_output
+
+import datetime
+str(datetime.datetime.today())
 """
 
 import os
@@ -233,7 +236,11 @@ def bench2site(path_infra, file_csv, path_output = "default"):
     print("path_infra ",path_infra)
     path_benchTrack = os.path.dirname(os.path.dirname(os.path.abspath( __file__ )))
     path_benchTrack = os.path.dirname(os.path.dirname(path_benchTrack))
+    path_infra = path_benchTrack + "/" + path_infra
+    print("path benchtrack", path_benchTrack)
+    print("path_infra ",path_infra)
     path_site_infra, name_infra = csv2content(path_infra, path_benchTrack, file_csv)
+    print("path site infra",path_site_infra)
 
     content2html(path_site_infra, path_infra, path_benchTrack, name_infra, path_output)
 
@@ -242,21 +249,6 @@ def bench2site(path_infra, file_csv, path_output = "default"):
 
 
 
-#---------------------------------------------TEST---------------------------------------------
-
-
-if __name__ == '__main__':
-    #path_infra = "/Users/alexislenoir/python/Benchtrack/infrastructures/PGM"
-    path_infra = "/Users/alexislenoir/python/Benchtrack/infrastructures/ConfigFichier"
-    file_csv = "output.csv"
-
-    if len(sys.argv) > 1:
-        path_infra = sys.argv[1]
-        file_csv = sys.argv[2]
-        path_output = sys.argv[3]
-        bench2site(path_infra, file_csv, path_output)
-    else:
-        bench2site(path_infra, file_csv)
 
 
     

@@ -5,7 +5,8 @@ import sys
 
 if __name__ == '__main__':
     #path_infra = "/Users/alexislenoir/python/Benchtrack_perso/infrastructures/PGM"
-    path_infra = "/Users/alexislenoir/python/Benchtrack_perso/infrastructures/ConfigFichier"
+    path_infra = "/Users/alexislenoir/python/Benchtrack/infrastructures/PGMbench"
+    #path_infra = "/Users/alexislenoir/python/Benchtrack_perso/infrastructures/ConfigFichier"
     file_csv = "output.csv"
 
     if len(sys.argv) > 1:
