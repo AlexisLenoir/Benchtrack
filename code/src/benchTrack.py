@@ -1,7 +1,7 @@
 import os
 import sys
 import BenchTrack.structureBench as bt
-from BenchTrack.bench2site import bench2site
+# from BenchTrack.bench2site import bench2site
 import BenchTrack.tools as tl
 
 
@@ -30,15 +30,16 @@ def exe(argv):
         tl.help()
         return 0
     if "--check" in argv:
-        tl.checkInfrastructure()
+        tl.checkInfrastructure(path_inf)
+        exit(0)
 
     bench = bt.BenchTrack(path_inf, path_benchTrack)
 
     if tl.manage_flag(argv,bench):
         bench.exe_bench()
         bench.ToCsv()
-        path_csvFile = bench.getPathOutputFile()
-        bench2site(path_inf, path_csvFile)
+        # path_csvFile = bench.getPathOutputFile()
+        # bench2site(path_inf, path_csvFile)
 
 def mainFonction():
     exe(sys.argv)

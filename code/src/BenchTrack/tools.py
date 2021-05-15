@@ -368,7 +368,10 @@ def manage_flag(argv,bench):
             flagTasks(argv[i:],bench,"info")
             return 0
         if "--output" == argv[i]:
-            bench.setPathOutput(argv[i+1])
+            bench.setPathOutputHtml(argv[i+1])
+        if "--pelican" == argv[i]:
+            bench.setPelican(True)
+
     return 1
 
 def checkInfrastructure():
@@ -385,7 +388,9 @@ def help():
 	––tasks-include A,B,C :Execut only the selected task\n\
 	––targets-exclude TOTO,TITI :Execut all the task except for the selected target\n\
 	––tasks-exclude A,B,C :Execut all the task except for the selected task\n\
-	––check :check le format de l’infrastructure)")
+	––check :Check le format de l’infrastructure\n\
+    \t--pelican:Save the ficher pelican\n\
+          ")
 def checkInfrastructure(path_infras):
     retval=os.getcwd()
     infras=retval+"/"+path_infras
@@ -393,8 +398,8 @@ def checkInfrastructure(path_infras):
     if not os.path.exists("readme.rst"):
         return False
         print("no readme at your infrastrature file")
-    target_path=infras+"targets/"
-    task_path=infras+"tasks/"
+    target_path=infras+"/targets"
+    task_path=infras+"/tasks"
     os.chdir(target_path)
     for files_sous in os.listdir(target_path):
         if files_sous!=".DS_Store":

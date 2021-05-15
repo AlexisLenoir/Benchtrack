@@ -38,6 +38,8 @@ class BenchTrack:
         self.__construct()
         self.__outputFile = self.__path+"/output"+tl.getDate()+".csv"
         self.__outputHtml = ""
+        self.__pelican = False
+
     def __str__(self):
         '''
         Output list of all the themes of the infrastructure
@@ -120,12 +122,19 @@ class BenchTrack:
             writer.writerow(["theme", "task", "target","args","run_time"])
             for theme in self.__listThemes:
                 theme.ToCsv(writer)
+
     def getPathInf(self):
         return self.__path
     def getPathOutputFile(self):
         return self.__outputFile
-    def setPathOutput(self,path):
+    def setPathOutputHtml(self,path):
         self.__outputHtml = path
+    def getPathOutputHtml(self):
+        return self.__outputHtml
+    def isPelican(self):
+        return self.__pelican
+    def setPelican(self,b):
+        self.__pelican = b
 
     def addTargets(self,name_target,lang_target):
         '''
