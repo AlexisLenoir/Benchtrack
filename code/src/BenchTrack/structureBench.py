@@ -37,6 +37,8 @@ class BenchTrack:
         self.__path_benchTrack = path_benchTrack
         self.__construct()
         self.__outputFile = self.__path+"/output"+tl.getDate()+".csv"
+        self.__outputHtml = ""
+        self.__pelican = False
 
     def __str__(self):
         '''
@@ -98,6 +100,7 @@ class BenchTrack:
                 self.__listThemes.append(theme)
         except IOError:
             print("Error of path in construct")
+            exit(0)
     def getName(self):
         '''
         Getter of parameter __name
@@ -119,10 +122,19 @@ class BenchTrack:
             writer.writerow(["theme", "task", "target","args","run_time"])
             for theme in self.__listThemes:
                 theme.ToCsv(writer)
+
     def getPathInf(self):
         return self.__path
     def getPathOutputFile(self):
         return self.__outputFile
+    def setPathOutputHtml(self,path):
+        self.__outputHtml = path
+    def getPathOutputHtml(self):
+        return self.__outputHtml
+    def isPelican(self):
+        return self.__pelican
+    def setPelican(self,b):
+        self.__pelican = b
 
     def addTargets(self,name_target,lang_target):
         '''
@@ -155,8 +167,12 @@ class BenchTrack:
 
         '''
         print("Execution of "+self.__name)
-        for i in range(len(self.__listThemes)):
-            self.__listThemes[i].exe_theme(self.__allTask,self.__allTarget,self.__path)
+        try:
+            for i in range(len(self.__listThemes)):
+                self.__listThemes[i].exe_theme(self.__allTask,self.__allTarget,self.__path)
+        except:
+            print("Error during execution")
+            exit(0)
 
     def filter_target(self,lis,model):
         '''
