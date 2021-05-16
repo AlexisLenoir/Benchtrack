@@ -72,6 +72,7 @@ def csv2content(path_infra, path_benchTrack, file_csv):
     # Loading the Benchtrack object and some attributes
     my_bench = BenchTrack(path_infra, path_benchTrack)
     display_tasks = my_bench.getDisplay()
+    print("display_tasks",display_tasks )
 
     list_targets = my_bench._BenchTrack__allTarget
     list_tasks = my_bench._BenchTrack__allTask

@@ -40,8 +40,8 @@ def exe(argv):
     bench = bt.BenchTrack(path_inf, path_benchTrack)
 
     if tl.manage_flag(argv,bench):
-        #bench.exe_bench()
-        #bench.ToCsv()
+        bench.exe_bench()
+        bench.ToCsv()
         path_csvFile = bench.getPathOutputFile()
         bench2site(path_inf, path_csvFile)
 
