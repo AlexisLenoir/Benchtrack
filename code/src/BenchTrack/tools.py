@@ -98,9 +98,9 @@ def ConfigFileTask(file):
         config.read(file)
         sample_size = config.get('running', 'sample_size')
         if config.has_option('running', 'display_mode'):
-            display_mode='tabular'
-        else:
             display_mode = config.get('running', 'display_mode')
+        else:
+            display_mode = 'tabular'
         if config.has_option('running', 'args'):
             arg = config.get('running', 'args')
         else:
