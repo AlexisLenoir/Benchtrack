@@ -152,6 +152,7 @@ def csv2content(path_infra, path_benchTrack, file_csv):
             for target in list_target_in_task:
                 # Generation of page by target x task 
                 path_code = path_infra+"/tasks/"+theme+"/"+task+"/"+target
+                print(" path_code ", path_code)
                 name_target = os.path.splitext(os.path.basename(target))[0]
                 create_targetXtask_rst(name_target, task, path_code, path_targetsXtasks, structure_run_time,path_images,display_mode)
 
@@ -236,6 +237,7 @@ def bench2site(path_infra, file_csv, path_output = "default"):
     -------
         Nothing
     """
+
     print("path_infra ",path_infra)
     path_benchTrack = os.path.dirname(os.path.dirname(os.path.abspath( __file__ )))
     path_benchTrack = os.path.dirname(os.path.dirname(path_benchTrack))
