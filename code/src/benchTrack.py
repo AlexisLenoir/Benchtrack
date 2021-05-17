@@ -21,6 +21,9 @@ def exe(argv):
     bench.getPathOutputFile():
     infrastructures/PGM/output.csv
 
+    bench.getPathOutputHtml()
+    bench.isPelican()
+
     """
 
     if len(argv) < 2:
@@ -28,6 +31,8 @@ def exe(argv):
         return -1
     path_benchTrack = os.path.dirname(os.path.dirname(os.path.abspath( __file__ )))
     path_inf = argv[-1]
+    if path_inf[-1] == "/":
+         path_inf = path_inf[:-1]
     if "--help" in argv:
         tl.help()
         return 0
@@ -38,9 +43,12 @@ def exe(argv):
     bench = bt.BenchTrack(path_inf, path_benchTrack)
 
     if tl.manage_flag(argv,bench):
-        bench.exe_bench()
-        bench.ToCsv()
+        #bench.exe_bench()
+        #bench.ToCsv()
+        print("os.getcwd()",os.getcwd())
         path_csvFile = bench.getPathOutputFile()
+        print("getPathOutputHtml",bench.getPathOutputHtml())
+        print("bench.isPelican()",bench.isPelican())
         bench2site(path_inf, path_csvFile)
 
 def mainFonction():
