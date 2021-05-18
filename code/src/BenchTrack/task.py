@@ -130,7 +130,7 @@ class Task:
             path_configFile = path + "/targets/" + target + "/config.ini"
             if os.path.exists(path_configFile):
                 command, language = ConfigFileTarget(path_configFile)
-                target += get_suffixe(language)
+                target += "_run"+get_suffixe(language)
                 list_target.append(target)
         return list_target
 
