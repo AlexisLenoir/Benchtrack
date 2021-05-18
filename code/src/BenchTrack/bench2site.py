@@ -97,12 +97,17 @@ def csv2content(path_infra, path_benchTrack, file_csv):
     #path_content = os.path.dirname(path_infra) + "/content"
     #print(" path Benchtrack", path_benchTrack)
 
+
+
     path_site = path_benchTrack + "/code/src/site"
     if not os.path.exists(path_benchTrack + "/output"):
         os.mkdir(path_benchTrack + "/output")
+
     # future temp file
     path_site_infra = path_benchTrack + "/output/" + name_infra + "_pelican_" + getDate()
     #os.system("cp -r " + path_site + " " + path_site_infra) #zip ?
+
+
     shutil.copytree(path_site, path_site_infra)
 
     path_content = path_site_infra + "/content"
@@ -175,6 +180,10 @@ def content2html(path_site_infra, path_infra, path_benchTrack, name_infra, path_
     -------
         Nothing
     """
+
+
+    #Arg is pelican 
+
 
     # Img for site
     img = False
