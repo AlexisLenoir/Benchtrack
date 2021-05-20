@@ -1,6 +1,6 @@
-from BenchTrack.tools import *
+from . import tools as tl
 import os
-from BenchTrack.target import *
+from . import target
 class Task:
     """
     This class contains the structure of the Task
@@ -47,7 +47,7 @@ class Task:
         param str name_Target :name of target.
 
         '''
-        self.__dictTargets[name_Target] = Target(name_Target)
+        self.__dictTargets[name_Target] = target.Target(name_Target)
 
     def modifyTarget(self, name_Target, res_Target):
         """
@@ -81,16 +81,16 @@ class Task:
                 #     self.upgrade_for_target(path,target)
                 for arg in self.__args:
                     # time to execute before_test
-                    times_before = time.time()
+                    times_before = tl.time.time()
                     for _ in range(self.__sample_size):
                         target.exe_before_test(themeName, self.getName(), path,arg)
-                    times_before = time.time() - times_before
+                    times_before = tl.time.time() - times_before
 
                     # time to execute test
-                    start = time.time()
+                    start = tl.time.time()
                     for _ in range(self.__sample_size):
                         target.exe_target(themeName, self.getName(), path,arg)
-                    time_mean = (time.time() - start - times_before) / self.__sample_size
+                    time_mean = (tl.time.time() - start - times_before) / self.__sample_size
                     self.__dictTargets[target_name].addResult(arg,time_mean)
                     print("--execute target " + target_name + ' ' + self.__sample_size.__str__() + ' times with arg:' + arg)
                     print("Execution time:" + time_mean.__str__())
@@ -129,8 +129,8 @@ class Task:
         for target in list(self.__dictTargets.keys()):
             path_configFile = path + "/targets/" + target + "/config.ini"
             if os.path.exists(path_configFile):
-                command, language = ConfigFileTarget(path_configFile)
-                target += "_run"+get_suffixe(language)
+                command, language = tl.ConfigFileTarget(path_configFile)
+                target += "_run"+tl.get_suffixe(language)
                 list_target.append(target)
         return list_target
 
@@ -139,7 +139,7 @@ class Task:
 
         """
         path_ConfigFile = path  + "/targets/" + target + "/config.ini"
-        config = ConfigParser()
+        config = tl.ConfigParser()
         config.read(path_ConfigFile)
         upgrade = config.get('execution', 'upgrading')
         os.system(upgrade)

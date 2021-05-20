@@ -1,4 +1,4 @@
-from BenchTrack.tools import *
+from . import tools as tl
 
 class Target:
     """
@@ -57,7 +57,7 @@ class Target:
         """
         path_File = path  + "/tasks/" + themeName + "/" + task
         path_ConfigFile = path  + "/targets/" + self.getName() + "/config.ini"
-        if existFile("before_"+self.getName(),path_File):
+        if tl.existFile("before_"+self.getName(),path_File):
             self.exe_file(path_ConfigFile, path_File,args,self.getName()+"_before")
 
     def exe_target(self, themeName, task,path,args):
@@ -84,5 +84,5 @@ class Target:
         :param str target :name of target
 
         """
-        command, language = ConfigFileTarget(path_configFile)
-        exeCmd(path_file, args, command, language,target)
+        command, language = tl.ConfigFileTarget(path_configFile)
+        tl.exeCmd(path_file, args, command, language,target)

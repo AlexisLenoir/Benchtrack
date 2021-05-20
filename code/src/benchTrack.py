@@ -1,8 +1,8 @@
 import os
 import sys
-import BenchTrack.structureBench as bt
-from BenchTrack.bench2site import bench2site
-import BenchTrack.tools as tl
+from src.BenchTrack.structureBench import *
+# from BenchTrack.bench2site import bench2site
+from src.BenchTrack.tools import *
 
 
 def exe(argv):
@@ -34,22 +34,25 @@ def exe(argv):
     if path_inf[-1] == "/":
          path_inf = path_inf[:-1]
     if "--help" in argv:
-        tl.help()
+        help()
         return 0
     if "--check" in argv:
-        tl.checkInfrastructure(path_inf)
-        exit(0)
+        if checkInfrastructure(path_inf):
+            benchcheck = BenchTrack(path_inf, path_benchTrack)
+            print("Your infratructure is completed and it's structure shows as follow:")
+            print(benchcheck.get_structure_tasks())
+            exit(0)
 
-    bench = bt.BenchTrack(path_inf, path_benchTrack)
+    bench = BenchTrack(path_inf, path_benchTrack)
 
-    if tl.manage_flag(argv,bench):
-        #bench.exe_bench()
-        #bench.ToCsv()
+    if manage_flag(argv,bench):
+        bench.exe_bench()
+        bench.ToCsv()
         print("os.getcwd()",os.getcwd())
         path_csvFile = bench.getPathOutputFile()
         print("getPathOutputHtml",bench.getPathOutputHtml())
         print("bench.isPelican()",bench.isPelican())
-        bench2site(path_inf, path_csvFile)
+        # bench2site(path_inf, path_csvFile)
 
 def mainFonction():
     exe(sys.argv)

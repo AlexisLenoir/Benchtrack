@@ -1,4 +1,4 @@
-from BenchTrack.tools import *
+from . import tools as tl
 #theme
 
 class Theme:
@@ -91,7 +91,7 @@ class Theme:
         '''
         for i in self.__listTasks:
             if i.getName() == nameTask:
-                file_read(path+nameTest,nameTask,'tasks')
+                tl.file_read(path,nameTask,'tasks')
                 return 1
     def ToCsv(self,writer):
         '''
