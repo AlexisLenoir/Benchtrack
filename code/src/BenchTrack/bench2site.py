@@ -17,6 +17,9 @@ import pathlib as pl
 import datetime
 from BenchTrack.structureBench import BenchTrack
 from BenchTrack.generateRst import *
+import tempfile
+from distutils.dir_util import copy_tree
+
 
 
 def getDate():
@@ -77,6 +80,9 @@ def csv2content(path_infra, path_benchTrack, file_csv):
     list_targets = my_bench._BenchTrack__allTarget
     list_tasks = my_bench._BenchTrack__allTask
 
+    print("list_targets",list_targets)
+    print("list_tasks",list_tasks )
+
     # structure_task tells us how the tasks and targets are distributed
     structure_tasks = my_bench.get_structure_tasks()
     list_themes = list(structure_tasks.keys())
@@ -89,7 +95,7 @@ def csv2content(path_infra, path_benchTrack, file_csv):
             structure_run_time[task][target] = {}
 
     # Instanciation of structure_run_time from file_csv 
-    structure_run_time = load_csv_results( file_csv, structure_run_time)
+    structure_run_time = load_csv_results(file_csv, structure_run_time)
 
     #-----------Create path_content-----------
     # !! Attention if it already exists
@@ -100,15 +106,17 @@ def csv2content(path_infra, path_benchTrack, file_csv):
 
 
     path_site = path_benchTrack + "/code/src/site"
+
     if not os.path.exists(path_benchTrack + "/output"):
         os.mkdir(path_benchTrack + "/output")
 
     # future temp file
-    path_site_infra = path_benchTrack + "/output/" + name_infra + "_pelican_" + getDate()
+    path_site_infra = tempfile.mkdtemp()
+    #path_site_infra = path_benchTrack + "/output/" + name_infra + "_pelican_" + getDate()
     #os.system("cp -r " + path_site + " " + path_site_infra) #zip ?
 
-
-    shutil.copytree(path_site, path_site_infra)
+    copy_tree(path_site, path_site_infra)
+    #shutil.copytree(path_site, tempfile.mkdtemp())
 
     path_content = path_site_infra + "/content"
     os.mkdir(path_content)
@@ -158,7 +166,10 @@ def csv2content(path_infra, path_benchTrack, file_csv):
                 # Generation of page by target x task 
                 path_code = path_infra+"/tasks/"+theme+"/"+task+"/"+target
                 print(" path_code ", path_code)
+                print("target", target)
                 name_target = os.path.splitext(os.path.basename(target))[0]
+                name_target = name_target.replace("_run","")
+                print("name_target", name_target)
                 create_targetXtask_rst(name_target, task, path_code, path_targetsXtasks, structure_run_time,path_images,display_mode)
 
 
@@ -232,7 +243,7 @@ def content2html(path_site_infra, path_infra, path_benchTrack, name_infra, path_
 
 
 
-def bench2site(path_infra, file_csv, path_output = "default"):
+def bench2site(path_infra, path_benchTrack, file_csv, path_output, save_pelican):
     """
     Main functions to generate the site which call the functions: csv2content, content2html, 
     by default the site will be in the benchtrack directory
@@ -248,15 +259,20 @@ def bench2site(path_infra, file_csv, path_output = "default"):
     """
 
     print("path_infra ",path_infra)
-    path_benchTrack = os.path.dirname(os.path.dirname(os.path.abspath( __file__ )))
-    path_benchTrack = os.path.dirname(os.path.dirname(path_benchTrack))
+    #path_benchTrack = os.path.dirname(os.path.dirname(os.path.abspath( __file__ )))
+    #path_benchTrack = os.path.dirname(os.path.dirname(path_benchTrack))
+    path_benchTrack = os.path.dirname(path_benchTrack)
     path_infra = path_benchTrack + "/" + path_infra
     print("path benchtrack", path_benchTrack)
     print("path_infra ",path_infra)
     path_site_infra, name_infra = csv2content(path_infra, path_benchTrack, file_csv)
     print("path site infra",path_site_infra)
-
-    content2html(path_site_infra, path_infra, path_benchTrack, name_infra, path_output)
+    output_site = path_output + "/" + name_infra + "_site" + getDate()
+    content2html(path_site_infra, path_infra, path_benchTrack, name_infra,  output_site)
+    if save_pelican:
+        output_pelican = path_output + "/" + name_infra + "_pelican" + getDate()
+        shutil.copytree(path_site_infra, output_pelican)
+    shutil.rmtree(path_site_infra)
 
 
 
