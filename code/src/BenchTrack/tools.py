@@ -391,6 +391,7 @@ def help():
 	––targets-exclude TOTO,TITI :Execut all the task except for the selected target\n\
 	––tasks-exclude A,B,C :Execut all the task except for the selected task\n\
 	––check :Check le format de l’infrastructure\n\
+    \t--output path : Generate the output file site in the folder\n\
     \t--pelican:Save the ficher pelican\n\
           ")
 def checkInfrastructure(path_infras):
