@@ -1,8 +1,8 @@
-import BenchTrack.tools as tl
+from . import tools as tl
 import os
 import csv
-from BenchTrack.theme import Theme
-from BenchTrack.task import Task
+from . import theme
+from . import task
 class BenchTrack:
     '''
     This class contains the structure of the BenchTrack
@@ -75,7 +75,7 @@ class BenchTrack:
             for themeName in os.listdir(path):
                 if themeName[0] == '.' :
                     continue
-                theme = Theme(themeName)
+                themes = theme.Theme(themeName)
                 #for every task in the folder theme
                 pathT = path + '/' + themeName
                 for taskName in os.listdir(pathT):
@@ -92,12 +92,12 @@ class BenchTrack:
                     if os.path.exists(path_config):
                         sample_size,args,display = tl.ConfigFileTask(path_config)
                         self.__display_mode[taskName]=display
-                    task = Task(taskName, tl.generateArgsList(args), sample_size)
+                    tasks = task.Task(taskName, tl.generateArgsList(args), sample_size)
                     for targetName in self.__allTarget:
                         if tl.existFile(targetName,pathTs):
-                            task.addTarget(targetName)
-                    theme.addTask(task)
-                self.__listThemes.append(theme)
+                            tasks.addTarget(targetName)
+                    themes.addTask(tasks)
+                self.__listThemes.append(themes)
         except IOError:
             print("Error of path in construct")
             exit(0)
@@ -230,7 +230,7 @@ class BenchTrack:
 
         '''
         print("Information of " + nomTarget + " in the test " + self.__name +":")
-        tl.file_read(self.__path+self.__name,nomTarget,"targets")
+        tl.file_read(self.__path,nomTarget,"targets")
 
     def showListTasks(self):
         '''

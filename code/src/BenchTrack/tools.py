@@ -97,8 +97,8 @@ def ConfigFileTask(file):
         config = ConfigParser()
         config.read(file)
         sample_size = config.get('running', 'sample_size')
-        if config.has_option('running', 'display_mode'):
-            display_mode = config.get('running', 'display_mode')
+        if config.has_option('running', 'display'):
+            display_mode = config.get('running', 'display')
         else:
             display_mode = 'tabular'
         if config.has_option('running', 'args'):
@@ -203,8 +203,10 @@ def file_read(nameTest, nameTarget, typeF):
                     filesRead = nameTest + "/" + typeF + "/" + nameTarget + "/" + "README.rst"
                     with open(filesRead, 'r') as f:
                         content = f.read()
+                        print("==============")
                         print(content)
-                        print("Fin\n")
+                        print("==============")
+
                         return 1
                 if existFile(files_sous, file_dir):
                     dir = file_dir + "/" + files_sous
@@ -213,8 +215,9 @@ def file_read(nameTest, nameTarget, typeF):
                             filesRead = nameTest + "/" + typeF + "/" + files_sous + "/" + file_task + "/" + "README.rst"
                             with open(filesRead, 'r') as f:
                                 content = f.read()
+                                print("==============")
                                 print(content)
-                                print("Fin\n")
+                                print("==============")
                                 return 1
 
 
@@ -286,7 +289,6 @@ def generateArgsIter(listIter):
         while begin >= end:
             argsIter.append(begin.__str__())
             begin += step
-    print("Argssss",argsIter)
     return argsIter
 
 def generateAgrs2D(list2D):
@@ -380,8 +382,8 @@ def checkInfrastructure():
 def help():
     print("Commande format:benchTrack [Option] path_infrastructure\n\
     Option flag:\n\
-	––targets-list :Show the list of targets\n\
-	––tasks-list :Show the list of tasks\n\
+	––target-list :Show the list of targets\n\
+	––task-list :Show the list of tasks\n\
 	––target-info TOTO :Show the information from readme.rst of target\n\
 	––task-info A :Show the information from readme.rst of task\n\
 	––targets-include TOTO,TITI :Execut only the selected target\n\
@@ -396,8 +398,9 @@ def checkInfrastructure(path_infras):
     infras=retval+"/"+path_infras
     os.chdir(infras)
     if not os.path.exists("readme.rst"):
-        return False
         print("no readme at your infrastrature file")
+        return False
+
     target_path=infras+"/targets"
     task_path=infras+"/tasks"
     os.chdir(target_path)
@@ -406,7 +409,7 @@ def checkInfrastructure(path_infras):
             files_sous_path=target_path+"/"+files_sous
             os.chdir(files_sous_path)
             if not os.path.exists("readme.rst"):
-                print("it lack at least one readme file at your targets files,please check it")
+                print("it lack at least one readme file at your targets files,please check it ")
                 return False
             if not os.path.exists("config.ini"):
                 print("it lack at least one configuration file at your targets files,please check it")
@@ -434,6 +437,7 @@ def checkInfrastructure(path_infras):
                         return False                        
                 os.chdir(files_sous_path)
         os.chdir(task_path)
+    os.chdir(retval)
     return True
 
 
