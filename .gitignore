@@ -5,6 +5,7 @@ doc/source
 doc/make.bat
 doc/Makefile
 code/src/BenchTrack.egg-info
+code/BenchTrack.egg-info
 code/dist
 code/build
 .idea
