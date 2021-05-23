@@ -53,9 +53,14 @@ def exe(argv):
     if manage_flag(argv,bench):
         cwd = os.getcwd()
         save_pelican = bench.isPelican()
+
+        # Generate results csv: 
+        
         #bench.exe_bench()
         #bench.ToCsv()
         print("os.getcwd()", cwd)
+
+        # Generate site: 
         path_csvFile = bench.getPathOutputFile()
         print("getPathOutputHtml",bench.getPathOutputHtml())
         print("bench.isPelican()",bench.isPelican())

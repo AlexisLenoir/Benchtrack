@@ -96,6 +96,21 @@ def create_graph (name_task, structure_run_time, list_target, path_images, displ
 
     for target in list_target:
         list_args = list(structure_run_time[name_task][target].keys())
+        print(" list_args before ",list_args )
+        list_number = True
+        for i in range (len(list_args)):
+            arg = list_args[i]
+            list_args[i] = arg[:arg.index(" ",1)]
+            list_args[i] = list_args[i].replace(" ","")
+            if not list_args[i].isdigit():
+                list_number = False
+
+        #if list_number:
+           # list_args = list(map(int, list_args))
+
+                
+        print(" list_args after ",list_args )
+
         list_runTime = list(structure_run_time[name_task][target].values())
         list_runTime = list(map(float, list_runTime))
         if display == "line":
