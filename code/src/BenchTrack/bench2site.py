@@ -13,8 +13,8 @@ import sys
 from os import getcwd, chdir, mkdir
 import pathlib as pl
 import datetime
-from BenchTrack.structureBench import BenchTrack
-from BenchTrack.generateRst import *
+from . import structureBench as sb
+from . import generateRst as gr
 import tempfile
 from distutils.dir_util import copy_tree
 
@@ -51,7 +51,7 @@ def load_csv_results(path_infra_csv, structure_run_time):
 
 
 
-def csv2content(path_infra, path_benchTrack, file_csv):
+def csv2content(path_infra, path_benchTrack, file_csv,my_bench):
     """
     This function generates a content directory for the static site
 
@@ -69,7 +69,7 @@ def csv2content(path_infra, path_benchTrack, file_csv):
     name_infra = os.path.basename(path_infra)
 
     # Loading the Benchtrack object and some attributes
-    my_bench = BenchTrack(path_infra, path_benchTrack)
+#    my_bench = sb.BenchTrack(path_infra, path_benchTrack)
     display_tasks = my_bench.getDisplay()
 
     list_targets = my_bench._BenchTrack__allTarget
@@ -110,7 +110,7 @@ def csv2content(path_infra, path_benchTrack, file_csv):
 
     #------------ Summary page ----------------
 
-    create_infra_rst(name_infra,path_pages,path_infra+"/README.rst",structure_run_time,list_targets)
+    gr.create_infra_rst(name_infra,path_pages,path_infra+"/README.rst",structure_run_time,list_targets)
 
     #------------ Page by target  ------------
 
@@ -120,7 +120,7 @@ def csv2content(path_infra, path_benchTrack, file_csv):
 
     for tg in list_targets:
         path_tg_rd= path_infra+"/targets/"+tg+"/README.rst" 
-        create_target_rst(tg, path_tg_rd, path_targets, structure_run_time, list_tasks)
+        gr.create_target_rst(tg, path_tg_rd, path_targets, structure_run_time, list_tasks)
 
 
     #------------ Page by task/ Page by target x task ------------
@@ -137,7 +137,7 @@ def csv2content(path_infra, path_benchTrack, file_csv):
             path_readme_task = path_infra+"/tasks/"+theme+"/"+task+"/README.rst"
             display_mode = display_tasks[task]
             # Generation of page by task 
-            create_task_rst(task, path_readme_task, path_tasks, structure_run_time, list_targets, path_images,display_mode)
+            gr.create_task_rst(task, path_readme_task, path_tasks, structure_run_time, list_targets, path_images,display_mode)
             list_target_in_task = structure_tasks[theme][task]
 
             for target in list_target_in_task:
@@ -145,7 +145,7 @@ def csv2content(path_infra, path_benchTrack, file_csv):
                 path_code = path_infra+"/tasks/"+theme+"/"+task+"/"+target
                 name_target = os.path.splitext(os.path.basename(target))[0]
                 name_target = name_target.replace("_run","")
-                create_targetXtask_rst(name_target, task, path_code, path_targetsXtasks, structure_run_time,path_images,display_mode)
+                gr.create_targetXtask_rst(name_target, task, path_code, path_targetsXtasks, structure_run_time,path_images,display_mode)
 
 
     return path_site_infra, name_infra
@@ -204,7 +204,7 @@ def content2html(path_site_infra, path_infra, name_infra, path_output):
 
 
 
-def bench2site(path_infra, path_benchTrack, file_csv, path_output, save_pelican):
+def bench2site(path_infra, path_benchTrack, file_csv, path_output, save_pelican,my_bench):
     """
     Main functions to generate the site which call the functions: csv2content, content2html, 
     by default the site will be in the benchtrack directory
@@ -224,7 +224,7 @@ def bench2site(path_infra, path_benchTrack, file_csv, path_output, save_pelican)
     path_benchTrack = os.path.dirname(path_benchTrack)
     path_infra = path_benchTrack + "/" + path_infra
 
-    path_site_infra, name_infra = csv2content(path_infra, path_benchTrack, file_csv)
+    path_site_infra, name_infra = csv2content(path_infra, path_benchTrack, file_csv,my_bench)
     output_site = path_output + "/" + name_infra + "_site" + getDate()
     content2html(path_site_infra, path_infra, name_infra,  output_site)
 

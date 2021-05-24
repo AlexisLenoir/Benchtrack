@@ -2,7 +2,7 @@ import os
 import sys
 from src.BenchTrack.structureBench import *
 from src.BenchTrack.tools import *
-from BenchTrack.bench2site import bench2site
+from src.BenchTrack.bench2site import bench2site
 
 
 
@@ -18,6 +18,7 @@ def exe(argv):
         print("Missing parameter,use --help to read the guide")
         return -1
     path_benchTrack = os.path.dirname(os.path.dirname(os.path.abspath( __file__ )))
+    print("dddd",path_benchTrack)
     path_inf = argv[-1]
     if path_inf[-1] == "/":
          path_inf = path_inf[:-1]
@@ -38,8 +39,8 @@ def exe(argv):
         save_pelican = bench.isPelican()
 
         # Generate results csv: 
-        bench.exe_bench()
-        bench.ToCsv()
+        # bench.exe_bench()
+        # bench.ToCsv()
 
         # Generate site: 
         path_csvFile = bench.getPathOutputFile()
@@ -48,7 +49,7 @@ def exe(argv):
         else:
             output = bench.getPathOutputHtml()
 
-        bench2site(path_inf, path_benchTrack, path_csvFile, output, save_pelican)
+        bench2site(path_inf, path_benchTrack,path_csvFile, output, save_pelican,bench)
 
 def mainFonction():
     exe(sys.argv)
