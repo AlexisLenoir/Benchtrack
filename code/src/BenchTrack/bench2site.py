@@ -4,8 +4,6 @@ This module generates the site,
 It can be used by calling directly the functions,
 You can also call in a shell as follows: python bench2site.py path_infrastructure path_csv path_output
 
-import datetime
-str(datetime.datetime.today())
 """
 
 import os
@@ -17,6 +15,9 @@ import pathlib as pl
 import datetime
 from BenchTrack.structureBench import BenchTrack
 from BenchTrack.generateRst import *
+import tempfile
+from distutils.dir_util import copy_tree
+
 
 
 def getDate():
@@ -46,8 +47,6 @@ def load_csv_results(path_infra_csv, structure_run_time):
             
             structure_run_time[row[1]][row[2]][row[3]] = row[4]
 
-    #print ("structure_run_time", structure_run_time)
-
     return structure_run_time
 
 
@@ -63,16 +62,15 @@ def csv2content(path_infra, path_benchTrack, file_csv):
         file_csv: String, name of the csv file used
     Returns
     -------
-        path_site_infra:
-        name_infra:
+        path_site_infra: String, absolute path of temporary repository for generate site
+        name_infra: String, infrastructure name
     """
-    print("path_infra ",path_infra)
+
     name_infra = os.path.basename(path_infra)
 
     # Loading the Benchtrack object and some attributes
     my_bench = BenchTrack(path_infra, path_benchTrack)
     display_tasks = my_bench.getDisplay()
-    print("display_tasks",display_tasks )
 
     list_targets = my_bench._BenchTrack__allTarget
     list_tasks = my_bench._BenchTrack__allTask
@@ -89,37 +87,30 @@ def csv2content(path_infra, path_benchTrack, file_csv):
             structure_run_time[task][target] = {}
 
     # Instanciation of structure_run_time from file_csv 
-    structure_run_time = load_csv_results( file_csv, structure_run_time)
+    structure_run_time = load_csv_results(file_csv, structure_run_time)
 
-    #-----------Create path_content-----------
-    # !! Attention if it already exists
+    #-----------Initialize site_infra repository -----------
+    
 
-    #path_content = os.path.dirname(path_infra) + "/content"
-    #print(" path Benchtrack", path_benchTrack)
+    # Temporary pelican directory
+    path_site_infra = tempfile.mkdtemp()
 
     path_site = path_benchTrack + "/code/src/site"
-    if not os.path.exists(path_benchTrack + "/output"):
-        os.mkdir(path_benchTrack + "/output")
-    # future temp file
-    path_site_infra = path_benchTrack + "/output/" + name_infra + "_pelican_" + getDate()
-    #os.system("cp -r " + path_site + " " + path_site_infra) #zip ?
-    shutil.copytree(path_site, path_site_infra)
+    copy_tree(path_site, path_site_infra)
 
     path_content = path_site_infra + "/content"
     os.mkdir(path_content)
     path_pages = path_content+"/pages"
     os.mkdir(path_pages)
 
-
+    # Get images for content
     path_images = path_content + "/images"
-    #os.system("cp -r " + path_site +"/images_content " + path_images)
     shutil.copytree(path_site+"/images_content", path_images)
     os.system("rm -r "+path_site_infra + "/images_content")
-    #os.mkdir(path_images)
 
     #------------ Summary page ----------------
-    create_infra_rst(name_infra,path_pages,path_infra+"/README.rst",structure_run_time,list_targets)
 
+    create_infra_rst(name_infra,path_pages,path_infra+"/README.rst",structure_run_time,list_targets)
 
     #------------ Page by target  ------------
 
@@ -152,15 +143,15 @@ def csv2content(path_infra, path_benchTrack, file_csv):
             for target in list_target_in_task:
                 # Generation of page by target x task 
                 path_code = path_infra+"/tasks/"+theme+"/"+task+"/"+target
-                print(" path_code ", path_code)
                 name_target = os.path.splitext(os.path.basename(target))[0]
+                name_target = name_target.replace("_run","")
                 create_targetXtask_rst(name_target, task, path_code, path_targetsXtasks, structure_run_time,path_images,display_mode)
 
 
     return path_site_infra, name_infra
 
     
-def content2html(path_site_infra, path_infra, path_benchTrack, name_infra, path_output):
+def content2html(path_site_infra, path_infra, name_infra, path_output):
     """
     This function generates the static site with pelican
 
@@ -168,9 +159,8 @@ def content2html(path_site_infra, path_infra, path_benchTrack, name_infra, path_
     ----------
         path_site_infra : String, absolute path of the infrastructure site
         path_infra : String, absolute path of the infrastructure
-        path_benchTrack: String, absolute path of the framework Benchtrack
         name_infra: String, name of the current infrastructure
-        path_output: String
+        path_output: String, absolute path of the output
     Returns
     -------
         Nothing
@@ -181,11 +171,8 @@ def content2html(path_site_infra, path_infra, path_benchTrack, name_infra, path_
     os.chdir(path_infra)
     if os.path.exists("img"):
         img = True
-        #os.system("rm -r "+ path_site_infra + "/theme/static/img")
-        #os.system("cp -r " + path_infra+"/img " + path_site_infra + "/theme/static/img")
         shutil.copytree(path_infra+"/img", path_site_infra + "/theme/static/img")
         
-
     # Modification of  pelicanconf.py:
     path_conf_py = path_site_infra + "/pelicanconf.py"
     new_file = ""
@@ -208,46 +195,44 @@ def content2html(path_site_infra, path_infra, path_benchTrack, name_infra, path_
     with open(path_conf_py,'w') as f:
         f.write(new_file)
 
-
-
     # Call pelican
     os.chdir(path_site_infra)
     os.system(sys.executable + " -m pelican content")
 
     # Export output
-    if path_output == "default":
-        path_output = path_benchTrack + "/output/" + name_infra + "_site"
-
-    #os.system("cp -r " + path_site_infra + "/output " + path_output) #zip ?
     shutil.copytree(path_site_infra + "/output", path_output)
 
 
 
-def bench2site(path_infra, file_csv, path_output = "default"):
+def bench2site(path_infra, path_benchTrack, file_csv, path_output, save_pelican):
     """
     Main functions to generate the site which call the functions: csv2content, content2html, 
     by default the site will be in the benchtrack directory
 
     Parameters
     ----------
-        path_infra : String, absolute path of the infrastructure
+        path_infra: String, absolute path of the infrastructure
+        path_benchTrack: String, absolute path of the package benchTrack
         file_csv: String, absolute path of the framework Benchtrack
         path_output: String, absolute path of the output site
+        save_pelican: Boolean, indicate if we have to save pelican archive
     Returns
     -------
         Nothing
     """
 
-    print("path_infra ",path_infra)
-    path_benchTrack = os.path.dirname(os.path.dirname(os.path.abspath( __file__ )))
-    path_benchTrack = os.path.dirname(os.path.dirname(path_benchTrack))
+    path_benchTrack = os.path.dirname(path_benchTrack)
     path_infra = path_benchTrack + "/" + path_infra
-    print("path benchtrack", path_benchTrack)
-    print("path_infra ",path_infra)
-    path_site_infra, name_infra = csv2content(path_infra, path_benchTrack, file_csv)
-    print("path site infra",path_site_infra)
 
-    content2html(path_site_infra, path_infra, path_benchTrack, name_infra, path_output)
+    path_site_infra, name_infra = csv2content(path_infra, path_benchTrack, file_csv)
+    output_site = path_output + "/" + name_infra + "_site" + getDate()
+    content2html(path_site_infra, path_infra, name_infra,  output_site)
+
+    if save_pelican:
+        output_pelican = path_output + "/" + name_infra + "_pelican" + getDate()
+        shutil.copytree(path_site_infra, output_pelican)
+    # Delete temp directory
+    shutil.rmtree(path_site_infra)
 
 
 

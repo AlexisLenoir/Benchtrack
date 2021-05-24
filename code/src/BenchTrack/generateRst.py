@@ -96,6 +96,15 @@ def create_graph (name_task, structure_run_time, list_target, path_images, displ
 
     for target in list_target:
         list_args = list(structure_run_time[name_task][target].keys())
+        list_number = True
+        for i in range (len(list_args)):
+            list_args[i] = list_args[i].replace(" ","-")
+            if not list_args[i].isdigit():
+                list_number = False
+
+        if list_number:
+           list_args = list(map(int, list_args))
+
         list_runTime = list(structure_run_time[name_task][target].values())
         list_runTime = list(map(float, list_runTime))
         if display == "line":
@@ -154,19 +163,16 @@ def create_infra_rst(name_infra, path_content, path_readme, structure_run_time, 
         f.write("   * - Tasks/Targets\n")
         for target in list_targets:
             f.write("     - `"+target+" <{filename}/targets/"+target + ".rst>`__ \n")
-            #f.write("     - "+target+"\n")
 
         problem_exec = False
 
         for task in list(structure_run_time.keys()):
             f.write("   * - `"+task+" <{filename}/tasks/"+task + ".rst>`__ \n")
-            #f.write("   * - "+task+"\n")
             for target in list(structure_run_time[task].keys()):
                 if len(list(structure_run_time[task][target].keys())) == 0:
                     f.write("     - .. image:: {static}/images/rect_orange.png \n")
                     f.write("          :target: {filename}/targetsXtasks/"+target+"X"+task+".rst \n")
                     f.write("          :alt: image orange rectangle \n")
-                    #f.write("     -  \n")
                 else:
                     for arg in list(structure_run_time[task][target].keys()):
                         if structure_run_time[task][target][arg] == -2:
@@ -174,14 +180,12 @@ def create_infra_rst(name_infra, path_content, path_readme, structure_run_time, 
                             f.write("     - .. image:: {static}/images/rect_red.png \n")
                             f.write("          :target: {filename}/targetsXtasks/"+target+"X"+task+".rst \n")
                             f.write("          :alt: image red rectangle \n")
-                            #f.write("     - X\n")
                             break
                     if not problem_exec:
                         f.write("     - .. image:: {static}/images/rect_green.png \n")
                         f.write("          :target: {filename}/targetsXtasks/"+target+"X"+task+".rst \n")
                         f.write("          :alt: image green rectangle \n")
-                        #f.write("     - `OK <{filename}/targetsXtasks/"+target+"X"+task +".rst>`__ \n")
-                        #f.write("     - OK\n")
+                    
 
         
 def create_target_rst(name_target, path_readme, path_targets, structure_run_time, list_tasks):
@@ -212,8 +216,6 @@ def create_target_rst(name_target, path_readme, path_targets, structure_run_time
         f.write("\n")
         f.write(".. list-table:: \n")
         f.write("   :widths: auto\n")
-        #f.write("   :header-rows: 1\n")
-        #f.write("   :stub-columns: 1\n")
         f.write("\n")
 
         list_tasks2 = []
@@ -303,8 +305,6 @@ def create_task_rst(name_task, path_readme, path_tasks, structure_run_time, list
 
             f.write(".. list-table:: \n")
             f.write("   :widths: auto\n")
-            #f.write("   :header-rows: 1\n")
-            #f.write("   :stub-columns: 1\n")
             f.write("\n")
             
             if one_argument:

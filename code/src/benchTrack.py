@@ -1,8 +1,9 @@
 import os
 import sys
 from src.BenchTrack.structureBench import *
-# from BenchTrack.bench2site import bench2site
 from src.BenchTrack.tools import *
+from BenchTrack.bench2site import bench2site
+
 
 
 def exe(argv):
@@ -12,20 +13,7 @@ def exe(argv):
     :param str argv: input in the terminal.
 
     """
-
-    """
-    Intégration 
-
-    bench.getPathInf():
-    infrastructures/PGM
-    bench.getPathOutputFile():
-    infrastructures/PGM/output.csv
-
-    bench.getPathOutputHtml()
-    bench.isPelican()
-
-    """
-
+    
     if len(argv) < 2:
         print("Missing parameter,use --help to read the guide")
         return -1
@@ -46,13 +34,21 @@ def exe(argv):
     bench = BenchTrack(path_inf, path_benchTrack)
 
     if manage_flag(argv,bench):
+        cwd = os.getcwd()
+        save_pelican = bench.isPelican()
+
+        # Generate results csv: 
         bench.exe_bench()
         bench.ToCsv()
-        print("os.getcwd()",os.getcwd())
+
+        # Generate site: 
         path_csvFile = bench.getPathOutputFile()
-        print("getPathOutputHtml",bench.getPathOutputHtml())
-        print("bench.isPelican()",bench.isPelican())
-        # bench2site(path_inf, path_csvFile)
+        if len(bench.getPathOutputHtml()) == 0:
+            output = cwd
+        else:
+            output = bench.getPathOutputHtml()
+
+        bench2site(path_inf, path_benchTrack, path_csvFile, output, save_pelican)
 
 def mainFonction():
     exe(sys.argv)
