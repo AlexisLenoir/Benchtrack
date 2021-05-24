@@ -13,24 +13,7 @@ def exe(argv):
     :param str argv: input in the terminal.
 
     """
-
-    """
-    Intégration 
-
-    bench.getPathInf():
-    infrastructures/PGM
-    bench.getPathOutputFile():
-    infrastructures/PGM/output.csv
-
-    bench.getPathOutputHtml()
-    bench.isPelican()
-
-    python code/src/benchTrack.py --output /lol --pelican infrastructures/PGMbench/
-
-
-
-    """
-
+    
     if len(argv) < 2:
         print("Missing parameter,use --help to read the guide")
         return -1
@@ -55,16 +38,11 @@ def exe(argv):
         save_pelican = bench.isPelican()
 
         # Generate results csv: 
-        
-        #bench.exe_bench()
-        #bench.ToCsv()
-        print("os.getcwd()", cwd)
+        bench.exe_bench()
+        bench.ToCsv()
 
         # Generate site: 
         path_csvFile = bench.getPathOutputFile()
-        print("getPathOutputHtml",bench.getPathOutputHtml())
-        print("bench.isPelican()",bench.isPelican())
-
         if len(bench.getPathOutputHtml()) == 0:
             output = cwd
         else:

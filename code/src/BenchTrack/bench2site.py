@@ -65,19 +65,15 @@ def csv2content(path_infra, path_benchTrack, file_csv):
         path_site_infra: String, absolute path of temporary repository for generate site
         name_infra: String, infrastructure name
     """
-    print("path_infra ",path_infra)
+
     name_infra = os.path.basename(path_infra)
 
     # Loading the Benchtrack object and some attributes
     my_bench = BenchTrack(path_infra, path_benchTrack)
     display_tasks = my_bench.getDisplay()
-    print("display_tasks",display_tasks )
 
     list_targets = my_bench._BenchTrack__allTarget
     list_tasks = my_bench._BenchTrack__allTask
-
-    print("list_targets",list_targets)
-    print("list_tasks",list_tasks )
 
     # structure_task tells us how the tasks and targets are distributed
     structure_tasks = my_bench.get_structure_tasks()
@@ -147,18 +143,15 @@ def csv2content(path_infra, path_benchTrack, file_csv):
             for target in list_target_in_task:
                 # Generation of page by target x task 
                 path_code = path_infra+"/tasks/"+theme+"/"+task+"/"+target
-                print(" path_code ", path_code)
-                print("target", target)
                 name_target = os.path.splitext(os.path.basename(target))[0]
                 name_target = name_target.replace("_run","")
-                print("name_target", name_target)
                 create_targetXtask_rst(name_target, task, path_code, path_targetsXtasks, structure_run_time,path_images,display_mode)
 
 
     return path_site_infra, name_infra
 
     
-def content2html(path_site_infra, path_infra, path_benchTrack, name_infra, path_output):
+def content2html(path_site_infra, path_infra, name_infra, path_output):
     """
     This function generates the static site with pelican
 
@@ -166,7 +159,6 @@ def content2html(path_site_infra, path_infra, path_benchTrack, name_infra, path_
     ----------
         path_site_infra : String, absolute path of the infrastructure site
         path_infra : String, absolute path of the infrastructure
-        path_benchTrack: String, absolute path of the framework Benchtrack
         name_infra: String, name of the current infrastructure
         path_output: String, absolute path of the output
     Returns
@@ -181,7 +173,6 @@ def content2html(path_site_infra, path_infra, path_benchTrack, name_infra, path_
         img = True
         shutil.copytree(path_infra+"/img", path_site_infra + "/theme/static/img")
         
-
     # Modification of  pelicanconf.py:
     path_conf_py = path_site_infra + "/pelicanconf.py"
     new_file = ""
@@ -209,9 +200,6 @@ def content2html(path_site_infra, path_infra, path_benchTrack, name_infra, path_
     os.system(sys.executable + " -m pelican content")
 
     # Export output
-    if path_output == "default":
-        path_output = path_benchTrack + "/output/" + name_infra + "_site"
-
     shutil.copytree(path_site_infra + "/output", path_output)
 
 
@@ -233,21 +221,17 @@ def bench2site(path_infra, path_benchTrack, file_csv, path_output, save_pelican)
         Nothing
     """
 
-    print("path_infra ",path_infra)
-    #path_benchTrack = os.path.dirname(os.path.dirname(os.path.abspath( __file__ )))
-    #path_benchTrack = os.path.dirname(os.path.dirname(path_benchTrack))
     path_benchTrack = os.path.dirname(path_benchTrack)
     path_infra = path_benchTrack + "/" + path_infra
-    print("path benchtrack", path_benchTrack)
-    print("path_infra ",path_infra)
+
     path_site_infra, name_infra = csv2content(path_infra, path_benchTrack, file_csv)
-    print("path site infra",path_site_infra)
     output_site = path_output + "/" + name_infra + "_site" + getDate()
-    content2html(path_site_infra, path_infra, path_benchTrack, name_infra,  output_site)
+    content2html(path_site_infra, path_infra, name_infra,  output_site)
 
     if save_pelican:
         output_pelican = path_output + "/" + name_infra + "_pelican" + getDate()
         shutil.copytree(path_site_infra, output_pelican)
+    # Delete temp directory
     shutil.rmtree(path_site_infra)
 
 

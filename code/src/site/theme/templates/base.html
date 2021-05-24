@@ -29,7 +29,6 @@
   {% endif %}
 
 
-
   {# PYGMENTS STYLES #}
   {% if THEME_COLOR_AUTO_DETECT_BROWSER_PREFERENCE or THEME_COLOR_ENABLE_USER_OVERRIDE or THEME_COLOR == "dark" %}
     <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
@@ -44,7 +43,7 @@
           {% endif %}
           href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/pygments/{{ PYGMENTS_STYLE_DARK or PYGMENTS_STYLE or 'monokai' }}.min.css">
   {% endif %}
-  
+
   {% if THEME_COLOR_AUTO_DETECT_BROWSER_PREFERENCE or not THEME_COLOR or THEME_COLOR == "light" %}
     <link id="pygments-light-theme" rel="stylesheet" type="text/css"
           {% if THEME_COLOR_AUTO_DETECT_BROWSER_PREFERENCE %}
@@ -60,6 +59,8 @@
   {% if PLUGINS and 'tipue_search' in PLUGINS %}
     <link rel="stylesheet" href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/tipuesearch/tipuesearch.min.css" />
   {% endif %}
+
+
 
   <link rel="stylesheet" type="text/css" href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/font-awesome/css/brands.css">
