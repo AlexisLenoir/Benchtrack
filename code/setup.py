@@ -9,7 +9,7 @@ with open("../README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(name='BenchTrack',
-      version='0.1.26',
+      version='0.1.45',
       description='A python framework for generating a benchmark, by running specific tasks on specific targets.',
       long_description=long_description,
       url='https://github.com/AlexisLenoir/Benchtrack',
@@ -30,6 +30,9 @@ setup(name='BenchTrack',
       packages=find_namespace_packages(
             include=["src","src.*"],),
       include_package_data = True,
+      package_data = {
+      '': ['src/*'],
+      },
       entry_points={
             'console_scripts': ['benchTrack=src.benchTrack:mainFonction'],
       }

@@ -50,8 +50,10 @@ def exe(argv):
         else:
             output = bench.getPathOutputHtml()
 
-        path_absolute_inf = cwd + "/"+ path_inf
-        path_absolute_benchTrack = os.path.dirname(path_benchTrack)
+        path_absolute_inf = cwd + "/"+ path_inf 
+        path_absolute_benchTrack = os.path.dirname(path_benchTrack)+"/site-packages/src"
+        # print(path_absolute_inf,"inf")
+        # print(path_absolute_benchTrack,"bench")
         bench2site(path_absolute_inf, path_absolute_benchTrack, path_csvFile, output, save_pelican, bench)
 
 def mainFonction():
