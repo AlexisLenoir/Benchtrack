@@ -95,7 +95,8 @@ def csv2content(path_infra, path_benchTrack, file_csv, my_bench):
     # Temporary pelican directory
     path_site_infra = tempfile.mkdtemp()
 
-    path_site = path_benchTrack + "/code/src/site"
+    path_site = path_benchTrack + "/site"
+    # print(path_benchTrack,"bench2site")
     copy_tree(path_site, path_site_infra)
 
     path_content = path_site_infra + "/content"
@@ -222,7 +223,7 @@ def bench2site(path_infra, path_benchTrack, file_csv, path_output, save_pelican,
     -------
         Nothing
     """
-
+    # print("HELLO BEAUTIFULL WORLD, THIS PACKAGE IS UPDATED")
     path_site_infra, name_infra = csv2content(path_infra, path_benchTrack, file_csv, benchObject)
     output_site = path_output + "/" + name_infra + "_site" + getDate()
     content2html(path_site_infra, path_infra, name_infra,  output_site)
