@@ -17,7 +17,9 @@ def exe(argv):
     if len(argv) < 2:
         print("Missing parameter,use --help to read the guide")
         return -1
+    print("aaa 1", os.path.abspath( __file__ ))
     path_benchTrack = os.path.dirname(os.path.dirname(os.path.abspath( __file__ )))
+    print(" path_benchTrack",path_benchTrack )
     path_inf = argv[-1]
     if path_inf[-1] == "/":
          path_inf = path_inf[:-1]
@@ -38,8 +40,8 @@ def exe(argv):
         save_pelican = bench.isPelican()
 
         # Generate results csv: 
-        bench.exe_bench()
-        bench.ToCsv()
+        #bench.exe_bench()
+        #bench.ToCsv()
         
         # Generate site: 
         path_csvFile = bench.getPathOutputFile()
