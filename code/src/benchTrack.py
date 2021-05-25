@@ -2,7 +2,7 @@ import os
 import sys
 from src.BenchTrack.structureBench import *
 from src.BenchTrack.tools import *
-from BenchTrack.bench2site import bench2site
+from src.BenchTrack.bench2site import bench2site
 
 
 
@@ -40,7 +40,7 @@ def exe(argv):
         # Generate results csv: 
         bench.exe_bench()
         bench.ToCsv()
-
+        
         # Generate site: 
         path_csvFile = bench.getPathOutputFile()
         if len(bench.getPathOutputHtml()) == 0:
@@ -48,7 +48,11 @@ def exe(argv):
         else:
             output = bench.getPathOutputHtml()
 
-        bench2site(path_inf, path_benchTrack, path_csvFile, output, save_pelican)
+        path_absolute_inf = cwd + "/"+ path_inf 
+        path_absolute_benchTrack = os.path.dirname(path_benchTrack)+"/site-packages/src"
+        # print(path_absolute_inf,"inf")
+        # print(path_absolute_benchTrack,"bench")
+        bench2site(path_absolute_inf, path_absolute_benchTrack, path_csvFile, output, save_pelican, bench)
 
 def mainFonction():
     exe(sys.argv)

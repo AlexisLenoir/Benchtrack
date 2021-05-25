@@ -199,7 +199,7 @@ def file_read(nameTest, nameTarget, typeF):
         if files == typeF:
             file_dir = nameTest + "/" + files
             for files_sous in os.listdir(file_dir):
-                if files_sous == nameTarget:
+                if files_sous == nameTarget and files_sous!=".DS_Store":
                     filesRead = nameTest + "/" + typeF + "/" + nameTarget + "/" + "README.rst"
                     with open(filesRead, 'r') as f:
                         content = f.read()
@@ -210,15 +210,16 @@ def file_read(nameTest, nameTarget, typeF):
                         return 1
                 if existFile(files_sous, file_dir):
                     dir = file_dir + "/" + files_sous
-                    for file_task in os.listdir(dir):
-                        if file_task == nameTarget:
-                            filesRead = nameTest + "/" + typeF + "/" + files_sous + "/" + file_task + "/" + "README.rst"
-                            with open(filesRead, 'r') as f:
-                                content = f.read()
-                                print("==============")
-                                print(content)
-                                print("==============")
-                                return 1
+                    if dir!=".DS_Store":
+                        for file_task in os.listdir(dir):
+                            if file_task == nameTarget:
+                                filesRead = nameTest + "/" + typeF + "/" + files_sous + "/" + file_task + "/" + "README.rst"
+                                with open(filesRead, 'r') as f:
+                                    content = f.read()
+                                    print("==============")
+                                    print(content)
+                                    print("==============")
+                                    return 1
 
 
 def flagTasks(argv, bench, flag):
@@ -260,7 +261,7 @@ def flagTargets(argv, bench, flag):
 
     if flag == 'info':
         if len(argv) < 3:
-            print('Without' + (3 - len(argv)).__init__() + 'parameter')
+            print('Without' + str((3 - len(argv)).__init__()) + 'parameter')
             return -1
         bench.showInfoTarget(argv[1])
     if flag == 'list':

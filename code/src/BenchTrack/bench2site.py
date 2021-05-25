@@ -13,8 +13,8 @@ import sys
 from os import getcwd, chdir, mkdir
 import pathlib as pl
 import datetime
-from BenchTrack.structureBench import BenchTrack
-from BenchTrack.generateRst import *
+from src.BenchTrack.structureBench import BenchTrack
+from src.BenchTrack.generateRst import *
 import tempfile
 from distutils.dir_util import copy_tree
 
@@ -51,7 +51,7 @@ def load_csv_results(path_infra_csv, structure_run_time):
 
 
 
-def csv2content(path_infra, path_benchTrack, file_csv):
+def csv2content(path_infra, path_benchTrack, file_csv, my_bench):
     """
     This function generates a content directory for the static site
 
@@ -60,6 +60,7 @@ def csv2content(path_infra, path_benchTrack, file_csv):
         path_infra : String, absolute path of the infrastructure
         path_benchTrack: String, absolute path of the framework Benchtrack
         file_csv: String, name of the csv file used
+        my_bench: Benchtrack object, object of the infrastructure
     Returns
     -------
         path_site_infra: String, absolute path of temporary repository for generate site
@@ -68,8 +69,7 @@ def csv2content(path_infra, path_benchTrack, file_csv):
 
     name_infra = os.path.basename(path_infra)
 
-    # Loading the Benchtrack object and some attributes
-    my_bench = BenchTrack(path_infra, path_benchTrack)
+    # Get from the Benchtrack object some attributes
     display_tasks = my_bench.getDisplay()
 
     list_targets = my_bench._BenchTrack__allTarget
@@ -95,7 +95,8 @@ def csv2content(path_infra, path_benchTrack, file_csv):
     # Temporary pelican directory
     path_site_infra = tempfile.mkdtemp()
 
-    path_site = path_benchTrack + "/code/src/site"
+    path_site = path_benchTrack + "/site"
+    # print(path_benchTrack,"bench2site")
     copy_tree(path_site, path_site_infra)
 
     path_content = path_site_infra + "/content"
@@ -204,7 +205,7 @@ def content2html(path_site_infra, path_infra, name_infra, path_output):
 
 
 
-def bench2site(path_infra, path_benchTrack, file_csv, path_output, save_pelican):
+def bench2site(path_infra, path_benchTrack, file_csv, path_output, save_pelican, benchObject):
     """
     Main functions to generate the site which call the functions: csv2content, content2html, 
     by default the site will be in the benchtrack directory
@@ -216,15 +217,14 @@ def bench2site(path_infra, path_benchTrack, file_csv, path_output, save_pelican)
         file_csv: String, absolute path of the framework Benchtrack
         path_output: String, absolute path of the output site
         save_pelican: Boolean, indicate if we have to save pelican archive
+        benchObject: Benchtrack object, object of the infrastructure
+
     Returns
     -------
         Nothing
     """
-
-    path_benchTrack = os.path.dirname(path_benchTrack)
-    path_infra = path_benchTrack + "/" + path_infra
-
-    path_site_infra, name_infra = csv2content(path_infra, path_benchTrack, file_csv)
+    # print("HELLO BEAUTIFULL WORLD, THIS PACKAGE IS UPDATED")
+    path_site_infra, name_infra = csv2content(path_infra, path_benchTrack, file_csv, benchObject)
     output_site = path_output + "/" + name_infra + "_site" + getDate()
     content2html(path_site_infra, path_infra, name_infra,  output_site)
 
